@@ -1,7 +1,7 @@
 /** @format */
 
-import React from "react";
+import Router from "./app/router/Router";
 
 export default function App() {
-  return <div className="">App</div>;
+  return <Router />;
 }
