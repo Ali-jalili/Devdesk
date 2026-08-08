@@ -4,13 +4,13 @@ import type { User } from "@supabase/supabase-js";
 
 import { createContext, useEffect, useState } from "react";
 
-const AuthContext = createContext<{
-  user: User | null;
-  isLoading: boolean;
-}>({
-  user: null,
-  isLoading: true,
-});
+const AuthContext = createContext<
+  | {
+      user: User | null;
+      isLoading: boolean;
+    }
+  | undefined
+>(undefined);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -44,4 +44,4 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     </AuthContext.Provider>
   );
 }
-export { AuthProvider };
+export { AuthProvider, AuthContext };
