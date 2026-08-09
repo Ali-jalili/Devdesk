@@ -3,6 +3,7 @@
 import useAuth from "@/app/context/useAuth";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { FaSpinner } from "react-icons/fa";
 
 export default function Signup() {
   const { handleSignUp } = useAuth();
@@ -16,26 +17,25 @@ export default function Signup() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const user = await handleSignUp(name, email, password);
-
     if (!name || !email || !password) {
-      setLoading(false);
       return toast.error("Please fill in all fields.");
     }
 
     try {
       setLoading(true);
-      setError("");
-      setName("");
-      setEmail("");
-      setPassword("");
+      const user = await handleSignUp(name, email, password);
 
       if (user) {
         toast.success("Account created successfully!");
+        setError("");
+        setName("");
+        setEmail("");
+        setPassword("");
       }
-    } catch {
-      toast.error("Failed to create account.");
-      setError("Failed to create account.");
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -79,7 +79,9 @@ export default function Signup() {
           />
         </div>
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={loading}>
+          {loading ? <FaSpinner /> : "Submit Application"}
+        </button>
       </form>
     </>
   );
