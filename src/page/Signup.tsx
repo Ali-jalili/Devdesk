@@ -1,17 +1,22 @@
 /** @format */
 
+import useAuth from "@/app/context/useAuth";
 import React, { useState } from "react";
 
 export default function Signup() {
+  const { handleSignUp } = useAuth();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // Handle form submission logic here
+
+    const user = await handleSignUp(name, email, password);
+    console.log("User signed up:", user);
   }
 
   return (
