@@ -2,6 +2,7 @@
 
 import Home from "@/page/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ProtectedRoute from "../ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -19,8 +20,14 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/dashboard",
-    element: <div>Dashboard</div>,
+    path: "/app",
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "dashboard",
+        element: <div>Dashboard</div>,
+      },
+    ],
   },
 ]);
 
