@@ -3,5 +3,9 @@
 import React from "react";
 
 export default function Header() {
-  return <div>Header</div>;
+  return (
+    <header>
+      <h2>DevDesk</h2>
+    </header>
+  );
 }
