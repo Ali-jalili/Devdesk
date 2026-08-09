@@ -1,7 +1,12 @@
 /** @format */
 
-import React from "react";
+import { Outlet } from "react-router-dom";
 
-export default function AppLayout({ childre }) {
-  return <div></div>;
+export default function AppLayout() {
+  return (
+    <>
+      {" "}
+      <Outlet />{" "}
+    </>
+  );
 }
