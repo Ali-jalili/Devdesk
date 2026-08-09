@@ -3,6 +3,7 @@
 import Home from "@/page/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute";
+import Signup from "@/page/Signup";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <div>Signup</div>,
+    element: <Signup />,
   },
 
   {
