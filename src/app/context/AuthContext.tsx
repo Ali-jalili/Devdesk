@@ -13,8 +13,8 @@ const AuthContext = createContext<
         email: string,
         password: string,
       ) => Promise<User | null>;
-      handleLogin: (email: string, password: string) => Promise<User | null>;
-      handlelogout: () => Promise<void>;
+      handleSignIn: (email: string, password: string) => Promise<User | null>;
+      handleSignOut: () => Promise<void>;
     }
   | undefined
 >(undefined);
@@ -55,7 +55,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     return data.user;
   }
 
-  async function handleLogin(email: string, password: string) {
+  async function handleSignIn(email: string, password: string) {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -65,16 +65,14 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       throw error;
     }
 
-    setUser(data.user);
-
     return data.user;
   }
-  async function handlelogout() {
+  async function handleSignOut() {
     await supabase.auth.signOut();
   }
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, handleSignUp, handleLogin, handlelogout }}
+      value={{ user, isLoading, handleSignUp, handleSignIn, handleSignOut }}
     >
       {children}
     </AuthContext.Provider>
