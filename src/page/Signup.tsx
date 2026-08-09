@@ -2,6 +2,7 @@
 
 import useAuth from "@/app/context/useAuth";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Signup() {
   const { handleSignUp } = useAuth();
@@ -16,7 +17,28 @@ export default function Signup() {
     event.preventDefault();
 
     const user = await handleSignUp(name, email, password);
-    console.log("User signed up:", user);
+
+    if (!name || !email || !password) {
+      setLoading(false);
+      return toast.error("Please fill in all fields.");
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+      setName("");
+      setEmail("");
+      setPassword("");
+
+      if (user) {
+        toast.success("Account created successfully!");
+      }
+    } catch {
+      toast.error("Failed to create account.");
+      setError("Failed to create account.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
