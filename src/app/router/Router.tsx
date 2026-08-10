@@ -9,6 +9,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import AppLayout from "../layouts/AppLayout";
 import PublicLayout from "../layouts/PublicLayout";
 import DashboardStats from "@/features/dashboard/DashboardStats";
+import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
+import Workspaces from "@/features/workspaces/workspaces";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,16 @@ const router = createBrowserRouter([
           {
             path: "dashboard",
             element: <DashboardStats />,
+          },
+
+          {
+            path: "workspaces/new",
+            element: <CreateWorkspace />,
+          },
+
+          {
+            path: "workspaces",
+            element: <Workspaces />,
           },
         ],
       },
