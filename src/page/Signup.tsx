@@ -4,6 +4,7 @@ import useAuth from "@/app/context/useAuth";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const { handleSignUp } = useAuth();
@@ -13,6 +14,8 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -31,6 +34,7 @@ export default function Signup() {
         setName("");
         setEmail("");
         setPassword("");
+        navigate("/app/dashboard");
       }
     } catch (error) {
       if (error instanceof Error) {
