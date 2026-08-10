@@ -4,7 +4,7 @@ import useAuth from "@/app/context/useAuth";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const { handleSignUp } = useAuth();
@@ -12,7 +12,6 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -26,14 +25,16 @@ export default function Signup() {
 
     try {
       setLoading(true);
+
       const user = await handleSignUp(name, email, password);
 
       if (user) {
         toast.success("Account created successfully!");
-        setError("");
+
         setName("");
         setEmail("");
         setPassword("");
+
         navigate("/app/dashboard");
       }
     } catch (error) {
@@ -46,47 +47,135 @@ export default function Signup() {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            type="text"
-            id="name"
-            name="name"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            id="email"
-            name="email"
-            required
-          />
+    <main className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-slate-50 px-6 py-16">
+      <div className="w-full max-w-md">
+        {/* Heading */}
+        <div className="mb-8 text-center">
+          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-sm font-bold text-white shadow-sm shadow-indigo-600/20">
+            D
+          </div>
+
+          <h1 className="mt-5 text-3xl font-bold tracking-tight text-slate-950">
+            Create your account
+          </h1>
+
+          <p className="mt-2 text-sm leading-6 text-slate-500">
+            Start organizing your API workflow with DevDesk.
+          </p>
         </div>
 
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            id="password"
-            name="password"
-            required
-          />
+        {/* Form Card */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Name */}
+            <div>
+              <label
+                htmlFor="name"
+                className="mb-2 block text-sm font-medium text-slate-700"
+              >
+                Name
+              </label>
+
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                id="name"
+                name="name"
+                placeholder="John Doe"
+                autoComplete="name"
+                required
+                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label
+                htmlFor="email"
+                className="mb-2 block text-sm font-medium text-slate-700"
+              >
+                Email
+              </label>
+
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                autoComplete="email"
+                required
+                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <div className="mb-2 flex items-center justify-between">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-slate-700"
+                >
+                  Password
+                </label>
+
+                <span className="text-xs text-slate-400">
+                  At least 6 characters
+                </span>
+              </div>
+
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                autoComplete="new-password"
+                required
+                minLength={6}
+                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {loading ? (
+                <>
+                  <FaSpinner className="animate-spin" />
+                  Creating account...
+                </>
+              ) : (
+                "Create account"
+              )}
+            </button>
+          </form>
+
+          {/* Login */}
+          <div className="mt-6 border-t border-slate-100 pt-6 text-center">
+            <p className="text-sm text-slate-500">
+              Already have an account?{" "}
+              <NavLink
+                to="/login"
+                className="font-semibold text-indigo-600 transition hover:text-indigo-700"
+              >
+                Log in
+              </NavLink>
+            </p>
+          </div>
         </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? <FaSpinner /> : "Submit Application"}
-        </button>
-      </form>
-    </>
+        <p className="mt-6 text-center text-xs leading-5 text-slate-400">
+          By creating an account, you can start organizing your API workflow in
+          DevDesk.
+        </p>
+      </div>
+    </main>
   );
 }
