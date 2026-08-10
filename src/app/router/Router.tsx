@@ -7,8 +7,8 @@ import Signup from "@/page/Signup";
 import Login from "@/page/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import AppLayout from "../layouts/AppLayout";
-import Dashboard from "@/page/Dashboard";
 import PublicLayout from "../layouts/PublicLayout";
+import DashboardStats from "@/features/dashboard/DashboardStats";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "dashboard",
-            element: <Dashboard />,
+            element: <DashboardStats />,
           },
         ],
       },
