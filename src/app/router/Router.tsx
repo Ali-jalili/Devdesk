@@ -8,20 +8,26 @@ import Login from "@/page/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import AppLayout from "../layouts/AppLayout";
 import Dashboard from "@/page/Dashboard";
+import PublicLayout from "../layouts/PublicLayout";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />,
-  },
+    element: <PublicLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
 
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+    ],
   },
 
   {
