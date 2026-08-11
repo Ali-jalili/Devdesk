@@ -1,6 +1,7 @@
 /** @format */
 
 import { useForm } from "react-hook-form";
+import createWorkspace from "./WorkspaceService";
 
 export default function CreateWorkspace() {
   type FormData = {
@@ -15,7 +16,7 @@ export default function CreateWorkspace() {
   } = useForm<FormData>();
 
   function handleSubmitForm(data: FormData) {
-    console.log(data);
+    createWorkspace(data.workspaceName, data.workspaceDescription);
   }
 
   return (
