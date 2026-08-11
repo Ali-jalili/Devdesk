@@ -15,8 +15,8 @@ export default function CreateWorkspace() {
     formState: { errors },
   } = useForm<FormData>();
 
-  function handleSubmitForm(data: FormData) {
-    createWorkspace(data.workspaceName, data.workspaceDescription);
+  async function handleSubmitForm(data: FormData) {
+    await createWorkspace(data.workspaceName, data.workspaceDescription);
   }
 
   return (
