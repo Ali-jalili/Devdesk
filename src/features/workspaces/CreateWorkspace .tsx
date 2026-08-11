@@ -51,15 +51,30 @@ export default function CreateWorkspace() {
               </label>
 
               <input
-                {...register("workspaceName", { required: true })}
+                {...register("workspaceName", {
+                  required: {
+                    value: true,
+                    message: "Workspace name is required.",
+                  },
+                  minLength: {
+                    value: 3,
+                    message:
+                      "Workspace name must be at least 3 characters long.",
+                  },
+                })}
                 id="workspace-name"
                 type="text"
                 placeholder="e.g. My API Project"
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
               />
-              {errors.workspaceName && (
+              {errors.workspaceName?.type === "required" && (
                 <p className="mt-2 text-sm text-red-500">
-                  Workspace name is required.
+                  {errors.workspaceName.message}{" "}
+                </p>
+              )}
+              {errors.workspaceName?.type === "minLength" && (
+                <p className="mt-2 text-sm text-red-500">
+                  {errors.workspaceName.message}
                 </p>
               )}
               <p className="mt-2 text-xs text-slate-400">
@@ -74,23 +89,36 @@ export default function CreateWorkspace() {
                 className="mb-2 block text-sm font-semibold text-slate-800"
               >
                 Description
-                <span className="ml-1 font-normal text-slate-400">
-                  (optional)
-                </span>
               </label>
 
               <textarea
-                {...register("workspaceDescription")}
+                {...register("workspaceDescription", {
+                  required: {
+                    value: true,
+                    message: "Workspace description is required.",
+                  },
+                  minLength: {
+                    value: 10,
+                    message:
+                      "Workspace description must be at least 10 characters long.",
+                  },
+                })}
                 id="workspace-description"
                 rows={4}
                 placeholder="What is this workspace for?"
                 className="w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
               />
-              {errors.workspaceName && (
+              {errors.workspaceDescription?.type === "required" && (
                 <p className="mt-2 text-sm text-red-500">
-                  Workspace name is required.
+                  {errors.workspaceDescription.message}
                 </p>
               )}
+              {errors.workspaceDescription?.type === "minLength" && (
+                <p className="mt-2 text-sm text-red-500">
+                  {errors.workspaceDescription.message}
+                </p>
+              )}
+
               <p className="mt-2 text-xs text-slate-400">
                 A short description will help you understand the purpose of this
                 workspace later.
