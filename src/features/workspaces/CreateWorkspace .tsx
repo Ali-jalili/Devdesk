@@ -67,16 +67,16 @@ export default function CreateWorkspace() {
                 placeholder="e.g. My API Project"
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
               />
-              {errors.workspaceName?.type === "required" && (
+              {errors.workspaceName?.type === "required" ? (
                 <p className="mt-2 text-sm text-red-500">
                   {errors.workspaceName.message}{" "}
                 </p>
-              )}
-              {errors.workspaceName?.type === "minLength" && (
+              ) : errors.workspaceName?.type === "minLength" ? (
                 <p className="mt-2 text-sm text-red-500">
                   {errors.workspaceName.message}
                 </p>
-              )}
+              ) : null}
+
               <p className="mt-2 text-xs text-slate-400">
                 Choose a clear name that helps you identify this workspace.
               </p>
