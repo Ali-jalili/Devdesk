@@ -8,7 +8,11 @@ export default function CreateWorkspace() {
     workspaceDescription: string;
   };
 
-  const { register, handleSubmit } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
   function handleSubmitForm(data: FormData) {
     console.log(data);
@@ -53,7 +57,11 @@ export default function CreateWorkspace() {
                 placeholder="e.g. My API Project"
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
               />
-
+              {errors.workspaceName && (
+                <p className="mt-2 text-sm text-red-500">
+                  Workspace name is required.
+                </p>
+              )}
               <p className="mt-2 text-xs text-slate-400">
                 Choose a clear name that helps you identify this workspace.
               </p>
@@ -78,7 +86,11 @@ export default function CreateWorkspace() {
                 placeholder="What is this workspace for?"
                 className="w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
               />
-
+              {errors.workspaceName && (
+                <p className="mt-2 text-sm text-red-500">
+                  Workspace name is required.
+                </p>
+              )}
               <p className="mt-2 text-xs text-slate-400">
                 A short description will help you understand the purpose of this
                 workspace later.
