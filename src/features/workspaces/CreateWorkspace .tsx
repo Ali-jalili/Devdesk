@@ -13,6 +13,7 @@ export default function CreateWorkspace() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -25,6 +26,7 @@ export default function CreateWorkspace() {
     if (result.error) return toast.error(result.error.message);
 
     reset();
+    toast.success("Workspace created successfully.");
   }
 
   return (
