@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import createWorkspace from "./WorkspaceService";
+import toast from "react-hot-toast";
 
 export default function CreateWorkspace() {
   type FormData = {
@@ -16,7 +17,14 @@ export default function CreateWorkspace() {
   } = useForm<FormData>();
 
   async function handleSubmitForm(data: FormData) {
-    await createWorkspace(data.workspaceName, data.workspaceDescription);
+    const result = await createWorkspace(
+      data.workspaceName,
+      data.workspaceDescription,
+    );
+
+    if (result.error) return toast.error(result.error.message);
+
+    reset();
   }
 
   return (

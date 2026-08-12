@@ -8,13 +8,13 @@ async function createWorkspace(
 ) {
   const { data: authData } = await supabase.auth.getUser();
 
-  const { error } = await supabase.from("CreateWorkspace").insert({
+  const { data, error } = await supabase.from("CreateWorkspace").insert({
     user_id: authData.user?.id,
     name: workspaceName,
     description: workspaceDescription,
   });
 
-  console.log(error);
+  return { data, error };
 }
 
 export default createWorkspace;
