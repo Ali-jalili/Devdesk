@@ -3,10 +3,11 @@
 import { getWorkspaceById } from "@/features/workspaces/WorkspaceService";
 import { useQuery } from "@tanstack/react-query";
 
-function useWorkspaceDetails(workspaceId: string) {
+function useWorkspaceDetails(workspaceId?: string) {
   const { data, isLoading, error } = useQuery({
-    queryFn: () => getWorkspaceById(workspaceId),
+    queryFn: () => getWorkspaceById(workspaceId!),
     queryKey: ["WorkSpaceDetails", workspaceId],
+    enabled: !!workspaceId,
   });
 
   return { data, isLoading, error };
