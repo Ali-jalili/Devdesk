@@ -1,7 +1,7 @@
 /** @format */
 
 import { useQuery } from "@tanstack/react-query";
-import { getWorkspaces } from "./WorkspaceService";
+import { getWorkspaces } from "../../features/workspaces/WorkspaceService";
 
 function useGetWorkspaces() {
   const { data, isLoading, error } = useQuery({

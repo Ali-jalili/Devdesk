@@ -53,6 +53,10 @@ const router = createBrowserRouter([
             path: "workspaces",
             element: <Workspaces />,
           },
+
+          {
+            path: "workspaces/:workspaceId",
+          },
         ],
       },
     ],

@@ -1,7 +1,7 @@
 /** @format */
 
 import Loading from "@/ui/Loading";
-import useGetWorkspaces from "./useWorkspaces";
+import useGetWorkspaces from "../../app/hook/useWorkspaces";
 import ErrorMessage from "@/components/ErrorMessage";
 
 export default function Workspaces() {
