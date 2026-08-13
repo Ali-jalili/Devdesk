@@ -3,12 +3,20 @@
 import Loading from "@/ui/Loading";
 import useGetWorkspaces from "../../app/hook/useWorkspaces";
 import ErrorMessage from "@/components/ErrorMessage";
+import { useNavigate } from "react-router-dom";
 
 export default function Workspaces() {
   const { data, isLoading, error } = useGetWorkspaces();
+  const navigate = useNavigate();
 
   if (isLoading) return <Loading />;
   if (error) return <ErrorMessage message={error.message} />;
+
+  function showDataWorkSpace(id: string) {
+    console.log("ffff");
+
+    navigate("/app/workspaces/" + id);
+  }
 
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
@@ -94,6 +102,7 @@ export default function Workspaces() {
                   </span>
 
                   <button
+                    onClick={() => showDataWorkSpace(item.id)}
                     type="button"
                     className="text-sm font-semibold text-indigo-600 transition hover:text-indigo-700"
                   >

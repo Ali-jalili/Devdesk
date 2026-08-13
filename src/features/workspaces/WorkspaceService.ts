@@ -24,4 +24,16 @@ async function getWorkspaces() {
   return data;
 }
 
-export { createWorkspace, getWorkspaces };
+async function getWorkspaceById(workspaceId: string) {
+  const { data, error } = await supabase
+    .from("CreateWorkspace")
+    .select("*")
+    .eq("id", workspaceId)
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export { createWorkspace, getWorkspaces, getWorkspaceById };
