@@ -11,6 +11,7 @@ import PublicLayout from "../layouts/PublicLayout";
 import DashboardStats from "@/features/dashboard/DashboardStats";
 import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
 import Workspaces from "@/features/workspaces/Workspaces";
+import WorkspaceDetails from "@/features/workspaces/WorkspaceDetails";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,7 @@ const router = createBrowserRouter([
 
           {
             path: "workspaces/:workspaceId",
+            element: <WorkspaceDetails />,
           },
         ],
       },
