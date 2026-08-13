@@ -10,7 +10,7 @@ import AppLayout from "../layouts/AppLayout";
 import PublicLayout from "../layouts/PublicLayout";
 import DashboardStats from "@/features/dashboard/DashboardStats";
 import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
-import Workspaces from "@/features/workspaces/workspaces";
+import Workspaces from "@/features/workspaces/Workspaces";
 
 const router = createBrowserRouter([
   {
