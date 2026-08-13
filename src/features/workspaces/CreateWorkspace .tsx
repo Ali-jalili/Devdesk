@@ -1,7 +1,7 @@
 /** @format */
 
 import { useForm } from "react-hook-form";
-import createWorkspace from "./WorkspaceService";
+import { createWorkspace } from "./WorkspaceService";
 import toast from "react-hot-toast";
 
 export default function CreateWorkspace() {
