@@ -19,7 +19,7 @@ function WorkspaceDetails() {
   if (!workspaceId) return null;
 
   function MenuOpen() {
-    console.log("okkkkkk");
+   <E
     setIsMenuOpen((prve) => !prve);
   }
 
