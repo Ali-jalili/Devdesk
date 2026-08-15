@@ -14,7 +14,7 @@ function EditWorkspaceModal({
   onClose,
 }: EditWorkspaceModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/10 backdrop-blur-md px-4">
       <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-6 shadow-2xl">
         {/* Header */}
         <div className="mb-6 flex items-start justify-between">

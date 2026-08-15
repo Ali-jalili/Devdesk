@@ -2,13 +2,14 @@
 
 import useWorkspaceDetails from "@/app/hook/useWorkspaceDetails";
 import ErrorMessage from "@/components/ErrorMessage";
-import { FiArrowLeft, FiMoreHorizontal, FiFolderPlus } from "react-icons/fi";
+import { FiArrowLeft, FiFolderPlus } from "react-icons/fi";
 import Loading from "@/ui/Loading";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import EditWorkspaceModal from "./EditWorkspaceModal";
 
 function WorkspaceDetails() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isEditModalOpen, setisEditModalOpen] = useState(false);
   const { workspaceId } = useParams<{ workspaceId: string }>();
   const navigate = useNavigate();
 
@@ -18,9 +19,13 @@ function WorkspaceDetails() {
   if (error) return <ErrorMessage message={error.message} />;
   if (!workspaceId) return null;
 
-  function MenuOpen() {
-   <E
-    setIsMenuOpen((prve) => !prve);
+  function openEditModal() {
+    console.log("csvdsv");
+    setisEditModalOpen(true);
+  }
+
+  function Close() {
+    setisEditModalOpen(false);
   }
 
   return (
@@ -61,7 +66,7 @@ function WorkspaceDetails() {
           </div>
 
           <button
-            onClick={MenuOpen}
+            onClick={openEditModal}
             type="button"
             aria-label="Workspace options"
             className="shrink-0 cursor-pointer rounded-lg border border-border p-2.5 text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
@@ -157,6 +162,14 @@ function WorkspaceDetails() {
           </div>
         </section>
       </div>
+
+      {isEditModalOpen && (
+        <EditWorkspaceModal
+          name={data.name}
+          description={data.description}
+          onClose={Close}
+        />
+      )}
     </div>
   );
 }
