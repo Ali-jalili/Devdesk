@@ -5,8 +5,10 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { FiArrowLeft, FiMoreHorizontal, FiFolderPlus } from "react-icons/fi";
 import Loading from "@/ui/Loading";
 import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 
 function WorkspaceDetails() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { workspaceId } = useParams<{ workspaceId: string }>();
   const navigate = useNavigate();
 
@@ -15,6 +17,11 @@ function WorkspaceDetails() {
   if (isLoading) return <Loading />;
   if (error) return <ErrorMessage message={error.message} />;
   if (!workspaceId) return null;
+
+  function MenuOpen() {
+    console.log("okkkkkk");
+    setIsMenuOpen((prve) => !prve);
+  }
 
   return (
     <div className="min-h-full">
@@ -54,11 +61,12 @@ function WorkspaceDetails() {
           </div>
 
           <button
+            onClick={MenuOpen}
             type="button"
             aria-label="Workspace options"
             className="shrink-0 cursor-pointer rounded-lg border border-border p-2.5 text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
           >
-            <FiMoreHorizontal size={19} />
+            Edit
           </button>
         </div>
 

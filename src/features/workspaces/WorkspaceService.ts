@@ -36,4 +36,21 @@ async function getWorkspaceById(workspaceId: string) {
   return data;
 }
 
-export { createWorkspace, getWorkspaces, getWorkspaceById };
+async function updateWorkspace(
+  workspaceId: string,
+  newName: string,
+  newDescription: string,
+) {
+  const { data, error } = await supabase
+    .from("CreateWorkspace")
+    .update({
+      name: newName,
+      description: newDescription,
+    })
+    .eq("id", workspaceId);
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export { createWorkspace, getWorkspaces, getWorkspaceById, updateWorkspace };

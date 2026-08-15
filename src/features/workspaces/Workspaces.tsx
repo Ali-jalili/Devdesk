@@ -13,8 +13,6 @@ export default function Workspaces() {
   if (error) return <ErrorMessage message={error.message} />;
 
   function showDataWorkSpace(id: string) {
-    console.log("ffff");
-
     navigate("/app/workspaces/" + id);
   }
 
