@@ -3,6 +3,8 @@
 import { FiX } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import useUpdateWorkspace from "@/app/hook/useUpdateWorkspace";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 interface EditWorkspaceModalProps {
   workspaceId: string;
@@ -28,7 +30,7 @@ function EditWorkspaceModal({
     formState: { errors },
   } = useForm<FormData>();
 
-  const { mutate, isPending, error } = useUpdateWorkspace();
+  const { mutate, isPending, error, isSuccess } = useUpdateWorkspace();
 
   function submitFormModal(data: FormData) {
     mutate({
@@ -36,6 +38,10 @@ function EditWorkspaceModal({
       data,
     });
   }
+
+  useEffect(() => {
+    if (isSuccess) onClose();
+  }, [isSuccess, onClose]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/10 backdrop-blur-md px-4">
