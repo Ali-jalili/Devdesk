@@ -28,7 +28,7 @@ function EditWorkspaceModal({
     formState: { errors },
   } = useForm<FormData>();
 
-  const { mutate, isPending } = useUpdateWorkspace();
+  const { mutate, isPending, error } = useUpdateWorkspace();
 
   function submitFormModal(data: FormData) {
     mutate({
@@ -134,6 +134,10 @@ function EditWorkspaceModal({
             >
               {isPending ? "Saving..." : "Save changes"}{" "}
             </button>
+
+            {error && (
+              <p className="mt-2 text-sm text-red-500">{error.message}</p>
+            )}
           </div>
         </form>
       </div>
