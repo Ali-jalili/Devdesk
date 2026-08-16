@@ -20,7 +20,6 @@ function WorkspaceDetails() {
   if (!workspaceId) return null;
 
   function openEditModal() {
-    console.log("csvdsv");
     setisEditModalOpen(true);
   }
 
@@ -165,6 +164,7 @@ function WorkspaceDetails() {
 
       {isEditModalOpen && (
         <EditWorkspaceModal
+          workspaceId={workspaceId}
           name={data.name}
           description={data.description}
           onClose={Close}

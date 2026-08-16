@@ -2,14 +2,17 @@
 
 import { FiX } from "react-icons/fi";
 import { useForm } from "react-hook-form";
+import useUpdateWorkspace from "@/app/hook/useUpdateWorkspace";
 
 interface EditWorkspaceModalProps {
+  workspaceId: string;
   name: string;
   description: string;
   onClose: () => void;
 }
 
 function EditWorkspaceModal({
+  workspaceId,
   name,
   description,
   onClose,
@@ -25,8 +28,13 @@ function EditWorkspaceModal({
     formState: { errors },
   } = useForm<FormData>();
 
+  const { mutate } = useUpdateWorkspace();
+
   function submitFormModal(data: FormData) {
-    console.log(data);
+    mutate({
+      workspaceId,
+      data,
+    });
   }
 
   return (
