@@ -28,7 +28,7 @@ function EditWorkspaceModal({
     formState: { errors },
   } = useForm<FormData>();
 
-  const { mutate } = useUpdateWorkspace();
+  const { mutate, isPending } = useUpdateWorkspace();
 
   function submitFormModal(data: FormData) {
     mutate({
@@ -128,10 +128,11 @@ function EditWorkspaceModal({
             </button>
 
             <button
+              disabled={isPending}
               type="submit"
               className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
             >
-              Save changes
+              {isPending ? "Saving..." : "Save changes"}{" "}
             </button>
           </div>
         </form>
