@@ -17,6 +17,12 @@ function useUpdateWorkspace() {
         description: string;
       };
     }) => updateWorkspace(workspaceId, data.name, data.description),
+
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["WorkSpaceDetails", variables.workspaceId],
+      });
+    },
   });
 
   return mutation;
