@@ -41,15 +41,22 @@ async function updateWorkspace(
   newName: string,
   newDescription: string,
 ) {
+  console.log("UPDATE SERVICE", {
+    workspaceId,
+    newName,
+    newDescription,
+  });
   const { data, error } = await supabase
     .from("CreateWorkspace")
     .update({
       name: newName,
       description: newDescription,
     })
-    .eq("id", workspaceId);
+    .eq("id", workspaceId)
+    .select();
 
   if (error) throw new Error(error.message);
+
   return data;
 }
 

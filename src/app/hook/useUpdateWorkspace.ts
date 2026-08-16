@@ -1,9 +1,11 @@
 /** @format */
 
 import { updateWorkspace } from "@/features/workspaces/WorkspaceService";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function useUpdateWorkspace() {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: ({
       workspaceId,
