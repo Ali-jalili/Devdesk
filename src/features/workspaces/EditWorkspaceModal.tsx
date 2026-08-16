@@ -40,7 +40,10 @@ function EditWorkspaceModal({
   }
 
   useEffect(() => {
-    if (isSuccess) onClose();
+    if (isSuccess) {
+      onClose();
+      toast.success("✓ Workspace updated successfully");
+    }
   }, [isSuccess, onClose]);
 
   return (
