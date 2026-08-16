@@ -9,7 +9,8 @@ import { useState } from "react";
 import EditWorkspaceModal from "./EditWorkspaceModal";
 
 function WorkspaceDetails() {
-  const [isEditModalOpen, setisEditModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const { workspaceId } = useParams<{ workspaceId: string }>();
   const navigate = useNavigate();
 
@@ -20,11 +21,11 @@ function WorkspaceDetails() {
   if (!workspaceId) return null;
 
   function openEditModal() {
-    setisEditModalOpen(true);
+    setIsEditModalOpen(true);
   }
 
-  function Close() {
-    setisEditModalOpen(false);
+  function closeEditModal() {
+    setIsEditModalOpen(false);
   }
 
   return (
@@ -33,6 +34,7 @@ function WorkspaceDetails() {
         {/* Back */}
         <button
           onClick={() => navigate("/app/workspaces")}
+          type="button"
           className="group mb-8 inline-flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <FiArrowLeft
@@ -43,17 +45,17 @@ function WorkspaceDetails() {
         </button>
 
         {/* Workspace Header */}
-        <div className="flex items-start justify-between gap-6">
+        <div className="flex items-start justify-between gap-8">
           <div className="min-w-0">
-            <div className="mb-3 flex items-center gap-3">
-              <div className="h-2.5 w-2.5 rounded-full bg-primary" />
+            <div className="mb-4 flex items-center gap-2.5">
+              <div className="h-2 w-2 rounded-full bg-primary" />
 
-              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <span className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
                 Workspace
               </span>
             </div>
 
-            <h1 className="truncate text-3xl font-semibold tracking-tight">
+            <h1 className="truncate text-3xl font-semibold tracking-tight text-foreground">
               {data?.name}
             </h1>
 
@@ -67,37 +69,34 @@ function WorkspaceDetails() {
           <button
             onClick={openEditModal}
             type="button"
-            aria-label="Workspace options"
-            className="shrink-0 cursor-pointer rounded-lg border border-border p-2.5 text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+            className="shrink-0 cursor-pointer rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-primary/5"
           >
             Edit
           </button>
         </div>
 
         {/* Divider */}
-        <div className="my-8 border-t border-border" />
+        <div className="my-10 border-t border-border/70" />
 
         {/* Overview */}
         <section>
-          <div className="mb-4">
+          <div className="mb-5">
             <h2 className="text-sm font-semibold">Overview</h2>
+
             <p className="mt-1 text-sm text-muted-foreground">
               A quick look at your workspace.
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-8 sm:grid-cols-2">
             {/* Collections */}
-            <div className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/30">
+            <div className="border-border/70 sm:border-r sm:pr-8">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">
                   Collections
                 </span>
 
-                <FiFolderPlus
-                  size={18}
-                  className="text-muted-foreground transition-colors group-hover:text-primary"
-                />
+                <FiFolderPlus size={18} className="text-muted-foreground" />
               </div>
 
               <div className="mt-4 text-3xl font-semibold">0</div>
@@ -108,8 +107,10 @@ function WorkspaceDetails() {
             </div>
 
             {/* Requests */}
-            <div className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/30">
-              <span className="text-sm text-muted-foreground">Requests</span>
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Requests</span>
+              </div>
 
               <div className="mt-4 text-3xl font-semibold">0</div>
 
@@ -119,8 +120,8 @@ function WorkspaceDetails() {
         </section>
 
         {/* Collections */}
-        <section className="mt-10">
-          <div className="mb-5 flex items-end justify-between gap-4">
+        <section className="mt-12">
+          <div className="mb-6 flex items-end justify-between gap-4">
             <div>
               <h2 className="text-lg font-semibold">Collections</h2>
 
@@ -132,16 +133,16 @@ function WorkspaceDetails() {
             <button
               type="button"
               disabled
-              className="cursor-not-allowed rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground opacity-50"
+              className="cursor-not-allowed rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground opacity-50"
             >
               + New Collection
             </button>
           </div>
 
-          {/* Empty state */}
-          <div className="flex min-h-64 flex-col items-center justify-center rounded-xl border border-dashed border-border bg-muted/20 px-6 text-center">
-            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground">
-              <FiFolderPlus size={20} />
+          {/* Empty State */}
+          <div className="flex min-h-64 flex-col items-center justify-center border-y border-dashed border-border/70 px-6 text-center">
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-border text-muted-foreground">
+              <FiFolderPlus size={18} />
             </div>
 
             <h3 className="text-sm font-semibold">No collections yet</h3>
@@ -167,7 +168,7 @@ function WorkspaceDetails() {
           workspaceId={workspaceId}
           name={data.name}
           description={data.description}
-          onClose={Close}
+          onClose={closeEditModal}
         />
       )}
     </div>

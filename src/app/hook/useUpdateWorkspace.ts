@@ -25,7 +25,6 @@ function useUpdateWorkspace() {
     },
   });
 
-  console.log(mutation);
   return mutation;
 }
 
