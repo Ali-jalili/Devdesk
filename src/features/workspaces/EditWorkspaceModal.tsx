@@ -47,7 +47,7 @@ function EditWorkspaceModal({
   }, [isSuccess, onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/10 backdrop-blur-md px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/10 px-4 backdrop-blur-md">
       <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-6 shadow-2xl">
         {/* Header */}
         <div className="mb-6 flex items-start justify-between">
@@ -71,7 +71,7 @@ function EditWorkspaceModal({
           </button>
         </div>
 
-        {/* Form UI */}
+        {/* Form */}
         <form className="space-y-5" onSubmit={handleSubmit(submitFormModal)}>
           <div>
             <label
@@ -93,10 +93,12 @@ function EditWorkspaceModal({
               defaultValue={name}
               className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
+
+            {errors.name && (
+              <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>
+            )}
           </div>
-          {errors.name && (
-            <p className="mt-2 text-sm text-red-500"> {errors.name.message}</p>
-          )}
+
           <div>
             <label
               htmlFor="workspace-description"
@@ -120,11 +122,12 @@ function EditWorkspaceModal({
 
             {errors.description && (
               <p className="mt-2 text-sm text-red-500">
-                {" "}
                 {errors.description.message}
               </p>
             )}
           </div>
+
+          {error && <p className="text-sm text-red-500">{error.message}</p>}
 
           {/* Actions */}
           <div className="mt-7 flex justify-end gap-3">
@@ -139,14 +142,10 @@ function EditWorkspaceModal({
             <button
               disabled={isPending}
               type="submit"
-              className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+              className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isPending ? "Saving..." : "Save changes"}{" "}
+              {isPending ? "Saving..." : "Save changes"}
             </button>
-
-            {error && (
-              <p className="mt-2 text-sm text-red-500">{error.message}</p>
-            )}
           </div>
         </form>
       </div>
