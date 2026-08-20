@@ -154,7 +154,6 @@ function WorkspaceDetails() {
 
             <button
               type="button"
-              disabled
               className="mt-5 cursor-not-allowed rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground opacity-50"
             >
               Create Collection
