@@ -153,26 +153,29 @@ function WorkspaceDetails() {
             </button>
           </div>
 
-          {/* Empty State */}
-          <div className="flex min-h-64 flex-col items-center justify-center border-y border-dashed border-border/70 px-6 text-center">
-            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-border text-muted-foreground">
-              <FiFolderPlus size={18} />
+          {collections?.length === 0 ? (
+            <div className="flex min-h-64 flex-col items-center justify-center border-y border-dashed border-border/70 px-6 text-center">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-border text-muted-foreground">
+                <FiFolderPlus size={18} />
+              </div>
+
+              <h3 className="text-sm font-semibold">No collections yet</h3>
+
+              <p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
+                Create your first collection to start organizing your API
+                requests.
+              </p>
+
+              <button
+                type="button"
+                className="mt-5 cursor-not-allowed rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground opacity-50"
+              >
+                Create Collection
+              </button>
             </div>
-
-            <h3 className="text-sm font-semibold">No collections yet</h3>
-
-            <p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
-              Create your first collection to start organizing your API
-              requests.
-            </p>
-
-            <button
-              type="button"
-              className="mt-5 cursor-not-allowed rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground opacity-50"
-            >
-              Create Collection
-            </button>
-          </div>
+          ) : (
+            <CollectionList collections={collections ?? []} />
+          )}
         </section>
       </div>
 
