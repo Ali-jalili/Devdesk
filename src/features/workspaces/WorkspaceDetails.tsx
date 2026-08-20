@@ -9,6 +9,7 @@ import { useState } from "react";
 import EditWorkspaceModal from "./EditWorkspaceModal";
 import CreateCollectionModal from "../collection/CreateCollectionModal";
 import useCollections from "@/app/hook/useCollections";
+import CollectionList from "../collection/CollectionList";
 
 function WorkspaceDetails() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -94,7 +95,6 @@ function WorkspaceDetails() {
         <section>
           <div className="mb-5">
             <h2 className="text-sm font-semibold">Overview</h2>
-
             <p className="mt-1 text-sm text-muted-foreground">
               A quick look at your workspace.
             </p>
@@ -112,7 +112,6 @@ function WorkspaceDetails() {
               </div>
 
               <div className="mt-4 text-3xl font-semibold">
-                {" "}
                 {collections?.length ?? 0}
               </div>
 
