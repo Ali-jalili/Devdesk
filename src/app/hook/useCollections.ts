@@ -3,10 +3,11 @@
 import { getCollections } from "@/features/collection/CollectionService";
 import { useQuery } from "@tanstack/react-query";
 
-function useCollections(workspaceId: string) {
+function useCollections(workspaceId?: string) {
   const { data, isLoading, error } = useQuery({
-    queryFn: () => getCollections(workspaceId),
+    queryFn: () => getCollections(workspaceId!),
     queryKey: ["collections", workspaceId],
+    enabled: !!workspaceId,
   });
 
   return { data, isLoading, error };

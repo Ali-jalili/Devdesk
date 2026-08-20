@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import EditWorkspaceModal from "./EditWorkspaceModal";
 import CreateCollectionModal from "../collection/CreateCollectionModal";
+import useCollections from "@/app/hook/useCollections";
 
 function WorkspaceDetails() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -17,6 +18,8 @@ function WorkspaceDetails() {
   const navigate = useNavigate();
 
   const { data, isLoading, error } = useWorkspaceDetails(workspaceId);
+
+  const { data: collections } = useCollections(workspaceId);
 
   if (isLoading) return <Loading />;
   if (error) return <ErrorMessage message={error.message} />;
@@ -108,7 +111,10 @@ function WorkspaceDetails() {
                 <FiFolderPlus size={18} className="text-muted-foreground" />
               </div>
 
-              <div className="mt-4 text-3xl font-semibold">0</div>
+              <div className="mt-4 text-3xl font-semibold">
+                {" "}
+                {collections?.length ?? 0}
+              </div>
 
               <p className="mt-1 text-xs text-muted-foreground">
                 API collections
