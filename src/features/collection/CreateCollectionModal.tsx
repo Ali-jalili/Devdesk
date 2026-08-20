@@ -21,7 +21,7 @@ export default function CreateCollectionModal({
     formState: { errors },
   } = useForm<FormData>();
 
-  const { mutate } = useCreateCollection();
+  const { mutate, isPending, error } = useCreateCollection();
 
   function submitForm(data: FormData) {
     mutate({
@@ -121,13 +121,15 @@ export default function CreateCollectionModal({
             </button>
 
             <button
-              //   disabled={isPending}
+              disabled={isPending}
               type="submit"
               className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <button disabled={isPending} type="submit">
                 {isPending ? "Creating..." : "Create collection"}
               </button>
+
+              {error && <p className="text-sm text-red-500">{error.message}</p>}
             </button>
           </div>
         </form>
