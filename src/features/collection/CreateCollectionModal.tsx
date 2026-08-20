@@ -1,6 +1,8 @@
 /** @format */
 import useCreateCollection from "@/app/hook/useCreateCollection";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FiX } from "react-icons/fi";
 interface CreateCollectionModalProps {
   workspaceId: string;
@@ -18,10 +20,11 @@ export default function CreateCollectionModal({
   const {
     register,
     handleSubmit,
+
     formState: { errors },
   } = useForm<FormData>();
 
-  const { mutate, isPending, error } = useCreateCollection();
+  const { mutate, isPending, error, isSuccess } = useCreateCollection();
 
   function submitForm(data: FormData) {
     mutate({
@@ -29,6 +32,13 @@ export default function CreateCollectionModal({
       ...data,
     });
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      onClose();
+      toast.success("✓ Collection created successfully");
+    }
+  }, [isSuccess, onClose]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/10 px-4 backdrop-blur-md">
