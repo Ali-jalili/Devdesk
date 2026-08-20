@@ -181,7 +181,10 @@ function WorkspaceDetails() {
       )}
 
       {isCreateCollectionModalOpen && (
-        <CreateCollectionModal onClose={closeCreateCollectionModal} />
+        <CreateCollectionModal
+          workspaceId={workspaceId}
+          onClose={closeCreateCollectionModal}
+        />
       )}
     </div>
   );

@@ -1,10 +1,13 @@
 /** @format */
+import useCreateCollection from "@/app/hook/useCreateCollection";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
 interface CreateCollectionModalProps {
+  workspaceId: string;
   onClose: () => void;
 }
 export default function CreateCollectionModal({
+  workspaceId,
   onClose,
 }: CreateCollectionModalProps) {
   type FormData = {
@@ -18,8 +21,13 @@ export default function CreateCollectionModal({
     formState: { errors },
   } = useForm<FormData>();
 
+  const { mutate } = useCreateCollection();
+
   function submitForm(data: FormData) {
-    console.log(data);
+    mutate({
+      workspaceId,
+      ...data,
+    });
   }
 
   return (
@@ -117,8 +125,9 @@ export default function CreateCollectionModal({
               type="submit"
               className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Create collection"
-              {/* {isPending ? "Saving..." : "Create collection"} */}
+              <button disabled={isPending} type="submit">
+                {isPending ? "Creating..." : "Create collection"}
+              </button>
             </button>
           </div>
         </form>
