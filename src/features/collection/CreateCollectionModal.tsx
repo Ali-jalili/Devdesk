@@ -1,5 +1,6 @@
 /** @format */
 import { useForm } from "react-hook-form";
+import { FiX } from "react-icons/fi";
 interface CreateCollectionModalProps {
   onClose: () => void;
 }
@@ -41,7 +42,10 @@ export default function CreateCollectionModal({
             onClick={onClose}
             className="cursor-pointer rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             aria-label="Close"
-          ></button>
+          >
+            {" "}
+            <FiX size={20} />
+          </button>
         </div>
 
         {/* Form */}

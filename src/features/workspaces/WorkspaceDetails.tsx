@@ -7,10 +7,12 @@ import Loading from "@/ui/Loading";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import EditWorkspaceModal from "./EditWorkspaceModal";
+import CreateCollectionModal from "../collection/CreateCollectionModal";
 
 function WorkspaceDetails() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
+  const [isCreateCollectionModalOpen, setIsCreateCollectionModalOpen] =
+    useState(false);
   const { workspaceId } = useParams<{ workspaceId: string }>();
   const navigate = useNavigate();
 
@@ -26,6 +28,13 @@ function WorkspaceDetails() {
 
   function closeEditModal() {
     setIsEditModalOpen(false);
+  }
+
+  function openCreateCollectionModal() {
+    setIsCreateCollectionModalOpen(true);
+  }
+  function closeCreateCollectionModal() {
+    setIsCreateCollectionModalOpen(false);
   }
 
   return (
@@ -131,9 +140,9 @@ function WorkspaceDetails() {
             </div>
 
             <button
+              onClick={openCreateCollectionModal}
               type="button"
-              disabled
-              className="cursor-not-allowed rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground opacity-50"
+              className="cursor rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground"
             >
               + New Collection
             </button>
@@ -169,6 +178,10 @@ function WorkspaceDetails() {
           description={data.description}
           onClose={closeEditModal}
         />
+      )}
+
+      {isCreateCollectionModalOpen && (
+        <CreateCollectionModal onClose={closeCreateCollectionModal} />
       )}
     </div>
   );
