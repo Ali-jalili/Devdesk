@@ -14,8 +14,6 @@ interface CollectionListProps {
 }
 
 function CollectionList({ collections }: CollectionListProps) {
-  console.log(collections);
-
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       {collections.map((item) => (
