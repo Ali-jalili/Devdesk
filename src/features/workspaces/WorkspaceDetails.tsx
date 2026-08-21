@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import EditWorkspaceModal from "./EditWorkspaceModal";
 import CreateCollectionModal from "../collection/CreateCollectionModal";
-import useCollections from "@/app/hook/useCollections";
+import useGetCollections from "@/app/hook/useGetCollections";
 import CollectionList from "../collection/CollectionList";
 
 function WorkspaceDetails() {
@@ -20,7 +20,7 @@ function WorkspaceDetails() {
 
   const { data, isLoading, error } = useWorkspaceDetails(workspaceId);
 
-  const { data: collections } = useCollections(workspaceId);
+  const { data: collections } = useGetCollections(workspaceId);
 
   if (isLoading) return <Loading />;
   if (error) return <ErrorMessage message={error.message} />;

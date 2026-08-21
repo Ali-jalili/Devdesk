@@ -3,7 +3,7 @@
 import { getCollections } from "@/features/collection/CollectionService";
 import { useQuery } from "@tanstack/react-query";
 
-function useCollections(workspaceId?: string) {
+function useGetCollections(workspaceId?: string) {
   const { data, isLoading, error } = useQuery({
     queryFn: () => getCollections(workspaceId!),
     queryKey: ["collections", workspaceId],
@@ -13,4 +13,4 @@ function useCollections(workspaceId?: string) {
   return { data, isLoading, error };
 }
 
-export default useCollections;
+export default useGetCollections;
