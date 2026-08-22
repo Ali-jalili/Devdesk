@@ -1,7 +1,9 @@
 /** @format */
 
 import useUpdateCollection from "@/app/hook/useUpdateCollection";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FiX } from "react-icons/fi";
 
 interface EditCollectionModalProps {
@@ -35,20 +37,22 @@ export default function EditCollectionModal({
     },
   });
 
-  const { mutate } = useUpdateCollection();
+  const { mutate, isSuccess, isPending } = useUpdateCollection();
 
   function submitFormModal(data: FormData) {
     mutate({
+      workspaceId,
       collectionId,
       data,
     });
-
-    console.log({
-      collectionId,
-      workspaceId,
-      ...data,
-    });
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      onClose();
+      toast.success("✓ Workspace updated successfully");
+    }
+  }, [isSuccess, onClose]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/10 px-4 backdrop-blur-md">
@@ -142,10 +146,11 @@ export default function EditCollectionModal({
             </button>
 
             <button
+              disabled={isPending}
               type="submit"
               className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
             >
-              Save changes
+              {isPending ? "Save.." : "Save changes"}
             </button>
           </div>
         </form>
