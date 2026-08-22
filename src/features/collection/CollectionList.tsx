@@ -35,10 +35,6 @@ function CollectionList({ collections }: CollectionListProps) {
     setSelectedCollection(null);
   }
 
-  // function handleDeleteCollection() {
-  //   console.log("svvd");
-  // }
-
   return (
     <div className="grid gap-5 sm:grid-cols-2">
       {collections.map((item) => (

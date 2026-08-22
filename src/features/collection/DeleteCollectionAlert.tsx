@@ -1,5 +1,6 @@
 /** @format */
 
+import useDeleteCollection from "@/app/hook/useDeleteCollection";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,6 +25,14 @@ function DeleteCollectionAlert({
   open,
   onOpenChange,
 }: DeleteCollectionAlertProps) {
+  const { mutate, isPending } = useDeleteCollection();
+
+  function handleDeleteCollection() {
+    mutate({ collectionId, workspaceId });
+
+    onOpenChange(false);
+  }
+
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -38,15 +47,8 @@ function DeleteCollectionAlert({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <AlertDialogAction
-            onClick={() => {
-              console.log({
-                collectionId,
-                workspaceId,
-              });
-            }}
-          >
-            Delete
+          <AlertDialogAction onClick={handleDeleteCollection}>
+            {isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

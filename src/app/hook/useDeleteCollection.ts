@@ -7,6 +7,7 @@
 
 import { deleteCollection } from "@/features/collection/CollectionService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 function useDeleteCollection() {
   const queryClient = useQueryClient();
@@ -19,6 +20,7 @@ function useDeleteCollection() {
       queryClient.invalidateQueries({
         queryKey: ["collections", variables.workspaceId],
       });
+      toast.success("Collection deleted successfully");
     },
   });
 
