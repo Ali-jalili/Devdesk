@@ -10,6 +10,7 @@ import EditWorkspaceModal from "./EditWorkspaceModal";
 import CreateCollectionModal from "../collection/CreateCollectionModal";
 import useGetCollections from "@/app/hook/useGetCollections";
 import CollectionList from "../collection/CollectionList";
+import DeleteWorkspaceAlert from "./DeleteWorkspaceAlert";
 
 function WorkspaceDetails() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -204,6 +205,12 @@ function WorkspaceDetails() {
           onClose={closeCreateCollectionModal}
         />
       )}
+
+      <DeleteWorkspaceAlert
+        workspaceId={workspaceId}
+        open={isDeleteAlertOpen}
+        onOpenChange={setIsDeleteAlertOpen}
+      />
     </div>
   );
 }
