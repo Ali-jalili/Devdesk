@@ -1,5 +1,6 @@
 /** @format */
 
+import useUpdateCollection from "@/app/hook/useUpdateCollection";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
 
@@ -34,7 +35,14 @@ export default function EditCollectionModal({
     },
   });
 
+  const { mutate } = useUpdateCollection();
+
   function submitFormModal(data: FormData) {
+    mutate({
+      collectionId,
+      data,
+    });
+
     console.log({
       collectionId,
       workspaceId,
