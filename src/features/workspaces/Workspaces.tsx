@@ -77,14 +77,6 @@ export default function Workspaces() {
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-lg font-bold text-indigo-600">
                     {item.name.charAt(0).toUpperCase()}
                   </div>
-
-                  <button
-                    type="button"
-                    className="rounded-lg px-2 py-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
-                    aria-label={`More options for ${item.name}`}
-                  >
-                    •••
-                  </button>
                 </div>
 
                 <h2 className="truncate text-base font-semibold text-slate-900">

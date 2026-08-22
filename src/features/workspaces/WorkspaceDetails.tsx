@@ -177,6 +177,13 @@ function WorkspaceDetails() {
             <CollectionList collections={collections ?? []} />
           )}
         </section>
+
+        <button
+          type="button"
+          className="mt-5 rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-100"
+        >
+          Delete Workspace
+        </button>
       </div>
 
       {isEditModalOpen && (
