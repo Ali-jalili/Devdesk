@@ -1,6 +1,6 @@
 /** @format */
 
-import EmptyDashboard from "@/components/EmptyDashboard";
+import EmptyDashboard from "./EmptyDashboard";
 
 export default function DashboardStats() {
   return <EmptyDashboard />;
