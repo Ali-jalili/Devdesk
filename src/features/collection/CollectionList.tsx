@@ -3,6 +3,7 @@
 import { FiEdit2, FiFolder, FiMoreVertical, FiTrash2 } from "react-icons/fi";
 import { useState } from "react";
 import EditCollectionModal from "./EditCollectionModal";
+import DeleteCollectionAlert from "./DeleteCollectionAlert";
 
 type Collection = {
   id: string;
@@ -21,6 +22,11 @@ function CollectionList({ collections }: CollectionListProps) {
   const [selectedCollection, setSelectedCollection] =
     useState<Collection | null>(null);
 
+  const [selectedCollectionToDelete, setSelectedCollectionToDelete] =
+    useState<Collection | null>(null);
+
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+
   function openCollectionModal(collection: Collection) {
     setSelectedCollection(collection);
   }
@@ -29,9 +35,9 @@ function CollectionList({ collections }: CollectionListProps) {
     setSelectedCollection(null);
   }
 
-  function handleDeleteCollection() {
-    console.log("svvd");
-  }
+  // function handleDeleteCollection() {
+  //   console.log("svvd");
+  // }
 
   return (
     <div className="grid gap-5 sm:grid-cols-2">
@@ -80,7 +86,10 @@ function CollectionList({ collections }: CollectionListProps) {
                   </button>
 
                   <button
-                    onClick={handleDeleteCollection}
+                    onClick={() => {
+                      setSelectedCollectionToDelete(item);
+                      setIsDeleteAlertOpen(true);
+                    }}
                     type="button"
                     className="mt-1 flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-500 transition hover:bg-red-500/10"
                   >
@@ -119,6 +128,15 @@ function CollectionList({ collections }: CollectionListProps) {
           name={selectedCollection.name}
           description={selectedCollection.description}
           onClose={closeCollectionModal}
+        />
+      )}
+
+      {selectedCollectionToDelete && (
+        <DeleteCollectionAlert
+          collectionId={selectedCollectionToDelete.id}
+          workspaceId={selectedCollectionToDelete.workspace_id}
+          open={isDeleteAlertOpen}
+          onOpenChange={setIsDeleteAlertOpen}
         />
       )}
     </div>

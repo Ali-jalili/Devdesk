@@ -38,7 +38,16 @@ function DeleteCollectionAlert({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <AlertDialogAction>Delete</AlertDialogAction>
+          <AlertDialogAction
+            onClick={() => {
+              console.log({
+                collectionId,
+                workspaceId,
+              });
+            }}
+          >
+            Delete
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
