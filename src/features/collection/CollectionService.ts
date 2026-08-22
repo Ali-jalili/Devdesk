@@ -31,4 +31,22 @@ async function getCollections(workspaceId: string) {
   return data;
 }
 
-export { createCollection, getCollections };
+async function updateCollection(
+  collectionId: string,
+  newName: string,
+  newDescription: string,
+) {
+  const { data, error } = await supabase
+    .from("collections")
+    .update({
+      name: newName,
+      description: newDescription,
+    })
+    .eq("id", collectionId);
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export { createCollection, getCollections, updateCollection };
