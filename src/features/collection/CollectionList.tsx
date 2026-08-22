@@ -29,6 +29,10 @@ function CollectionList({ collections }: CollectionListProps) {
     setSelectedCollection(null);
   }
 
+  function handleDeleteCollection() {
+    console.log("svvd");
+  }
+
   return (
     <div className="grid gap-5 sm:grid-cols-2">
       {collections.map((item) => (
@@ -76,6 +80,7 @@ function CollectionList({ collections }: CollectionListProps) {
                   </button>
 
                   <button
+                    onClick={handleDeleteCollection}
                     type="button"
                     className="mt-1 flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-500 transition hover:bg-red-500/10"
                   >
