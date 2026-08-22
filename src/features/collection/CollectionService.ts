@@ -49,4 +49,12 @@ async function updateCollection(
   return data;
 }
 
-export { createCollection, getCollections, updateCollection };
+async function deleteCollection(collectionId: string) {
+  const { error } = await supabase
+    .from("collections")
+    .delete()
+    .eq("id", collectionId);
+  if (error) throw new Error(error.message);
+}
+
+export { createCollection, getCollections, updateCollection, deleteCollection };
