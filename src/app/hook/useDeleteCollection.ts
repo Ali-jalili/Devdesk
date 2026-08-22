@@ -22,6 +22,10 @@ function useDeleteCollection() {
       });
       toast.success("Collection deleted successfully");
     },
+
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 
   return mutation;
