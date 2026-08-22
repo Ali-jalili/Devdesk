@@ -3,7 +3,7 @@
 import Loading from "@/ui/Loading";
 import useGetWorkspaces from "../../app/hook/useWorkspaces";
 import ErrorMessage from "@/components/ErrorMessage";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Workspaces() {
   const { data, isLoading, error } = useGetWorkspaces();
@@ -37,12 +37,13 @@ export default function Workspaces() {
               </p>
             </div>
 
-            <button
+            <NavLink
+              to="/app/workspaces/new"
               type="button"
               className="w-fit rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/20"
             >
               + New Workspace
-            </button>
+            </NavLink>
           </div>
         </div>
 

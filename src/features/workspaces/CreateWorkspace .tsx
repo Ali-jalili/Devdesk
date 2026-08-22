@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { createWorkspace } from "./WorkspaceService";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateWorkspace() {
   type FormData = {
@@ -10,11 +11,14 @@ export default function CreateWorkspace() {
     workspaceDescription: string;
   };
 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+
+    formState: { isSubmitting, errors },
   } = useForm<FormData>();
 
   async function handleSubmitForm(data: FormData) {
@@ -27,6 +31,11 @@ export default function CreateWorkspace() {
 
     reset();
     toast.success("Workspace created successfully.");
+    navigate("/app/workspaces");
+  }
+
+  function handleCancel() {
+    navigate("/app/workspaces");
   }
 
   return (
@@ -139,6 +148,7 @@ export default function CreateWorkspace() {
             {/* Actions */}
             <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-6 sm:flex-row sm:justify-end">
               <button
+                onClick={handleCancel}
                 type="button"
                 className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-950"
               >
@@ -146,10 +156,12 @@ export default function CreateWorkspace() {
               </button>
 
               <button
+                disabled={isSubmitting}
                 type="submit"
-                className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/20"
+                className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 disabled:cursor-not-allowed
+disabled:opacity-60"
               >
-                Create Workspace
+                {isSubmitting ? "Creating..." : "Create Workspace"}
               </button>
             </div>
           </div>
