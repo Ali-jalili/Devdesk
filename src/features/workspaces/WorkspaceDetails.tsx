@@ -16,6 +16,8 @@ function WorkspaceDetails() {
   const [isCreateCollectionModalOpen, setIsCreateCollectionModalOpen] =
     useState(false);
   const { workspaceId } = useParams<{ workspaceId: string }>();
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const { data, isLoading, error } = useWorkspaceDetails(workspaceId);
@@ -179,6 +181,7 @@ function WorkspaceDetails() {
         </section>
 
         <button
+          onClick={() => setIsDeleteAlertOpen(true)}
           type="button"
           className="mt-5 rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-100"
         >
