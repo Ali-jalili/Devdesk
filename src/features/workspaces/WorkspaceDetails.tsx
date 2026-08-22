@@ -147,7 +147,7 @@ function WorkspaceDetails() {
             <button
               onClick={openCreateCollectionModal}
               type="button"
-              className="cursor rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground"
+              className="cursor-pointer rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
             >
               + New Collection
             </button>
