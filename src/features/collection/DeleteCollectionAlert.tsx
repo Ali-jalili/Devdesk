@@ -33,6 +33,7 @@ function DeleteCollectionAlert({
       { collectionId, workspaceId },
       {
         onSuccess() {
+          onOpenChange(false);
           toast.success("Collection deleted successfully");
         },
         onError: (error) => {
@@ -40,8 +41,6 @@ function DeleteCollectionAlert({
         },
       },
     );
-
-    onOpenChange(false);
   }
 
   return (

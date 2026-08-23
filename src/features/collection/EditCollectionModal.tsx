@@ -50,7 +50,7 @@ export default function EditCollectionModal({
   useEffect(() => {
     if (isSuccess) {
       onClose();
-      toast.success("✓ Workspace updated successfully");
+      toast.success("✓ Collection updated successfully");
     }
   }, [isSuccess, onClose]);
 
