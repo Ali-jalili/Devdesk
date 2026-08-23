@@ -61,40 +61,42 @@ function WorkspaceOverview() {
 
       {/* Collections Entry Point */}
 
-      <section className="mt-10 rounded-2xl border border-border bg-card p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* Collections Entry Point */}
+
+      <section className="mt-10 border-t border-border pt-8">
+        <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-semibold text-foreground">
+            <h3 className="text-sm font-semibold text-foreground">
               Collections
             </h3>
 
             <p className="mt-1 text-sm text-muted-foreground">
-              Organize your API requests into collections.
+              Manage your API request collections.
             </p>
           </div>
 
           <NavLink
             to={`/app/workspaces/${workspaceId}/collections`}
-            className="inline-flex w-fit items-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+            className="text-sm font-medium text-primary transition hover:underline"
           >
-            View Collections →
+            View →
           </NavLink>
         </div>
       </section>
 
       {/* Danger Zone */}
 
-      <section className="mt-12 rounded-2xl border border-red-200 bg-red-50/40 p-6">
-        <h2 className="text-sm font-semibold text-red-700">Danger Zone</h2>
+      <section className="mt-10 border-t border-border pt-8">
+        <h2 className="text-sm font-semibold text-red-600">Danger Zone</h2>
 
-        <p className="mt-2 text-sm leading-6 text-red-600/80">
-          Delete this workspace permanently. This action cannot be undone.
+        <p className="mt-2 text-sm text-muted-foreground">
+          Permanently delete this workspace and all related data.
         </p>
 
         <button
           onClick={() => setIsDeleteAlertOpen(true)}
           type="button"
-          className="mt-5 rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-100"
+          className="mt-4 rounded-lg border border-red-200 px-3 py-1.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
         >
           Delete Workspace
         </button>
