@@ -4,10 +4,7 @@ import {
   FiBriefcase,
   FiChevronLeft,
   FiChevronRight,
-  FiFolder,
   FiGrid,
-  FiSend,
-  FiSliders,
   FiX,
 } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
@@ -29,21 +26,6 @@ const navigation = [
     label: "Workspaces",
     to: "/app/workspaces",
     icon: FiBriefcase,
-  },
-  {
-    label: "Collections",
-    to: "/app/collections",
-    icon: FiFolder,
-  },
-  {
-    label: "Requests",
-    to: "/app/requests",
-    icon: FiSend,
-  },
-  {
-    label: "Environments",
-    to: "/app/environments",
-    icon: FiSliders,
   },
 ];
 
@@ -69,7 +51,7 @@ export default function Sidebar({
       <aside
         className={`
           fixed left-0 top-16 z-50 h-[calc(100vh-64px)]
-          w-64 border-r border-slate-200 bg-white
+          border-r border-slate-200 bg-white
           transition-all duration-200
           md:sticky md:z-30
           ${collapsed ? "md:w-[72px]" : "md:w-60"}
@@ -110,7 +92,7 @@ export default function Sidebar({
                         ? "bg-indigo-50 text-indigo-600"
                         : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
                     }
-                  `
+                    `
                   }
                 >
                   <Icon className="h-[18px] w-[18px] shrink-0" />
@@ -147,7 +129,6 @@ export default function Sidebar({
               ) : (
                 <>
                   <FiChevronLeft className="h-[18px] w-[18px]" />
-
                   <span className="ml-3">Collapse</span>
                 </>
               )}
