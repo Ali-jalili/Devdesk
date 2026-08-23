@@ -12,6 +12,7 @@ import DashboardStats from "@/features/dashboard/DashboardStats";
 import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
 import Workspaces from "@/features/workspaces/Workspaces";
 import WorkspaceDetails from "@/features/workspaces/WorkspaceDetails";
+import WorkspaceLayout from "@/features/workspaces/WorkspaceLayout";
 
 const router = createBrowserRouter([
   {
@@ -57,7 +58,13 @@ const router = createBrowserRouter([
 
           {
             path: "workspaces/:workspaceId",
-            element: <WorkspaceDetails />,
+            element: <WorkspaceLayout />,
+            children: [
+              {
+                index: true,
+                element: <WorkspaceDetails />,
+              },
+            ],
           },
         ],
       },
