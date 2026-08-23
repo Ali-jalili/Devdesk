@@ -1,60 +1,35 @@
 /** @format */
 
-import { FiBriefcase, FiFolder, FiSend } from "react-icons/fi";
+import { FiArrowRight, FiBriefcase } from "react-icons/fi";
+import { NavLink } from "react-router-dom";
 
 function WorkspaceSummaryCard() {
   return (
     <section className="rounded-2xl border border-border bg-card p-6">
-      <div className="flex items-start justify-between">
-        <div>
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <FiBriefcase size={22} />
-            </div>
-
-            <div>
-              <h2 className="text-lg font-semibold text-foreground">
-                DevDesk API
-              </h2>
-
-              <p className="mt-1 text-sm text-muted-foreground">
-                Your active workspace
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-6 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-border bg-background p-4">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <FiFolder size={16} />
-
-            <span className="text-sm">Collections</span>
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <FiBriefcase size={22} />
           </div>
 
-          <p className="mt-3 text-2xl font-bold text-foreground">12</p>
-        </div>
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">
+              Your Workspaces
+            </h2>
 
-        <div className="rounded-xl border border-border bg-background p-4">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <FiSend size={16} />
-
-            <span className="text-sm">Requests</span>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Manage your API projects and environments.
+            </p>
           </div>
-
-          <p className="mt-3 text-2xl font-bold text-foreground">48</p>
         </div>
 
-        <div className="rounded-xl border border-border bg-background p-4">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <FiBriefcase size={16} />
-
-            <span className="text-sm">Environment</span>
-          </div>
-
-          <p className="mt-3 text-2xl font-bold text-foreground">3</p>
-        </div>
+        <NavLink
+          to="/app/workspaces"
+          className="inline-flex w-fit items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium transition hover:bg-muted"
+        >
+          View workspaces
+          <FiArrowRight size={16} />
+        </NavLink>
       </div>
     </section>
   );
