@@ -13,7 +13,7 @@ function useDeleteWorkspace() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["WorkSpace"],
+        queryKey: ["workspaces"],
       });
       toast.success("Workspace deleted successfully");
     },
