@@ -4,6 +4,7 @@ import { FiEdit2, FiFolder, FiMoreVertical, FiTrash2 } from "react-icons/fi";
 import { useState } from "react";
 import EditCollectionModal from "./EditCollectionModal";
 import DeleteCollectionAlert from "./DeleteCollectionAlert";
+import { useNavigate } from "react-router-dom";
 
 type Collection = {
   id: string;
@@ -26,7 +27,7 @@ function CollectionList({ collections }: CollectionListProps) {
     useState<Collection | null>(null);
 
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
-
+  const navigate = useNavigate();
   function openCollectionModal(collection: Collection) {
     setSelectedCollection(collection);
   }
@@ -107,6 +108,11 @@ function CollectionList({ collections }: CollectionListProps) {
             <div className="text-xs text-muted-foreground">API Requests</div>
 
             <button
+              onClick={() =>
+                navigate(
+                  `/app/workspaces/${item.workspace_id}/collections/${item.id}`,
+                )
+              }
               type="button"
               className="cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium text-primary transition hover:bg-primary/10"
             >
