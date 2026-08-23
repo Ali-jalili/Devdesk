@@ -3,17 +3,11 @@
 import useGetCollections from "@/app/hook/useGetCollections";
 import { FiFolderPlus } from "react-icons/fi";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-
-import CollectionList from "../collection/CollectionList";
-import CreateCollectionModal from "../collection/CreateCollectionModal";
+import { NavLink, useParams } from "react-router-dom";
 import DeleteWorkspaceAlert from "./DeleteWorkspaceAlert";
 
 function WorkspaceOverview() {
   const { workspaceId } = useParams<{ workspaceId: string }>();
-
-  const [isCreateCollectionModalOpen, setIsCreateCollectionModalOpen] =
-    useState(false);
 
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
@@ -21,17 +15,10 @@ function WorkspaceOverview() {
 
   if (!workspaceId) return null;
 
-  function openCreateCollectionModal() {
-    setIsCreateCollectionModalOpen(true);
-  }
-
-  function closeCreateCollectionModal() {
-    setIsCreateCollectionModalOpen(false);
-  }
-
   return (
     <div>
       {/* Overview */}
+
       <section>
         <div className="mb-5">
           <h2 className="text-sm font-semibold">Overview</h2>
@@ -63,9 +50,7 @@ function WorkspaceOverview() {
           {/* Requests Stats */}
 
           <div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Requests</span>
-            </div>
+            <div className="text-sm text-muted-foreground">Requests</div>
 
             <div className="mt-4 text-3xl font-semibold">0</div>
 
@@ -74,51 +59,27 @@ function WorkspaceOverview() {
         </div>
       </section>
 
-      {/* Collections */}
+      {/* Collections Entry Point */}
 
-      <section className="mt-12">
-        <div className="mb-6 flex items-end justify-between gap-4">
+      <section className="mt-10 rounded-2xl border border-border bg-card p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-lg font-semibold">Collections</h2>
+            <h3 className="text-base font-semibold text-foreground">
+              Collections
+            </h3>
 
             <p className="mt-1 text-sm text-muted-foreground">
               Organize your API requests into collections.
             </p>
           </div>
 
-          <button
-            onClick={openCreateCollectionModal}
-            type="button"
-            className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+          <NavLink
+            to={`/app/workspaces/${workspaceId}/collections`}
+            className="inline-flex w-fit items-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
           >
-            + New Collection
-          </button>
+            View Collections →
+          </NavLink>
         </div>
-
-        {collections?.length === 0 ? (
-          <div className="flex min-h-64 flex-col items-center justify-center border-y border-dashed border-border/70 px-6 text-center">
-            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-border text-muted-foreground">
-              <FiFolderPlus size={18} />
-            </div>
-
-            <h3 className="text-sm font-semibold">No collections yet</h3>
-
-            <p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
-              Create your first collection to start organizing your API
-              requests.
-            </p>
-
-            <button
-              onClick={openCreateCollectionModal}
-              type="button"
-              className="mt-5 rounded-lg border border-border px-4 py-2 text-sm font-medium transition hover:bg-muted"
-            >
-              Create Collection
-            </button>
-          </div>
-        ) : (
-          <CollectionList collections={collections ?? []} />
-        )}
       </section>
 
       {/* Danger Zone */}
@@ -138,13 +99,6 @@ function WorkspaceOverview() {
           Delete Workspace
         </button>
       </section>
-
-      {isCreateCollectionModalOpen && (
-        <CreateCollectionModal
-          workspaceId={workspaceId}
-          onClose={closeCreateCollectionModal}
-        />
-      )}
 
       <DeleteWorkspaceAlert
         workspaceId={workspaceId}

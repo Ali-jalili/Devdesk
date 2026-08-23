@@ -13,6 +13,7 @@ import Workspaces from "@/features/workspaces/Workspaces";
 import WorkspaceLayout from "@/features/workspaces/WorkspaceLayout";
 import WorkspaceOverview from "@/features/workspaces/WorkspaceOverview";
 import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
+import Collections from "@/features/collection/Collections";
 
 const router = createBrowserRouter([
   {
@@ -66,7 +67,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "collections",
-                element: <div>Collections Page</div>,
+                element: <Collections />,
               },
               {
                 path: "requests",
