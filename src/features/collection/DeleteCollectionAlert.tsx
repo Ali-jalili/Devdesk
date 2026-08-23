@@ -11,6 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import toast from "react-hot-toast";
 
 interface DeleteCollectionAlertProps {
   collectionId: string;
@@ -28,7 +29,17 @@ function DeleteCollectionAlert({
   const { mutate, isPending } = useDeleteCollection();
 
   function handleDeleteCollection() {
-    mutate({ collectionId, workspaceId });
+    mutate(
+      { collectionId, workspaceId },
+      {
+        onSuccess() {
+          toast.success("Collection deleted successfully");
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      },
+    );
 
     onOpenChange(false);
   }
