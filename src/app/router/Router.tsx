@@ -9,10 +9,10 @@ import ProtectedRoute from "./ProtectedRoute";
 import AppLayout from "../layouts/AppLayout";
 import PublicLayout from "../layouts/PublicLayout";
 import DashboardStats from "@/features/dashboard/DashboardStats";
-import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
 import Workspaces from "@/features/workspaces/Workspaces";
-import WorkspaceDetails from "@/features/workspaces/WorkspaceDetails";
 import WorkspaceLayout from "@/features/workspaces/WorkspaceLayout";
+import WorkspaceOverview from "@/features/workspaces/WorkspaceOverview";
+import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
 
 const router = createBrowserRouter([
   {
@@ -62,7 +62,19 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <WorkspaceDetails />,
+                element: <WorkspaceOverview />,
+              },
+              {
+                path: "collections",
+                element: <div>Collections Page</div>,
+              },
+              {
+                path: "requests",
+                element: <div>Requests Page</div>,
+              },
+              {
+                path: "environments",
+                element: <div>Environments Page</div>,
               },
             ],
           },

@@ -1,6 +1,6 @@
 /** @format */
 
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const navigation = [
   {
@@ -22,14 +22,12 @@ const navigation = [
 ];
 
 export default function WorkspaceNavigation() {
-  const { workspaceId } = useParams();
-
   return (
     <nav className="flex gap-1 border-b border-border">
       {navigation.map((item) => (
         <NavLink
           key={item.label}
-          to={`/app/workspaces/${workspaceId}/${item.path}`}
+          to={item.path}
           end={item.path === ""}
           className={({ isActive }) =>
             `

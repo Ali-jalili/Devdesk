@@ -7,6 +7,7 @@ import {
   FiGrid,
   FiX,
 } from "react-icons/fi";
+
 import { NavLink } from "react-router-dom";
 
 interface SidebarProps {
@@ -37,7 +38,6 @@ export default function Sidebar({
 }: SidebarProps) {
   return (
     <>
-      {/* Mobile Overlay */}
       {mobileOpen && (
         <button
           type="button"
@@ -47,7 +47,6 @@ export default function Sidebar({
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={`
           fixed left-0 top-16 z-50 h-[calc(100vh-64px)]
@@ -59,7 +58,6 @@ export default function Sidebar({
         `}
       >
         <div className="flex h-full flex-col p-3">
-          {/* Mobile Close */}
           <div className="mb-3 flex justify-end md:hidden">
             <button
               type="button"
@@ -71,7 +69,6 @@ export default function Sidebar({
             </button>
           </div>
 
-          {/* Navigation */}
           <nav className="space-y-1">
             {navigation.map((item) => {
               const Icon = item.icon;
@@ -80,6 +77,7 @@ export default function Sidebar({
                 <NavLink
                   key={item.to}
                   to={item.to}
+                  end={item.to === "/app/dashboard"}
                   onClick={onClose}
                   title={collapsed ? item.label : undefined}
                   className={({ isActive }) =>
@@ -111,7 +109,6 @@ export default function Sidebar({
             })}
           </nav>
 
-          {/* Collapse */}
           <div className="mt-auto hidden border-t border-slate-200 pt-3 md:block">
             <button
               type="button"

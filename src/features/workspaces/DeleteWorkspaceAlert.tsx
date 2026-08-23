@@ -41,7 +41,14 @@ function DeleteWorkspaceAlert({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog
+      open={open}
+      onOpenChange={(value) => {
+        if (!isPending) {
+          onOpenChange(value);
+        }
+      }}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle> Delete Workspace?</AlertDialogTitle>

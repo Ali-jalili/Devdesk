@@ -1,9 +1,6 @@
 /** @format */
 
 import useGetCollections from "@/app/hook/useGetCollections";
-import useWorkspaceDetails from "@/app/hook/useWorkspaceDetails";
-import ErrorMessage from "@/components/ErrorMessage";
-import Loading from "@/ui/Loading";
 import { FiFolderPlus } from "react-icons/fi";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -12,7 +9,7 @@ import CollectionList from "../collection/CollectionList";
 import CreateCollectionModal from "../collection/CreateCollectionModal";
 import DeleteWorkspaceAlert from "./DeleteWorkspaceAlert";
 
-function WorkspaceDetails() {
+function WorkspaceOverview() {
   const { workspaceId } = useParams<{ workspaceId: string }>();
 
   const [isCreateCollectionModalOpen, setIsCreateCollectionModalOpen] =
@@ -20,13 +17,7 @@ function WorkspaceDetails() {
 
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
-  const { isLoading, error } = useWorkspaceDetails(workspaceId);
-
   const { data: collections } = useGetCollections(workspaceId);
-
-  if (isLoading) return <Loading />;
-
-  if (error) return <ErrorMessage message={error.message} />;
 
   if (!workspaceId) return null;
 
@@ -52,6 +43,7 @@ function WorkspaceDetails() {
 
         <div className="grid gap-8 sm:grid-cols-2">
           {/* Collections Stats */}
+
           <div className="border-border/70 sm:border-r sm:pr-8">
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Collections</span>
@@ -69,6 +61,7 @@ function WorkspaceDetails() {
           </div>
 
           {/* Requests Stats */}
+
           <div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Requests</span>
@@ -81,7 +74,8 @@ function WorkspaceDetails() {
         </div>
       </section>
 
-      {/* Collections Preview */}
+      {/* Collections */}
+
       <section className="mt-12">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
@@ -128,6 +122,7 @@ function WorkspaceDetails() {
       </section>
 
       {/* Danger Zone */}
+
       <section className="mt-12 rounded-2xl border border-red-200 bg-red-50/40 p-6">
         <h2 className="text-sm font-semibold text-red-700">Danger Zone</h2>
 
@@ -160,4 +155,4 @@ function WorkspaceDetails() {
   );
 }
 
-export default WorkspaceDetails;
+export default WorkspaceOverview;
