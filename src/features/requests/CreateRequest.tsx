@@ -79,7 +79,7 @@ export default function CreateRequest() {
 
       description: data.description,
 
-      collectionId,
+      collectionId: collectionId!,
     };
     mutate(requestData);
     console.log(requestData);
