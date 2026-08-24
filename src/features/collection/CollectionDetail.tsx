@@ -7,7 +7,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import RequestList from "../requests/RequestList";
 
 export default function CollectionDetail() {
-  const { collectionId } = useParams<{ collectionId: string }>();
+  const { workspaceId, collectionId } = useParams<{
+    workspaceId: string;
+    collectionId: string;
+  }>();
 
   const navigate = useNavigate();
 
@@ -96,7 +99,11 @@ export default function CollectionDetail() {
             </div>
           </div>
         ) : (
-          <RequestList data={data || []} />
+          <RequestList
+            data={data!}
+            workspaceId={workspaceId!}
+            collectionId={collectionId!}
+          />
         )}
       </section>
     </div>

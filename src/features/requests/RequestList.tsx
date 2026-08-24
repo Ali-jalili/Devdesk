@@ -1,5 +1,7 @@
 /** @format */
 
+import { useNavigate } from "react-router-dom";
+
 type Request = {
   id: string;
   name: string;
@@ -15,9 +17,16 @@ type Request = {
 
 interface RequestListProps {
   data: Request[];
+  workspaceId: string;
+  collectionId: string;
 }
 
-export default function RequestList({ data }: RequestListProps) {
+export default function RequestList({
+  data,
+  workspaceId,
+  collectionId,
+}: RequestListProps) {
+  const navigate = useNavigate();
   return (
     <div className="space-y-4">
       {data.map((item) => (
@@ -40,6 +49,11 @@ export default function RequestList({ data }: RequestListProps) {
           )}
 
           <button
+            onClick={() =>
+              navigate(
+                `/app/workspaces/${workspaceId}/collections/${collectionId}/requests/${item.id}`,
+              )
+            }
             type="button"
             className="mt-4 text-sm font-medium text-primary hover:underline"
           >
