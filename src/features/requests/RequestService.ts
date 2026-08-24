@@ -46,4 +46,15 @@ async function getRequests(collectionId: string) {
   return data;
 }
 
-export { createRequest, getRequests };
+async function getRequestById(requestId: string) {
+  const { data, error } = await supabase
+    .from("requests")
+    .select("*")
+    .eq("id", requestId)
+    .single();
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export { createRequest, getRequests, getRequestById };
