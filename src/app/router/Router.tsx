@@ -75,12 +75,10 @@ const router = createBrowserRouter([
               {
                 path: "collections/:collectionId",
                 element: <CollectionDetail />,
-                children: [
-                  {
-                    path: "requests/new",
-                    element: <CreateRequest />,
-                  },
-                ],
+              },
+              {
+                path: "collections/:collectionId/requests/new",
+                element: <CreateRequest />,
               },
 
               {
