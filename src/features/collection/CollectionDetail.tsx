@@ -1,8 +1,10 @@
 /** @format */
 
 import useGetCollection from "@/app/hook/useGetCollection";
+import useGetRequests from "@/app/hook/useGetRequests";
 import { FiPlus, FiSearch } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
+import RequestList from "../requests/RequestList";
 
 export default function CollectionDetail() {
   const { collectionId } = useParams<{ collectionId: string }>();
@@ -10,6 +12,8 @@ export default function CollectionDetail() {
   const navigate = useNavigate();
 
   const { data: collection, isLoading } = useGetCollection(collectionId!);
+  const { data } = useGetRequests(collectionId);
+  console.log(data);
 
   if (isLoading) {
     return (
@@ -78,17 +82,22 @@ export default function CollectionDetail() {
         </div>
 
         {/* Empty Request State */}
-        <div className="mt-6 flex min-h-56 items-center justify-center rounded-xl border border-dashed border-border">
-          <div className="text-center">
-            <p className="text-sm font-medium text-foreground">
-              No requests yet
-            </p>
 
-            <p className="mt-1 text-sm text-muted-foreground">
-              Create your first API request for this collection.
-            </p>
+        {data?.length === 0 ? (
+          <div className="mt-6 flex min-h-56 items-center justify-center rounded-xl border border-dashed border-border">
+            <div className="text-center">
+              <p className="text-sm font-medium text-foreground">
+                No requests yet
+              </p>
+
+              <p className="mt-1 text-sm text-muted-foreground">
+                Create your first API request for this collection.
+              </p>
+            </div>
           </div>
-        </div>
+        ) : (
+          <RequestList data={data || []} />
+        )}
       </section>
     </div>
   );

@@ -82,7 +82,6 @@ export default function CreateRequest() {
       collectionId: collectionId!,
     };
     mutate(requestData);
-    console.log(requestData);
   }
 
   return (

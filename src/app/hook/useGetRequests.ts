@@ -4,9 +4,9 @@
 import { getRequests } from "@/features/requests/RequestService";
 import { useQuery } from "@tanstack/react-query";
 
-function useGetRequests(collectionId: string) {
+function useGetRequests(collectionId?: string) {
   const { data, error, isLoading } = useQuery({
-    queryFn: () => getRequests(collectionId),
+    queryFn: () => getRequests(collectionId!),
     queryKey: ["requests", collectionId],
   });
 
