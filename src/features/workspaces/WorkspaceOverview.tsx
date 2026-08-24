@@ -61,8 +61,6 @@ function WorkspaceOverview() {
 
       {/* Collections Entry Point */}
 
-      {/* Collections Entry Point */}
-
       <section className="mt-10 border-t border-border pt-8">
         <div className="flex items-center justify-between">
           <div>

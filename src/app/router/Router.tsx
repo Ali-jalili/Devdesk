@@ -14,6 +14,8 @@ import WorkspaceLayout from "@/features/workspaces/WorkspaceLayout";
 import WorkspaceOverview from "@/features/workspaces/WorkspaceOverview";
 import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
 import Collections from "@/features/collection/Collections";
+import CollectionDetail from "@/features/collection/CollectionDetail";
+import CreateRequest from "@/features/requests/CreateRequest";
 
 const router = createBrowserRouter([
   {
@@ -48,13 +50,13 @@ const router = createBrowserRouter([
           },
 
           {
-            path: "workspaces/new",
-            element: <CreateWorkspace />,
+            path: "workspaces",
+            element: <Workspaces />,
           },
 
           {
-            path: "workspaces",
-            element: <Workspaces />,
+            path: "workspaces/new",
+            element: <CreateWorkspace />,
           },
 
           {
@@ -69,10 +71,18 @@ const router = createBrowserRouter([
                 path: "collections",
                 element: <Collections />,
               },
+
               {
-                path: "requests",
-                element: <div>Requests Page</div>,
+                path: "collections/:collectionId",
+                element: <CollectionDetail />,
+                children: [
+                  {
+                    path: "requests/new",
+                    element: <CreateRequest />,
+                  },
+                ],
               },
+
               {
                 path: "environments",
                 element: <div>Environments Page</div>,
