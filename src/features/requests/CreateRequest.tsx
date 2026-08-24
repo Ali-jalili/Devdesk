@@ -57,9 +57,38 @@ export default function CreateRequest() {
     name: "params",
   });
 
+  function convertKeyValueArrayToObject(
+    items: { key: string; value: string }[],
+  ) {
+    const result: Record<string, string> = {};
+
+    items.forEach((item) => {
+      if (item.key) {
+        result[item.key] = item.value;
+      }
+    });
+
+    return result;
+  }
+
   async function submitFormRequest(data: FormData) {
-    console.log(data);
-    console.log(collectionId);
+    const requestData = {
+      name: data.name,
+      method: data.method,
+      url: data.url,
+
+      headers: convertKeyValueArrayToObject(data.headers),
+
+      params: convertKeyValueArrayToObject(data.params),
+
+      body: data.body,
+
+      description: data.description,
+
+      collectionId,
+    };
+
+    console.log(requestData);
   }
 
   return (
