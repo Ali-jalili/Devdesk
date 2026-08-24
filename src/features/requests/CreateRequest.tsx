@@ -2,10 +2,15 @@
 
 import useCreateRequest from "@/app/hook/useCreateRequest";
 import { useForm, useFieldArray } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function CreateRequest() {
-  const { collectionId } = useParams<{ collectionId: string }>();
+  const { workspaceId, collectionId } = useParams<{
+    workspaceId: string;
+    collectionId: string;
+  }>();
+  const navigate = useNavigate();
 
   type FormData = {
     name: string;
@@ -23,7 +28,7 @@ export default function CreateRequest() {
     description: string;
   };
 
-  const { register, control, handleSubmit } = useForm<FormData>({
+  const { register, control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
       method: "GET",
       headers: [{ key: "", value: "" }],
@@ -81,7 +86,16 @@ export default function CreateRequest() {
 
       collectionId: collectionId!,
     };
-    mutate(requestData);
+    mutate(requestData, {
+      onSuccess() {
+        toast.success("Request created successfully");
+        reset();
+        navigate(`/app/workspaces/${workspaceId}/collections/${collectionId}`);
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
   }
 
   return (
@@ -264,9 +278,13 @@ export default function CreateRequest() {
           <button
             disabled={isPending}
             type="submit"
-            className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {isPending ? " Creating..." : " Create Request"}
+            {isPending && (
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+            )}
+
+            {isPending ? "Creating..." : "Create Request"}
           </button>
         </div>
       </form>
