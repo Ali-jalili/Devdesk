@@ -1,5 +1,9 @@
 /** @format */
 
+import { useParams } from "react-router-dom";
+
 export default function CollectionDetail() {
-  return <div>CollectionDetail</div>;
+  const { collectionId } = useParams();
+
+  return <div>CollectionDetail:::{collectionId}</div>;
 }

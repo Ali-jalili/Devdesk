@@ -57,4 +57,21 @@ async function deleteCollection(collectionId: string) {
   if (error) throw new Error(error.message);
 }
 
-export { createCollection, getCollections, updateCollection, deleteCollection };
+async function getCollectionById(collectionId: string) {
+  const { data, error } = await supabase
+    .from("collections")
+    .select("*")
+    .eq("id", collectionId)
+    .single();
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export {
+  createCollection,
+  getCollections,
+  updateCollection,
+  deleteCollection,
+  getCollectionById,
+};
