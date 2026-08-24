@@ -35,7 +35,7 @@ async function createRequest({
   return { data, error };
 }
 
-async function getRequests(collectionId) {
+async function getRequests(collectionId: string) {
   const { data, error } = await supabase
     .from("requests")
     .select("*")
