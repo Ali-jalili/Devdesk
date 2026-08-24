@@ -35,4 +35,15 @@ async function createRequest({
   return { data, error };
 }
 
-export { createRequest };
+async function getRequests(collectionId) {
+  const { data, error } = await supabase
+    .from("requests")
+    .select("*")
+    .eq("collection_id", collectionId);
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export { createRequest, getRequests };
