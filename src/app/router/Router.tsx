@@ -16,6 +16,7 @@ import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
 import Collections from "@/features/collection/Collections";
 import CollectionDetail from "@/features/collection/CollectionDetail";
 import CreateRequest from "@/features/requests/CreateRequest";
+import RequestDetail from "@/features/requests/RequestDetail";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +80,11 @@ const router = createBrowserRouter([
               {
                 path: "collections/:collectionId/requests/new",
                 element: <CreateRequest />,
+              },
+
+              {
+                path: "collections/:collectionId/requests/:requestId",
+                element: <RequestDetail />,
               },
 
               {
