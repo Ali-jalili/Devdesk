@@ -17,7 +17,7 @@ async function createRequest({
   url: string;
   headers: Record<string, string>;
   params: Record<string, string>;
-  body: Record<string, unknown>;
+  body: string;
   description: string;
   collectionId: string;
 }) {
