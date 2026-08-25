@@ -1,6 +1,11 @@
 /** @format */
 
 import { useForm, useFieldArray } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
+import useUpdateRequest from "@/app/hook/useUpdateRequest";
+import { convertKeyValueArrayToObject } from "@/utils/convertKeyValueArrayToObject";
 
 type FormData = {
   name: string;
@@ -28,11 +33,20 @@ interface RequestEditFormProps {
     body: string;
     description: string;
   };
+
+  onSuccess: () => void;
+  onCancel: () => void;
 }
 
- function RequestEditForm({
+export default function RequestEditForm({
   data,
+  onSuccess,
+  onCancel,
 }: RequestEditFormProps) {
+  const { requestId } = useParams();
+
+  const { mutate, isPending } = useUpdateRequest();
+
   const { register, control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       name: data.name,
@@ -69,126 +83,193 @@ interface RequestEditFormProps {
     name: "params",
   });
 
-  function submitForm(data: FormData) {
-    console.log(data);
+  function submitForm(formData: FormData) {
+    if (!requestId) return;
+
+    const requestData = {
+      name: formData.name,
+      method: formData.method,
+      url: formData.url,
+      headers: convertKeyValueArrayToObject(formData.headers),
+      params: convertKeyValueArrayToObject(formData.params),
+      body: formData.body,
+      description: formData.description,
+    };
+
+    mutate(
+      {
+        requestId,
+        data: requestData,
+      },
+      {
+        onSuccess() {
+          toast.success("Request updated successfully");
+          onSuccess();
+        },
+
+        onError(error) {
+          toast.error(error.message);
+        },
+      },
+    );
   }
 
   return (
     <form
       onSubmit={handleSubmit(submitForm)}
-      className="space-y-5"
+      className="mx-auto max-w-4xl space-y-6"
     >
-      <input
-        {...register("name")}
-        className="w-full rounded-lg border p-2"
-      />
+      <div className="rounded-xl border border-border bg-card p-6">
+        <h2 className="mb-5 text-lg font-semibold">Edit Request</h2>
 
-      <input
-        {...register("method")}
-        className="w-full rounded-lg border p-2"
-      />
+        <div className="space-y-4">
+          <input
+            {...register("name")}
+            placeholder="Request name"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+          />
 
-      <input
-        {...register("url")}
-        className="w-full rounded-lg border p-2"
-      />
+          <input
+            {...register("method")}
+            placeholder="Method"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+          />
 
-      <div>
-        <h3 className="mb-2 font-semibold">Headers</h3>
-
-        {headerFields.map((field, index) => (
-          <div key={field.id} className="flex gap-2">
-            <input
-              {...register(`headers.${index}.key`)}
-              placeholder="Key"
-              className="rounded-lg border p-2"
-            />
-
-            <input
-              {...register(`headers.${index}.value`)}
-              placeholder="Value"
-              className="rounded-lg border p-2"
-            />
-
-            <button
-              type="button"
-              onClick={() => removeHeader(index)}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
-
-        <button
-          type="button"
-          onClick={() =>
-            appendHeader({
-              key: "",
-              value: "",
-            })
-          }
-        >
-          + Add Header
-        </button>
+          <input
+            {...register("url")}
+            placeholder="URL"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+          />
+        </div>
       </div>
 
-      <div>
-        <h3 className="mb-2 font-semibold">Params</h3>
+      <div className="rounded-xl border border-border bg-card p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="font-semibold">Headers</h3>
 
-        {paramFields.map((field, index) => (
-          <div key={field.id} className="flex gap-2">
-            <input
-              {...register(`params.${index}.key`)}
-              placeholder="Key"
-              className="rounded-lg border p-2"
-            />
+          <button
+            type="button"
+            onClick={() =>
+              appendHeader({
+                key: "",
+                value: "",
+              })
+            }
+            className="text-sm font-medium text-primary"
+          >
+            + Add Header
+          </button>
+        </div>
 
-            <input
-              {...register(`params.${index}.value`)}
-              placeholder="Value"
-              className="rounded-lg border p-2"
-            />
+        <div className="space-y-3">
+          {headerFields.map((field, index) => (
+            <div key={field.id} className="flex gap-2">
+              <input
+                {...register(`headers.${index}.key`)}
+                placeholder="Key"
+                className="flex-1 rounded-lg border border-border px-3 py-2 text-sm"
+              />
 
-            <button
-              type="button"
-              onClick={() => removeParam(index)}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
-        
-        <button
-          type="button"
-          onClick={() =>
-            appendParam({
-              key: "",
-              value: "",
-            })
-          }
-        >
-          + Add Param
-        </button>
+              <input
+                {...register(`headers.${index}.value`)}
+                placeholder="Value"
+                className="flex-1 rounded-lg border border-border px-3 py-2 text-sm"
+              />
+
+              <button
+                type="button"
+                onClick={() => removeHeader(index)}
+                className="rounded-lg px-3 text-sm text-destructive hover:bg-muted"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <textarea
-        {...register("body")}
-        className="w-full rounded-lg border p-2"
-      />
+      <div className="rounded-xl border border-border bg-card p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="font-semibold">Params</h3>
 
-      <input
-        {...register("description")}
-        className="w-full rounded-lg border p-2"
-      />
+          <button
+            type="button"
+            onClick={() =>
+              appendParam({
+                key: "",
+                value: "",
+              })
+            }
+            className="text-sm font-medium text-primary"
+          >
+            + Add Param
+          </button>
+        </div>
 
-      <button
-        type="submit"
-        className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground"
-      >
-        Save Changes
-      </button>
+        <div className="space-y-3">
+          {paramFields.map((field, index) => (
+            <div key={field.id} className="flex gap-2">
+              <input
+                {...register(`params.${index}.key`)}
+                placeholder="Key"
+                className="flex-1 rounded-lg border border-border px-3 py-2 text-sm"
+              />
+
+              <input
+                {...register(`params.${index}.value`)}
+                placeholder="Value"
+                className="flex-1 rounded-lg border border-border px-3 py-2 text-sm"
+              />
+
+              <button
+                type="button"
+                onClick={() => removeParam(index)}
+                className="rounded-lg px-3 text-sm text-destructive hover:bg-muted"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-border bg-card p-6">
+        <h3 className="mb-3 font-semibold">Body</h3>
+
+        <textarea
+          {...register("body")}
+          rows={8}
+          className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+        />
+      </div>
+
+      <div className="rounded-xl border border-border bg-card p-6">
+        <h3 className="mb-3 font-semibold">Description</h3>
+
+        <textarea
+          {...register("description")}
+          rows={3}
+          className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+        />
+      </div>
+
+      <div className="flex justify-end gap-3">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="rounded-lg border border-border px-5 py-2 text-sm font-medium hover:bg-muted"
+        >
+          Cancel
+        </button>
+
+        <button
+          disabled={isPending}
+          type="submit"
+          className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {isPending ? "Saving..." : "Save Changes"}
+        </button>
+      </div>
     </form>
   );
 }
-
-export default RequestEditForm
