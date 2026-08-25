@@ -30,7 +30,7 @@ interface RequestEditFormProps {
   };
 }
 
-export default function RequestEditForm({
+ function RequestEditForm({
   data,
 }: RequestEditFormProps) {
   const { register, control, handleSubmit } = useForm<FormData>({
@@ -190,3 +190,5 @@ export default function RequestEditForm({
     </form>
   );
 }
+
+export default RequestEditForm
