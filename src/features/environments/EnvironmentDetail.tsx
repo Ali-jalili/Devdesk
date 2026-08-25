@@ -8,6 +8,7 @@ import useGetVariables from "@/app/hook/useGetVariables";
 import Loading from "@/ui/Loading";
 
 import CreateVariableForm from "./CreateVariableForm";
+import VariableList from "./VariableList";
 
 export default function EnvironmentDetail() {
   const [isCreating, setIsCreating] = useState(false);
@@ -50,28 +51,8 @@ export default function EnvironmentDetail() {
         />
       )}
 
-      {/* Variables List */}
-      {data && data.length > 0 ? (
-        <div className="space-y-3">
-          {data.map((item) => (
-            <div key={item.id} className="rounded-xl border border-border p-4">
-              <p className="font-medium">{item.key}</p>
-
-              <p className="mt-1 text-sm text-muted-foreground">{item.value}</p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex min-h-48 items-center justify-center rounded-xl border border-dashed border-border">
-          <div className="text-center">
-            <p className="text-sm font-medium">No variables yet</p>
-
-            <p className="mt-1 text-sm text-muted-foreground">
-              Add your first environment variable.
-            </p>
-          </div>
-        </div>
-      )}
+      {/* Variables */}
+      <VariableList data={data || []} />
     </div>
   );
 }
