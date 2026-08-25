@@ -1,17 +1,20 @@
 /** @format */
 
-import useGetRequest from "@/app/hook/useGetRequest";
-import Loading from "@/ui/Loading";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+
+import useGetRequest from "@/app/hook/useGetRequest";
+import Loading from "@/ui/Loading";
+
 import RequestView from "./RequestView";
 import RequestEditForm from "./RequestEditForm";
 
 export default function RequestDetail() {
+  const [isEditing, setIsEditing] = useState(false);
+
   const { requestId } = useParams();
 
   const { data, isLoading } = useGetRequest(requestId);
-  const [isEditing, setIsEditing] = useState(false);
 
   if (isLoading) {
     return <Loading />;
@@ -22,7 +25,11 @@ export default function RequestDetail() {
   }
 
   return isEditing ? (
-    <RequestEditForm data={data} />
+    <RequestEditForm
+      data={data}
+      onSuccess={() => setIsEditing(false)}
+      onCancel={() => setIsEditing(false)}
+    />
   ) : (
     <RequestView data={data} onEdit={() => setIsEditing(true)} />
   );
