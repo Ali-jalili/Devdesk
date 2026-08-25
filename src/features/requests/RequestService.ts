@@ -83,4 +83,23 @@ async function updateRequest(
   return data;
 }
 
-export { createRequest, getRequests, getRequestById, updateRequest };
+async function deleteRequest(requestId: string) {
+  const { error } = await supabase
+    .from("requests")
+    .delete()
+    .eq("id", requestId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return true;
+}
+
+export {
+  createRequest,
+  getRequests,
+  getRequestById,
+  updateRequest,
+  deleteRequest,
+};
