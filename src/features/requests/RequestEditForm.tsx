@@ -129,11 +129,16 @@ export default function RequestEditForm({
             className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
           />
 
-          <input
+          <select
             {...register("method")}
-            placeholder="Method"
             className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-          />
+          >
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="PATCH">PATCH</option>
+            <option value="DELETE">DELETE</option>
+          </select>
 
           <input
             {...register("url")}
