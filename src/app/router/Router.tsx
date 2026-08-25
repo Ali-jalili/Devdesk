@@ -17,6 +17,7 @@ import Collections from "@/features/collection/Collections";
 import CollectionDetail from "@/features/collection/CollectionDetail";
 import CreateRequest from "@/features/requests/CreateRequest";
 import RequestDetail from "@/features/requests/RequestDetail";
+import Environments from "@/features/environments/Environments";
 
 const router = createBrowserRouter([
   {
@@ -89,7 +90,7 @@ const router = createBrowserRouter([
 
               {
                 path: "environments",
-                element: <div>Environments Page</div>,
+                element: <Environments />,
               },
             ],
           },
