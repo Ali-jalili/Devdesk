@@ -18,6 +18,7 @@ import CollectionDetail from "@/features/collection/CollectionDetail";
 import CreateRequest from "@/features/requests/CreateRequest";
 import RequestDetail from "@/features/requests/RequestDetail";
 import Environments from "@/features/environments/Environments";
+import EnvironmentDetail from "@/features/environments/EnvironmentDetail";
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
               {
                 path: "environments",
                 element: <Environments />,
+              },
+              {
+                path: "environments/:environmentId",
+                element: <EnvironmentDetail />,
               },
             ],
           },
