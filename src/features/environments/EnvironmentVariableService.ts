@@ -32,3 +32,27 @@ export async function createVariable(data: {
 
   return variable;
 }
+/**
+ * آپدیت کردن یک Variable
+ */
+
+export async function updateVariable(
+  variableId: string,
+  data: {
+    key: string;
+    value: string;
+  },
+) {
+  const { data: variable, error } = await supabase
+    .from("environment_variables")
+    .update(data)
+    .eq("id", variableId)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return variable;
+}
