@@ -57,4 +57,30 @@ async function getRequestById(requestId: string) {
   return data;
 }
 
-export { createRequest, getRequests, getRequestById };
+async function updateRequest(
+  requestId: string,
+  requestData: {
+    name: string;
+    method: string;
+    url: string;
+    headers: Record<string, string>;
+    params: Record<string, string>;
+    body: string;
+    description: string;
+  },
+) {
+  const { data, error } = await supabase
+    .from("requests")
+    .update(requestData)
+    .eq("id", requestId)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export { createRequest, getRequests, getRequestById, updateRequest };
