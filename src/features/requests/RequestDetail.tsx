@@ -1,7 +1,7 @@
 /** @format */
 
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import useGetRequest from "@/app/hook/useGetRequest";
 import Loading from "@/ui/Loading";
@@ -12,8 +12,9 @@ import RequestEditForm from "./RequestEditForm";
 export default function RequestDetail() {
   const [isEditing, setIsEditing] = useState(false);
 
-  const { requestId } = useParams();
+  const navigate = useNavigate();
 
+  const { workspaceId, collectionId, requestId } = useParams();
   const { data, isLoading } = useGetRequest(requestId);
 
   if (isLoading) {
@@ -31,6 +32,12 @@ export default function RequestDetail() {
       onCancel={() => setIsEditing(false)}
     />
   ) : (
-    <RequestView data={data} onEdit={() => setIsEditing(true)} />
+    <RequestView
+      data={data}
+      onEdit={() => setIsEditing(true)}
+      onDeleteSuccess={() => {
+        navigate(`/app/workspaces/${workspaceId}/collections/${collectionId}`);
+      }}
+    />
   );
 }

@@ -1,5 +1,7 @@
 /** @format */
 
+import RequestDeleteButton from "./RequestDeleteButton";
+
 type Request = {
   id: string;
   name: string;
@@ -16,11 +18,18 @@ type Request = {
 interface RequestViewProps {
   data: Request;
   onEdit: () => void;
+  onDeleteSuccess: () => void;
 }
 
-export default function RequestView({ data, onEdit }: RequestViewProps) {
+export default function RequestView({
+  data,
+  onEdit,
+  onDeleteSuccess,
+}: RequestViewProps) {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
+      {/* Header */}
+
       <div className="rounded-xl border border-border p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -38,12 +47,14 @@ export default function RequestView({ data, onEdit }: RequestViewProps) {
           <button
             type="button"
             onClick={onEdit}
-            className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+            className="inline-flex items-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
           >
             Edit Request
           </button>
         </div>
       </div>
+
+      {/* Headers */}
 
       <section className="rounded-xl border border-border p-6">
         <h2 className="font-semibold">Headers</h2>
@@ -55,11 +66,14 @@ export default function RequestView({ data, onEdit }: RequestViewProps) {
               className="flex justify-between rounded-lg bg-muted px-3 py-2 text-sm"
             >
               <span>{key}</span>
+
               <span className="text-muted-foreground">{value}</span>
             </div>
           ))}
         </div>
       </section>
+
+      {/* Params */}
 
       <section className="rounded-xl border border-border p-6">
         <h2 className="font-semibold">Params</h2>
@@ -71,11 +85,14 @@ export default function RequestView({ data, onEdit }: RequestViewProps) {
               className="flex justify-between rounded-lg bg-muted px-3 py-2 text-sm"
             >
               <span>{key}</span>
+
               <span className="text-muted-foreground">{value}</span>
             </div>
           ))}
         </div>
       </section>
+
+      {/* Body */}
 
       <section className="rounded-xl border border-border p-6">
         <h2 className="font-semibold">Body</h2>
@@ -85,6 +102,8 @@ export default function RequestView({ data, onEdit }: RequestViewProps) {
         </pre>
       </section>
 
+      {/* Description */}
+
       <section className="rounded-xl border border-border p-6">
         <h2 className="font-semibold">Description</h2>
 
@@ -92,6 +111,12 @@ export default function RequestView({ data, onEdit }: RequestViewProps) {
           {data.description || "No description"}
         </p>
       </section>
+
+      {/* Actions */}
+
+      <div className="flex justify-end">
+        <RequestDeleteButton requestId={data.id} onSuccess={onDeleteSuccess} />
+      </div>
     </div>
   );
 }
