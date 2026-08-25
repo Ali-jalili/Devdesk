@@ -56,3 +56,14 @@ export async function updateVariable(
 
   return variable;
 }
+
+export async function deleteVariable(variableId: string) {
+  const { error } = await supabase
+    .from("environment_variables")
+    .delete()
+    .eq("id", variableId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
