@@ -43,7 +43,7 @@ export default function VariableDeleteButton({
         <button
           type="button"
           disabled={isPending}
-          className="rounded-lg border border-destructive px-3 py-1 text-sm text-destructive transition hover:bg-destructive/10 disabled:opacity-50"
+          className="rounded-lg border border-destructive px-3 py-1 text-sm text-destructive transition hover:bg-destructive/10 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isPending ? "Deleting..." : "Delete"}
         </button>
@@ -60,9 +60,11 @@ export default function VariableDeleteButton({
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
 
-          <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+          <AlertDialogAction onClick={handleDelete} disabled={isPending}>
+            {isPending ? "Deleting..." : "Delete"}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
