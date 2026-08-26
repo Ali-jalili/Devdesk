@@ -1,103 +1,116 @@
 /** @format */
 
-import useGetCollections from "@/app/hook/useGetCollections";
-import { FiFolderPlus } from "react-icons/fi";
 import { useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+
+import { useParams } from "react-router-dom";
+
+import { FiFolder, FiLayers, FiTrash2 } from "react-icons/fi";
+
+import useGetCollections from "@/app/hook/useGetCollections";
+
 import DeleteWorkspaceAlert from "./DeleteWorkspaceAlert";
 
-function WorkspaceOverview() {
-  const { workspaceId } = useParams<{ workspaceId: string }>();
+export default function WorkspaceOverview() {
+  const { workspaceId } = useParams<{
+    workspaceId: string;
+  }>();
 
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
   const { data: collections } = useGetCollections(workspaceId);
 
-  if (!workspaceId) return null;
+  if (!workspaceId) {
+    return null;
+  }
 
   return (
-    <div>
-      {/* Overview */}
+    <div className="space-y-8">
+      {/* Overview Header */}
 
       <section>
         <div className="mb-5">
-          <h2 className="text-sm font-semibold">Overview</h2>
+          <h2 className="text-xl font-bold tracking-tight text-slate-950">
+            Workspace Overview
+          </h2>
 
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-slate-500">
             A quick look at your workspace.
           </p>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-2">
-          {/* Collections Stats */}
+        <div className="grid gap-4 sm:grid-cols-2">
+          {/* Collections */}
 
-          <div className="border-border/70 sm:border-r sm:pr-8">
+          <div className="rounded-xl border border-slate-200 bg-white p-5">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Collections</span>
+              <span className="text-sm font-medium text-slate-500">
+                Collections
+              </span>
 
-              <FiFolderPlus size={18} className="text-muted-foreground" />
+              <FiFolder className="h-5 w-5 text-indigo-600" />
             </div>
 
-            <div className="mt-4 text-3xl font-semibold">
+            <p className="mt-4 text-3xl font-bold text-slate-950">
               {collections?.length ?? 0}
+            </p>
+
+            <p className="mt-1 text-xs text-slate-400">API collections</p>
+          </div>
+
+          {/* Environments */}
+
+          <div className="rounded-xl border border-slate-200 bg-white p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-slate-500">
+                Environments
+              </span>
+
+              <FiLayers className="h-5 w-5 text-indigo-600" />
             </div>
 
-            <p className="mt-1 text-xs text-muted-foreground">
-              API collections
+            <p className="mt-4 text-3xl font-bold text-slate-950">0</p>
+
+            <p className="mt-1 text-xs text-slate-400">
+              Configured environments
             </p>
           </div>
-
-          {/* Requests Stats */}
-
-          <div>
-            <div className="text-sm text-muted-foreground">Requests</div>
-
-            <div className="mt-4 text-3xl font-semibold">0</div>
-
-            <p className="mt-1 text-xs text-muted-foreground">API requests</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Collections Entry Point */}
-
-      <section className="mt-10 border-t border-border pt-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-sm font-semibold text-foreground">
-              Collections
-            </h3>
-
-            <p className="mt-1 text-sm text-muted-foreground">
-              Manage your API request collections.
-            </p>
-          </div>
-
-          <NavLink
-            to={`/app/workspaces/${workspaceId}/collections`}
-            className="text-sm font-medium text-primary transition hover:underline"
-          >
-            View →
-          </NavLink>
         </div>
       </section>
 
       {/* Danger Zone */}
 
-      <section className="mt-10 border-t border-border pt-8">
-        <h2 className="text-sm font-semibold text-red-600">Danger Zone</h2>
+      <section className="border-t border-slate-200 pt-6">
+        <div>
+          <h3 className="text-sm font-semibold text-red-700">Danger Zone</h3>
 
-        <p className="mt-2 text-sm text-muted-foreground">
-          Permanently delete this workspace and all related data.
-        </p>
+          <p className="mt-1 text-sm text-slate-600">
+            Permanently delete this workspace and its data.
+          </p>
 
-        <button
-          onClick={() => setIsDeleteAlertOpen(true)}
-          type="button"
-          className="mt-4 rounded-lg border border-red-200 px-3 py-1.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
-        >
-          Delete Workspace
-        </button>
+          <button
+            type="button"
+            onClick={() => setIsDeleteAlertOpen(true)}
+            className="
+        mt-4
+        inline-flex
+        items-center
+        gap-2
+        rounded-lg
+        border
+        border-red-200
+        px-4
+        py-2
+        text-sm
+        font-semibold
+        text-red-600
+        transition
+        hover:bg-red-50
+      "
+          >
+            <FiTrash2 className="h-4 w-4" />
+            Delete Workspace
+          </button>
+        </div>
       </section>
 
       <DeleteWorkspaceAlert
@@ -108,5 +121,3 @@ function WorkspaceOverview() {
     </div>
   );
 }
-
-export default WorkspaceOverview;

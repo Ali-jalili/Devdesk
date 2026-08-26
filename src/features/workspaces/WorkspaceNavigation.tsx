@@ -11,7 +11,6 @@ const navigation = [
     label: "Collections",
     path: "collections",
   },
-
   {
     label: "Environments",
     path: "environments",
@@ -20,26 +19,54 @@ const navigation = [
 
 export default function WorkspaceNavigation() {
   return (
-    <nav className="flex gap-1 border-b border-border">
-      {navigation.map((item) => (
-        <NavLink
-          key={item.label}
-          to={item.path}
-          end={item.path === ""}
-          className={({ isActive }) =>
-            `
-            px-4 py-3 text-sm font-medium transition
-            ${
-              isActive
-                ? "border-b-2 border-primary text-primary"
-                : "text-muted-foreground hover:text-foreground"
+    <nav className="overflow-x-auto border-b border-slate-200">
+      <div className="flex min-w-max gap-1">
+        {navigation.map((item) => (
+          <NavLink
+            key={item.label}
+            to={item.path}
+            end={item.path === ""}
+            className={({ isActive }) =>
+              `
+              relative
+              rounded-t-lg
+              px-4
+              py-2.5
+              text-sm
+              font-semibold
+              transition
+
+              ${
+                isActive
+                  ? "bg-indigo-50 text-indigo-600"
+                  : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+              }
+
+              `
             }
-            `
-          }
-        >
-          {item.label}
-        </NavLink>
-      ))}
+          >
+            {({ isActive }) => (
+              <>
+                {item.label}
+
+                {isActive && (
+                  <span
+                    className="
+                      absolute
+                      bottom-0
+                      left-2
+                      right-2
+                      h-0.5
+                      rounded-full
+                      bg-indigo-600
+                    "
+                  />
+                )}
+              </>
+            )}
+          </NavLink>
+        ))}
+      </div>
     </nav>
   );
 }
