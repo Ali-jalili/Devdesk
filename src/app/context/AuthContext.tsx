@@ -38,6 +38,8 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         setUser(session.user);
+      } else {
+        setUser(null);
       }
       setIsLoading(false);
     });
@@ -45,7 +47,11 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => listener.subscription.unsubscribe();
   }, []);
 
-  async function handleSignUp(name: string, email: string, password: string) {
+  async function handleSignUp(
+    name: string,
+    email: string,
+    password: string,
+  ): Promise<User | null> {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -55,7 +61,10 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     return data.user;
   }
 
-  async function handleSignIn(email: string, password: string) {
+  async function handleSignIn(
+    email: string,
+    password: string,
+  ): Promise<User | null> {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
