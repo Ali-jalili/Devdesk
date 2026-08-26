@@ -1,37 +1,45 @@
 /** @format */
 
 import { FiBriefcase, FiFolder, FiSend, FiSliders } from "react-icons/fi";
-
 import { motion } from "framer-motion";
 
-const stats = [
-  {
-    title: "Workspaces",
-    value: 3,
-    description: "Active projects",
-    icon: FiBriefcase,
-  },
-  {
-    title: "Collections",
-    value: 12,
-    description: "API groups",
-    icon: FiFolder,
-  },
-  {
-    title: "Requests",
-    value: 48,
-    description: "Stored requests",
-    icon: FiSend,
-  },
-  {
-    title: "Environments",
-    value: 5,
-    description: "Configured setups",
-    icon: FiSliders,
-  },
-];
+interface StatCardsProps {
+  stats: {
+    workspaces: number;
+    collections: number;
+    requests: number;
+    environments: number;
+  };
+}
 
-export default function StatCards() {
+export default function StatCards({ stats }: StatCardsProps) {
+  const items = [
+    {
+      title: "Workspaces",
+      value: stats.workspaces,
+      description: "Active projects",
+      icon: FiBriefcase,
+    },
+    {
+      title: "Collections",
+      value: stats.collections,
+      description: "API groups",
+      icon: FiFolder,
+    },
+    {
+      title: "Requests",
+      value: stats.requests,
+      description: "Stored requests",
+      icon: FiSend,
+    },
+    {
+      title: "Environments",
+      value: stats.environments,
+      description: "Configured setups",
+      icon: FiSliders,
+    },
+  ];
+
   return (
     <div
       className="
@@ -41,7 +49,7 @@ export default function StatCards() {
         xl:grid-cols-4
       "
     >
-      {stats.map((item, index) => {
+      {items.map((item, index) => {
         const Icon = item.icon;
 
         return (
