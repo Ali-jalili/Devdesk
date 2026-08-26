@@ -14,15 +14,47 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    password?: string;
+  }>({});
+
   const navigate = useNavigate();
+
+  function validateForm() {
+    const newErrors: {
+      name?: string;
+      email?: string;
+      password?: string;
+    } = {};
+
+    if (!name.trim()) {
+      newErrors.name = "Name is required.";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!email.includes("@")) {
+      newErrors.email = "Please enter a valid email.";
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required.";
+    } else if (password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters.";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    if (!name || !email || !password) {
-      return toast.error("Please fill in all fields.");
+    if (!validateForm()) {
+      return;
     }
-
     try {
       setLoading(true);
 
@@ -34,7 +66,7 @@ export default function Signup() {
         setName("");
         setEmail("");
         setPassword("");
-
+        setErrors({});
         navigate("/app/dashboard");
       }
     } catch (error) {
@@ -84,9 +116,11 @@ export default function Signup() {
                 name="name"
                 placeholder="John Doe"
                 autoComplete="name"
-                required
                 className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
               />
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+              )}
             </div>
 
             {/* Email */}
@@ -106,9 +140,11 @@ export default function Signup() {
                 name="email"
                 placeholder="you@example.com"
                 autoComplete="email"
-                required
                 className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
               />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+              )}
             </div>
 
             {/* Password */}
@@ -134,10 +170,12 @@ export default function Signup() {
                 name="password"
                 placeholder="••••••••"
                 autoComplete="new-password"
-                required
-                minLength={6}
+                minLength={8}
                 className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
               />
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-500">{errors.password}</p>
+              )}
             </div>
 
             {/* Submit */}
