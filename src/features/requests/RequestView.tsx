@@ -105,32 +105,39 @@ export default function RequestView({
         </pre>
       </section>
 
-      {/* Description */}
+      {/* Documentation */}
+      <section className="rounded-xl border border-border p-6 space-y-6">
+        <div>
+          <h2 className="font-semibold">Documentation</h2>
 
-      <section className="rounded-xl border border-border p-6">
-        <h2 className="font-semibold">Description</h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {data.description || "No description"}
+          </p>
+        </div>
 
-        <p className="mt-3 text-sm text-muted-foreground">
-          {data.description || "No description"}
-        </p>
+        <div>
+          <h3 className="text-sm font-medium">Example Request</h3>
 
-        <h2 className="font-semibold">ExampleRequest</h2>
+          <pre className="mt-3 overflow-auto rounded-lg bg-muted p-4 text-sm">
+            {data.example_request || "No example request"}
+          </pre>
+        </div>
 
-        <p className="mt-3 text-sm text-muted-foreground">
-          {data.example_request || "No ExampleRequest"}
-        </p>
+        <div>
+          <h3 className="text-sm font-medium">Example Response</h3>
 
-        <h2 className="font-semibold">ExampleResponse</h2>
+          <pre className="mt-3 overflow-auto rounded-lg bg-muted p-4 text-sm">
+            {data.example_response || "No example response"}
+          </pre>
+        </div>
 
-        <p className="mt-3 text-sm text-muted-foreground">
-          {data.example_response || "No ExampleResponse"}
-        </p>
+        <div>
+          <h3 className="text-sm font-medium">Notes</h3>
 
-        <h2 className="font-semibold">Notes</h2>
-
-        <p className="mt-3 text-sm text-muted-foreground">
-          {data.notes || "No Notes"}
-        </p>
+          <p className="mt-3 text-sm text-muted-foreground whitespace-pre-line">
+            {data.notes || "No notes"}
+          </p>
+        </div>
       </section>
 
       {/* Actions */}
