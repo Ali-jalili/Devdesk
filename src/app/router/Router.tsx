@@ -8,7 +8,6 @@ import Login from "@/page/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import AppLayout from "../layouts/AppLayout";
 import PublicLayout from "../layouts/PublicLayout";
-import DashboardStats from "@/features/dashboard/DashboardStats";
 import Workspaces from "@/features/workspaces/Workspaces";
 import WorkspaceLayout from "@/features/workspaces/WorkspaceLayout";
 import WorkspaceOverview from "@/features/workspaces/WorkspaceOverview";
@@ -19,6 +18,7 @@ import CreateRequest from "@/features/requests/CreateRequest";
 import RequestDetail from "@/features/requests/RequestDetail";
 import Environments from "@/features/environments/Environments";
 import EnvironmentDetail from "@/features/environments/EnvironmentDetail";
+import Dashboard from "@/features/dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "dashboard",
-            element: <DashboardStats />,
+            element: <Dashboard />,
           },
 
           {
