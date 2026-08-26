@@ -1,10 +1,20 @@
 /** @format */
 
+import { motion } from "framer-motion";
+
 const activities = [
-  "Updated Login User request",
-  "Created Authentication collection",
-  "Updated Production environment",
-  "Modified User API request",
+  {
+    text: "Updated Login User request",
+    time: "2 hours ago",
+  },
+  {
+    text: "Created Authentication collection",
+    time: "Yesterday",
+  },
+  {
+    text: "Updated Production environment",
+    time: "Yesterday",
+  },
 ];
 
 export default function RecentActivity() {
@@ -29,30 +39,77 @@ export default function RecentActivity() {
         Recent Activity
       </h2>
 
-      <div className="mt-5 space-y-4">
-        {activities.map((item) => (
-          <div
-            key={item}
+      <div className="mt-6 space-y-5">
+        {activities.map((item, index) => (
+          <motion.div
+            key={item.text}
+            initial={{
+              opacity: 0,
+              x: -10,
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+            }}
+            transition={{
+              delay: index * 0.1,
+            }}
             className="
               flex
-              items-start
-              gap-3
-              text-sm
-              text-slate-600
+              gap-4
             "
           >
-            <span
+            <div
               className="
-                mt-2
-                h-2
-                w-2
-                rounded-full
-                bg-indigo-500
+                relative
               "
-            />
+            >
+              <span
+                className="
+                  block
+                  h-3
+                  w-3
+                  rounded-full
+                  bg-indigo-500
+                "
+              />
 
-            <span>{item}</span>
-          </div>
+              {index !== activities.length - 1 && (
+                <span
+                  className="
+                    absolute
+                    left-1/2
+                    top-3
+                    h-10
+                    w-px
+                    -translate-x-1/2
+                    bg-slate-200
+                  "
+                />
+              )}
+            </div>
+
+            <div>
+              <p
+                className="
+                  text-sm
+                  text-slate-700
+                "
+              >
+                {item.text}
+              </p>
+
+              <p
+                className="
+                  mt-1
+                  text-xs
+                  text-slate-400
+                "
+              >
+                {item.time}
+              </p>
+            </div>
+          </motion.div>
         ))}
       </div>
     </section>

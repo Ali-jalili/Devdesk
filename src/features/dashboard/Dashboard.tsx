@@ -6,7 +6,14 @@ import WorkspaceSnapshot from "./WorkspaceSnapshot";
 
 export default function Dashboard() {
   return (
-    <div className="mx-auto max-w-7xl space-y-8 p-6">
+    <div
+      className="
+        mx-auto
+        max-w-7xl
+        space-y-8
+        p-6
+      "
+    >
       {/* Header */}
 
       <section>
@@ -18,7 +25,7 @@ export default function Dashboard() {
             text-slate-950
           "
         >
-          Welcome back 👋
+          Welcome back, Arka 👋
         </h1>
 
         <p
@@ -28,17 +35,19 @@ export default function Dashboard() {
             text-slate-500
           "
         >
-          Your API workspace overview.
+          Here's what's happening across your API workspace.
         </p>
       </section>
 
-      {/* Stats */}
-
       <StatCards />
 
-      {/* Activity */}
-
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div
+        className="
+          grid
+          gap-6
+          lg:grid-cols-2
+        "
+      >
         <RecentActivity />
 
         <WorkspaceSnapshot />

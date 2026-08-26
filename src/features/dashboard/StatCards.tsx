@@ -1,25 +1,33 @@
 /** @format */
 
+import { FiBriefcase, FiFolder, FiSend, FiSliders } from "react-icons/fi";
+
+import { motion } from "framer-motion";
+
 const stats = [
   {
     title: "Workspaces",
-    value: "3",
-    description: "Active workspaces",
+    value: 3,
+    description: "Active projects",
+    icon: FiBriefcase,
   },
   {
     title: "Collections",
-    value: "12",
-    description: "API collections",
+    value: 12,
+    description: "API groups",
+    icon: FiFolder,
   },
   {
     title: "Requests",
-    value: "48",
+    value: 48,
     description: "Stored requests",
+    icon: FiSend,
   },
   {
     title: "Environments",
-    value: "5",
-    description: "Configured environments",
+    value: 5,
+    description: "Configured setups",
+    icon: FiSliders,
   },
 ];
 
@@ -33,50 +41,86 @@ export default function StatCards() {
         xl:grid-cols-4
       "
     >
-      {stats.map((item) => (
-        <div
-          key={item.title}
-          className="
-            rounded-xl
-            border
-            border-slate-200
-            bg-white
-            p-5
-            shadow-sm
-          "
-        >
-          <p
-            className="
-              text-sm
-              font-medium
-              text-slate-500
-            "
-          >
-            {item.title}
-          </p>
+      {stats.map((item, index) => {
+        const Icon = item.icon;
 
-          <p
+        return (
+          <motion.div
+            key={item.title}
+            initial={{
+              opacity: 0,
+              y: 15,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: index * 0.08,
+            }}
+            whileHover={{
+              y: -4,
+            }}
             className="
-              mt-3
-              text-3xl
-              font-bold
-              text-slate-950
+              rounded-xl
+              border
+              border-slate-200
+              bg-white
+              p-5
+              shadow-sm
+              transition
+              hover:shadow-md
             "
           >
-            {item.value}
-          </p>
+            <div
+              className="
+                flex
+                h-10
+                w-10
+                items-center
+                justify-center
+                rounded-lg
+                bg-indigo-50
+                text-indigo-600
+              "
+            >
+              <Icon className="h-5 w-5" />
+            </div>
 
-          <p
-            className="
-              mt-1
-              text-xs
-              text-slate-400
-            "
-          >
-            {item.description}
-          </p>
-        </div>
-      ))}
+            <p
+              className="
+                mt-4
+                text-sm
+                font-medium
+                text-slate-500
+              "
+            >
+              {item.title}
+            </p>
+
+            <p
+              className="
+                mt-2
+                text-3xl
+                font-bold
+                text-slate-950
+              "
+            >
+              {item.value}
+            </p>
+
+            <p
+              className="
+                mt-1
+                text-xs
+                text-slate-400
+              "
+            >
+              {item.description}
+            </p>
+          </motion.div>
+        );
+      })}
     </div>
   );
 }
