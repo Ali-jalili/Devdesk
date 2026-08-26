@@ -1,7 +1,9 @@
 /** @format */
 
-import { FiMenu } from "react-icons/fi";
+import { FiCode, FiMenu } from "react-icons/fi";
+
 import useAuth from "@/app/context/useAuth";
+
 import { NavLink } from "react-router-dom";
 
 interface HeaderProps {
@@ -9,58 +11,112 @@ interface HeaderProps {
 }
 
 export default function Header({ onMenuClick }: HeaderProps) {
-  const { user, handleSignOut } = useAuth();
+  const { user } = useAuth();
 
   return (
-    <header className="sticky top-0 z-50 h-16 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div className="flex h-full items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header
+      className="
+        sticky top-0 z-50 h-16
+        border-b border-slate-200
+        bg-white/90 backdrop-blur
+      "
+    >
+      <div
+        className="
+          flex h-full items-center justify-between
+          px-4 sm:px-6 lg:px-8
+        "
+      >
         <div className="flex items-center gap-3">
           {/* Mobile Menu */}
+
           {user && (
             <button
               type="button"
               onClick={onMenuClick}
-              className="rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-950 md:hidden"
+              className="
+                rounded-lg p-2
+                text-slate-600
+                transition
+                hover:bg-slate-100
+                hover:text-slate-950
+                md:hidden
+              "
               aria-label="Open navigation"
             >
               <FiMenu className="h-5 w-5" />
             </button>
           )}
 
-          {/* Logo */}
+          {/* Brand */}
+
           <NavLink
             to={user ? "/app/dashboard" : "/"}
-            className="flex items-center gap-2"
+            className="
+              group flex items-center gap-3
+            "
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-sm font-bold text-white shadow-sm shadow-indigo-600/20">
-              D
-            </span>
+            <div
+              className="
+                flex h-9 w-9 items-center justify-center
+                rounded-xl
+                bg-indigo-600
+                text-white
+                shadow-sm shadow-indigo-600/20
+                transition
+                group-hover:scale-105
+              "
+            >
+              <FiCode className="h-5 w-5" />
+            </div>
 
-            <span className="text-lg font-bold tracking-tight text-slate-950">
-              DevDesk
-            </span>
+            <div className="flex flex-col leading-none">
+              <span
+                className="
+                  text-lg font-bold
+                  tracking-tight
+                  text-slate-950
+                "
+              >
+                DevDesk
+              </span>
+
+              <span
+                className="
+                  mt-1 text-[11px]
+                  font-medium
+                  tracking-wide
+                  text-slate-400
+                "
+              >
+                API Workspace
+              </span>
+            </div>
           </NavLink>
         </div>
 
-        {/* Actions */}
-        {user ? (
-          <button
-            type="button"
-            onClick={handleSignOut}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950"
+        {/* Public Actions */}
+
+        {!user && (
+          <nav
+            className="
+              flex items-center gap-1 sm:gap-2
+            "
           >
-            Logout
-          </button>
-        ) : (
-          <nav className="flex items-center gap-1 sm:gap-2">
             <NavLink
               to="/login"
               className={({ isActive }) =>
-                `rounded-lg px-3 py-2 text-sm font-semibold transition sm:px-4 ${
+                `
+                rounded-lg px-3 py-2
+                text-sm font-semibold
+                transition sm:px-4
+
+                ${
                   isActive
                     ? "bg-slate-100 text-slate-950"
                     : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
-                }`
+                }
+                `
               }
             >
               Login
@@ -68,7 +124,16 @@ export default function Header({ onMenuClick }: HeaderProps) {
 
             <NavLink
               to="/signup"
-              className="rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 sm:px-4"
+              className="
+                rounded-lg
+                bg-indigo-600
+                px-3 py-2
+                text-sm font-semibold
+                text-white
+                transition
+                hover:bg-indigo-700
+                sm:px-4
+              "
             >
               Sign Up
             </NavLink>
