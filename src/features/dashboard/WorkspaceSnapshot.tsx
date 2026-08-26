@@ -1,5 +1,6 @@
 /** @format */
 
+import Loading from "@/ui/Loading";
 import { motion } from "framer-motion";
 
 interface WorkspaceSnapshotProps {
@@ -10,11 +11,14 @@ interface WorkspaceSnapshotProps {
     environments: number;
     lastActivity: string;
   } | null;
+  workspaceLoading: boolean;
 }
 
 export default function WorkspaceSnapshot({
   workspace,
+  workspaceLoading,
 }: WorkspaceSnapshotProps) {
+  if (workspaceLoading) return <Loading />;
   return (
     <motion.section
       initial={{
