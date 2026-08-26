@@ -1,7 +1,10 @@
 /** @format */
 
 import useAuth from "@/app/context/useAuth";
+import { getAuthErrorMessage } from "@/utils/authError";
+
 import React, { useState } from "react";
+
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -12,6 +15,7 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const [errors, setErrors] = useState<{
@@ -52,9 +56,11 @@ export default function Signup() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     if (!validateForm()) {
       return;
     }
+
     try {
       setLoading(true);
 
@@ -63,16 +69,16 @@ export default function Signup() {
       if (user) {
         toast.success("Account created successfully!");
 
+        setErrors({});
+
         setName("");
         setEmail("");
         setPassword("");
-        setErrors({});
+
         navigate("/app/dashboard");
       }
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
+      toast.error(getAuthErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -81,7 +87,6 @@ export default function Signup() {
   return (
     <main className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-slate-50 px-6 py-16">
       <div className="w-full max-w-md">
-        {/* Heading */}
         <div className="mb-8 text-center">
           <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-sm font-bold text-white shadow-sm shadow-indigo-600/20">
             D
@@ -96,28 +101,38 @@ export default function Signup() {
           </p>
         </div>
 
-        {/* Form Card */}
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name */}
             <div>
-              <label
-                htmlFor="name"
-                className="mb-2 block text-sm font-medium text-slate-700"
-              >
+              <label className="mb-2 block text-sm font-medium text-slate-700">
                 Name
               </label>
 
               <input
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  setName(value);
+
+                  if (value.trim()) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      name: undefined,
+                    }));
+                  }
+                }}
                 type="text"
-                id="name"
-                name="name"
                 placeholder="John Doe"
                 autoComplete="name"
-                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                className={`w-full rounded-lg border px-3.5 py-2.5 text-sm outline-none transition ${
+                  errors.name
+                    ? "border-red-500 focus:border-red-500"
+                    : "border-slate-200 focus:border-indigo-500"
+                }`}
               />
+
               {errors.name && (
                 <p className="mt-1 text-sm text-red-500">{errors.name}</p>
               )}
@@ -125,23 +140,34 @@ export default function Signup() {
 
             {/* Email */}
             <div>
-              <label
-                htmlFor="email"
-                className="mb-2 block text-sm font-medium text-slate-700"
-              >
+              <label className="mb-2 block text-sm font-medium text-slate-700">
                 Email
               </label>
 
               <input
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  setEmail(value);
+
+                  if (value.includes("@")) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      email: undefined,
+                    }));
+                  }
+                }}
                 type="email"
-                id="email"
-                name="email"
                 placeholder="you@example.com"
                 autoComplete="email"
-                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                className={`w-full rounded-lg border px-3.5 py-2.5 text-sm outline-none transition ${
+                  errors.email
+                    ? "border-red-500 focus:border-red-500"
+                    : "border-slate-200 focus:border-indigo-500"
+                }`}
               />
+
               {errors.email && (
                 <p className="mt-1 text-sm text-red-500">{errors.email}</p>
               )}
@@ -150,39 +176,48 @@ export default function Signup() {
             {/* Password */}
             <div>
               <div className="mb-2 flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-slate-700"
-                >
+                <label className="block text-sm font-medium text-slate-700">
                   Password
                 </label>
 
                 <span className="text-xs text-slate-400">
-                  At least 6 characters
+                  At least 8 characters
                 </span>
               </div>
 
               <input
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  setPassword(value);
+
+                  if (value.length >= 8) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      password: undefined,
+                    }));
+                  }
+                }}
                 type="password"
-                id="password"
-                name="password"
                 placeholder="••••••••"
                 autoComplete="new-password"
-                minLength={8}
-                className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                className={`w-full rounded-lg border px-3.5 py-2.5 text-sm outline-none transition ${
+                  errors.password
+                    ? "border-red-500 focus:border-red-500"
+                    : "border-slate-200 focus:border-indigo-500"
+                }`}
               />
+
               {errors.password && (
                 <p className="mt-1 text-sm text-red-500">{errors.password}</p>
               )}
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? (
                 <>
@@ -195,13 +230,12 @@ export default function Signup() {
             </button>
           </form>
 
-          {/* Login */}
           <div className="mt-6 border-t border-slate-100 pt-6 text-center">
             <p className="text-sm text-slate-500">
               Already have an account?{" "}
               <NavLink
                 to="/login"
-                className="font-semibold text-indigo-600 transition hover:text-indigo-700"
+                className="font-semibold text-indigo-600 hover:text-indigo-700"
               >
                 Log in
               </NavLink>
