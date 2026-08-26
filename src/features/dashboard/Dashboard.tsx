@@ -5,6 +5,20 @@ import RecentActivity from "./RecentActivity";
 import StatCards from "./StatCards";
 import WorkspaceSnapshot from "./WorkspaceSnapshot";
 
+const activities = [
+  {
+    text: "Updated Login User request",
+    time: "2 hours ago",
+  },
+  {
+    text: "Created Authentication collection",
+    time: "Yesterday",
+  },
+  {
+    text: "Updated Production environment",
+    time: "Yesterday",
+  },
+];
 export default function Dashboard() {
   const { data, isLoading } = useDashboard();
 
@@ -24,12 +38,12 @@ export default function Dashboard() {
         </p>
       </section>
 
-      <StatCards stats={data} />
+      <StatCards stats={data!} />
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <RecentActivity />
+        <RecentActivity activities={activities} />
 
-        <WorkspaceSnapshot />
+        <WorkspaceSnapshot workspace={workspaceData} />
       </div>
     </div>
   );

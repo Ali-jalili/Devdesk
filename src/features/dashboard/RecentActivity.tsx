@@ -2,22 +2,16 @@
 
 import { motion } from "framer-motion";
 
-const activities = [
-  {
-    text: "Updated Login User request",
-    time: "2 hours ago",
-  },
-  {
-    text: "Created Authentication collection",
-    time: "Yesterday",
-  },
-  {
-    text: "Updated Production environment",
-    time: "Yesterday",
-  },
-];
+interface Activity {
+  text: string;
+  time: string;
+}
 
-export default function RecentActivity() {
+interface RecentActivityProps {
+  activities: Activity[];
+}
+
+export default function RecentActivity({ activities }: RecentActivityProps) {
   return (
     <section
       className="
@@ -59,11 +53,7 @@ export default function RecentActivity() {
               gap-4
             "
           >
-            <div
-              className="
-                relative
-              "
-            >
+            <div className="relative">
               <span
                 className="
                   block

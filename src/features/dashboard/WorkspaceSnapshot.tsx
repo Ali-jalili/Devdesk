@@ -1,8 +1,30 @@
 /** @format */
 
-export default function WorkspaceSnapshot() {
+import { motion } from "framer-motion";
+
+interface WorkspaceSnapshotProps {
+  workspace?: {
+    name: string;
+    collections: number;
+    requests: number;
+    environments: number;
+    lastActivity: string;
+  };
+}
+
+export default function WorkspaceSnapshot({
+  workspace,
+}: WorkspaceSnapshotProps) {
   return (
-    <section
+    <motion.section
+      initial={{
+        opacity: 0,
+        y: 15,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
       className="
         rounded-xl
         border
@@ -32,50 +54,60 @@ export default function WorkspaceSnapshot() {
           Current workspace
         </p>
 
-        <p
+        <h3
           className="
             mt-1
-            text-lg
-            font-semibold
+            text-xl
+            font-bold
             text-slate-950
           "
         >
-          DevDesk API
-        </p>
+          {workspace?.name ?? "No workspace"}
+        </h3>
 
         <div
           className="
             mt-5
-            space-y-2
-            text-sm
-            text-slate-600
+            grid
+            grid-cols-3
+            gap-4
           "
         >
-          <p>Collections:</p>
+          <div>
+            <p className="text-lg font-bold text-slate-950">
+              {workspace?.collections ?? 0}
+            </p>
 
-          <ul
-            className="
-              list-disc
-              pl-5
-              text-slate-500
-            "
-          >
-            <li>Authentication</li>
-            <li>Products</li>
-            <li>Orders</li>
-          </ul>
+            <p className="text-xs text-slate-400">Collections</p>
+          </div>
+
+          <div>
+            <p className="text-lg font-bold text-slate-950">
+              {workspace?.requests ?? 0}
+            </p>
+
+            <p className="text-xs text-slate-400">Requests</p>
+          </div>
+
+          <div>
+            <p className="text-lg font-bold text-slate-950">
+              {workspace?.environments ?? 0}
+            </p>
+
+            <p className="text-xs text-slate-400">Environments</p>
+          </div>
         </div>
 
         <p
           className="
-            mt-5
+            mt-6
             text-xs
             text-slate-400
           "
         >
-          Last activity: 2 hours ago
+          Last activity: {workspace?.lastActivity ?? "No activity yet"}
         </p>
       </div>
-    </section>
+    </motion.section>
   );
 }
