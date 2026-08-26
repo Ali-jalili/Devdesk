@@ -2,6 +2,7 @@
 
 import { useForm, useFieldArray } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 
 import useUpdateRequest from "@/app/hook/useUpdateRequest";
@@ -11,14 +12,17 @@ type FormData = {
   name: string;
   method: string;
   url: string;
+
   headers: {
     key: string;
     value: string;
   }[];
+
   params: {
     key: string;
     value: string;
   }[];
+
   body: string;
   description: string;
   example_request: string;
@@ -49,23 +53,33 @@ export default function RequestEditForm({
   onSuccess,
   onCancel,
 }: RequestEditFormProps) {
-  const { requestId } = useParams();
+  const { requestId } = useParams<{
+    requestId: string;
+  }>();
 
   const { mutate, isPending } = useUpdateRequest();
 
-  const { register, control, handleSubmit } = useForm<FormData>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: {
       name: data.name,
       method: data.method,
       url: data.url,
-      headers: Object.entries(data.headers).map(([key, value]) => ({
+
+      headers: Object.entries(data.headers || {}).map(([key, value]) => ({
         key,
         value,
       })),
-      params: Object.entries(data.params).map(([key, value]) => ({
+
+      params: Object.entries(data.params || {}).map(([key, value]) => ({
         key,
         value,
       })),
+
       body: data.body,
       description: data.description,
       example_request: data.example_request,
@@ -95,23 +109,24 @@ export default function RequestEditForm({
   function submitForm(formData: FormData) {
     if (!requestId) return;
 
-    const requestData = {
-      name: formData.name,
-      method: formData.method,
-      url: formData.url,
-      headers: convertKeyValueArrayToObject(formData.headers),
-      params: convertKeyValueArrayToObject(formData.params),
-      body: formData.body,
-      description: formData.description,
-      example_request: formData.example_request,
-      example_response: formData.example_response,
-      notes: formData.notes,
-    };
-
     mutate(
       {
         requestId,
-        data: requestData,
+        data: {
+          name: formData.name,
+          method: formData.method,
+          url: formData.url,
+
+          headers: convertKeyValueArrayToObject(formData.headers),
+
+          params: convertKeyValueArrayToObject(formData.params),
+
+          body: formData.body,
+          description: formData.description,
+          example_request: formData.example_request,
+          example_response: formData.example_response,
+          notes: formData.notes,
+        },
       },
       {
         onSuccess() {
@@ -129,40 +144,94 @@ export default function RequestEditForm({
   return (
     <form
       onSubmit={handleSubmit(submitForm)}
-      className="mx-auto max-w-4xl space-y-6"
+      className="mx-auto max-w-5xl space-y-6"
     >
-      <div className="rounded-xl border border-border bg-card p-6">
-        <h2 className="mb-5 text-lg font-semibold">Edit Request</h2>
+      {/* Request Information */}
 
-        <div className="space-y-4">
-          <input
-            {...register("name")}
-            placeholder="Request name"
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-          />
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-slate-950">
+            Request Information
+          </h2>
 
-          <select
-            {...register("method")}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-          >
-            <option value="GET">GET</option>
-            <option value="POST">POST</option>
-            <option value="PUT">PUT</option>
-            <option value="PATCH">PATCH</option>
-            <option value="DELETE">DELETE</option>
-          </select>
-
-          <input
-            {...register("url")}
-            placeholder="URL"
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-          />
+          <p className="mt-1 text-sm text-slate-500">
+            Configure basic request settings.
+          </p>
         </div>
-      </div>
 
-      <div className="rounded-xl border border-border bg-card p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="font-semibold">Headers</h3>
+        <div className="space-y-5">
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Request Name
+            </label>
+
+            <input
+              {...register("name", {
+                required: "Request name is required",
+              })}
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+              placeholder="Get Users"
+            />
+
+            {errors.name && (
+              <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>
+            )}
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-[140px_1fr]">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Method
+              </label>
+
+              <select
+                {...register("method")}
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-indigo-500"
+              >
+                <option value="GET">GET</option>
+
+                <option value="POST">POST</option>
+
+                <option value="PUT">PUT</option>
+
+                <option value="PATCH">PATCH</option>
+
+                <option value="DELETE">DELETE</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                URL
+              </label>
+
+              <input
+                {...register("url", {
+                  required: "URL is required",
+                })}
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-mono outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                placeholder="https://api.example.com/users"
+              />
+
+              {errors.url && (
+                <p className="mt-2 text-sm text-red-500">
+                  {errors.url.message}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Headers */}
+
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="mb-5 flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-semibold text-slate-950">Headers</h2>
+
+            <p className="mt-1 text-sm text-slate-500">Add request headers.</p>
+          </div>
 
           <button
             type="button"
@@ -172,42 +241,56 @@ export default function RequestEditForm({
                 value: "",
               })
             }
-            className="text-sm font-medium text-primary"
+            className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-50"
           >
-            + Add Header
+            <FiPlus className="h-4 w-4" />
+            Add
           </button>
         </div>
 
         <div className="space-y-3">
           {headerFields.map((field, index) => (
-            <div key={field.id} className="flex gap-2">
+            <div
+              key={field.id}
+              className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]"
+            >
               <input
                 {...register(`headers.${index}.key`)}
                 placeholder="Key"
-                className="flex-1 rounded-lg border border-border px-3 py-2 text-sm"
+                className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm"
               />
 
               <input
                 {...register(`headers.${index}.value`)}
                 placeholder="Value"
-                className="flex-1 rounded-lg border border-border px-3 py-2 text-sm"
+                className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm"
               />
 
               <button
                 type="button"
                 onClick={() => removeHeader(index)}
-                className="rounded-lg px-3 text-sm text-destructive hover:bg-muted"
+                className="flex h-10 items-center justify-center rounded-lg px-3 text-red-500 transition hover:bg-red-50"
               >
-                Delete
+                <FiTrash2 className="h-4 w-4" />
               </button>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      <div className="rounded-xl border border-border bg-card p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="font-semibold">Params</h3>
+      {/* Params */}
+
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="mb-5 flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-semibold text-slate-950">
+              Query Params
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              Configure request parameters.
+            </p>
+          </div>
 
           <button
             type="button"
@@ -217,117 +300,144 @@ export default function RequestEditForm({
                 value: "",
               })
             }
-            className="text-sm font-medium text-primary"
+            className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-50"
           >
-            + Add Param
+            <FiPlus className="h-4 w-4" />
+            Add
           </button>
         </div>
 
         <div className="space-y-3">
           {paramFields.map((field, index) => (
-            <div key={field.id} className="flex gap-2">
+            <div
+              key={field.id}
+              className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]"
+            >
               <input
                 {...register(`params.${index}.key`)}
-                placeholder="Key"
-                className="flex-1 rounded-lg border border-border px-3 py-2 text-sm"
+                placeholder="Parameter"
+                className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-indigo-500"
               />
 
               <input
                 {...register(`params.${index}.value`)}
                 placeholder="Value"
-                className="flex-1 rounded-lg border border-border px-3 py-2 text-sm"
+                className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-indigo-500"
               />
 
               <button
                 type="button"
                 onClick={() => removeParam(index)}
-                className="rounded-lg px-3 text-sm text-destructive hover:bg-muted"
+                className="flex h-10 items-center justify-center rounded-lg px-3 text-red-500 transition hover:bg-red-50"
               >
-                Delete
+                <FiTrash2 className="h-4 w-4" />
               </button>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      <div className="rounded-xl border border-border bg-card p-6">
-        <h3 className="mb-3 font-semibold">Body</h3>
+      {/* Body */}
+
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="mb-5">
+          <h2 className="text-lg font-semibold text-slate-950">Body</h2>
+
+          <p className="mt-1 text-sm text-slate-500">Request payload.</p>
+        </div>
 
         <textarea
           {...register("body")}
-          rows={8}
-          className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+          rows={10}
+          placeholder={`{
+  "username": "arka",
+  "password": "123456"
+}`}
+          className="w-full resize-none rounded-xl border border-slate-200 bg-slate-950 px-4 py-4 font-mono text-sm text-slate-100 outline-none transition focus:ring-4 focus:ring-indigo-500/10"
         />
-      </div>
+      </section>
 
       {/* Documentation */}
-      <section className="rounded-xl border border-border p-6">
-        <div>
-          <h2 className="text-sm font-semibold">Documentation</h2>
 
-          <p className="mt-1 text-sm text-muted-foreground">
-            Add information to help other developers understand this endpoint.
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div>
+          <h2 className="text-lg font-semibold text-slate-950">
+            Documentation
+          </h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Help other developers understand this endpoint.
           </p>
         </div>
 
-        <div className="mt-5 space-y-5">
+        <div className="mt-6 space-y-5">
           <div>
-            <label className="text-sm font-medium">Description</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Description
+            </label>
 
             <textarea
               {...register("description")}
               rows={3}
-              className="mt-2 w-full rounded-lg border border-border px-3 py-2 text-sm"
               placeholder="Explain what this request does..."
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-indigo-500"
             />
           </div>
 
           <div>
-            <label className="text-sm font-medium">Example Request</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Example Request
+            </label>
 
             <textarea
               {...register("example_request")}
-              rows={6}
-              className="mt-2 w-full rounded-lg border border-border px-3 py-2 text-sm font-mono"
+              rows={7}
               placeholder={`{
   "email": "user@example.com",
   "password": "123456"
 }`}
+              className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 font-mono text-sm outline-none focus:border-indigo-500"
             />
           </div>
 
           <div>
-            <label className="text-sm font-medium">Example Response</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Example Response
+            </label>
 
             <textarea
               {...register("example_response")}
-              rows={6}
-              className="mt-2 w-full rounded-lg border border-border px-3 py-2 text-sm font-mono"
+              rows={7}
               placeholder={`{
   "token": "abc123",
   "user": {}
 }`}
+              className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 font-mono text-sm outline-none focus:border-indigo-500"
             />
           </div>
 
           <div>
-            <label className="text-sm font-medium">Notes</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Notes
+            </label>
 
             <textarea
               {...register("notes")}
               rows={3}
-              className="mt-2 w-full rounded-lg border border-border px-3 py-2 text-sm"
-              placeholder="Add important notes about this endpoint..."
+              placeholder="Add important notes..."
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-indigo-500"
             />
           </div>
         </div>
       </section>
 
-      <div className="flex justify-end gap-3">
+      {/* Actions */}
+
+      <div className="flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:justify-end">
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-lg border border-border px-5 py-2 text-sm font-medium hover:bg-muted"
+          className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
         >
           Cancel
         </button>
@@ -335,7 +445,7 @@ export default function RequestEditForm({
         <button
           disabled={isPending}
           type="submit"
-          className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isPending ? "Saving..." : "Save Changes"}
         </button>
