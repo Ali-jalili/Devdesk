@@ -23,7 +23,7 @@ async function createCollection({
 async function getCollections(workspaceId: string) {
   const { data, error } = await supabase
     .from("collections")
-    .select("*")
+    .select("*,requests(count)")
     .eq("workspace_id", workspaceId);
 
   if (error) throw new Error(error.message);
