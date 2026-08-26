@@ -11,6 +11,9 @@ type Request = {
   params: Record<string, string>;
   body: string;
   description: string;
+  example_request: string;
+  example_response: string;
+  notes: string;
   collection_id: string;
   created_at: string;
 };
@@ -109,6 +112,24 @@ export default function RequestView({
 
         <p className="mt-3 text-sm text-muted-foreground">
           {data.description || "No description"}
+        </p>
+
+        <h2 className="font-semibold">ExampleRequest</h2>
+
+        <p className="mt-3 text-sm text-muted-foreground">
+          {data.example_request || "No ExampleRequest"}
+        </p>
+
+        <h2 className="font-semibold">ExampleResponse</h2>
+
+        <p className="mt-3 text-sm text-muted-foreground">
+          {data.example_response || "No ExampleResponse"}
+        </p>
+
+        <h2 className="font-semibold">Notes</h2>
+
+        <p className="mt-3 text-sm text-muted-foreground">
+          {data.notes || "No Notes"}
         </p>
       </section>
 

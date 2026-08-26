@@ -16,6 +16,7 @@ export default function RequestDetail() {
 
   const { workspaceId, collectionId, requestId } = useParams();
   const { data, isLoading } = useGetRequest(requestId);
+  console.log(data);
 
   if (isLoading) {
     return <Loading />;

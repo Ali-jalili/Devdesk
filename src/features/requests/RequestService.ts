@@ -10,6 +10,9 @@ async function createRequest({
   params,
   body,
   description,
+  example_request,
+  example_response,
+  notes,
   collectionId,
 }: {
   name: string;
@@ -19,6 +22,9 @@ async function createRequest({
   params: Record<string, string>;
   body: string;
   description: string;
+  example_request: string;
+  example_response: string;
+  notes: string;
   collectionId: string;
 }) {
   const { data, error } = await supabase.from("requests").insert({
@@ -29,6 +35,9 @@ async function createRequest({
     params: params,
     body: body,
     description: description,
+    example_request: example_request,
+    example_response: example_response,
+    notes: notes,
     collection_id: collectionId,
   });
 
@@ -67,6 +76,9 @@ async function updateRequest(
     params: Record<string, string>;
     body: string;
     description: string;
+    example_request: string;
+    example_response: string;
+    notes: string;
   },
 ) {
   const { data, error } = await supabase

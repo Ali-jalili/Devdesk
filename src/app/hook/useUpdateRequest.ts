@@ -20,6 +20,9 @@ function useUpdateRequest() {
         params: Record<string, string>;
         body: string;
         description: string;
+        example_request: string;
+        example_response: string;
+        notes: string;
       };
     }) => updateRequest(requestId, data),
 

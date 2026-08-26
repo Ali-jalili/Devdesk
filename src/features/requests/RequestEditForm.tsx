@@ -21,6 +21,9 @@ type FormData = {
   }[];
   body: string;
   description: string;
+  example_request: string;
+  example_response: string;
+  notes: string;
 };
 
 interface RequestEditFormProps {
@@ -32,6 +35,9 @@ interface RequestEditFormProps {
     params: Record<string, string>;
     body: string;
     description: string;
+    example_request: string;
+    example_response: string;
+    notes: string;
   };
 
   onSuccess: () => void;
@@ -62,6 +68,9 @@ export default function RequestEditForm({
       })),
       body: data.body,
       description: data.description,
+      example_request: data.example_request,
+      example_response: data.example_response,
+      notes: data.notes,
     },
   });
 
@@ -94,6 +103,9 @@ export default function RequestEditForm({
       params: convertKeyValueArrayToObject(formData.params),
       body: formData.body,
       description: formData.description,
+      example_request: formData.example_request,
+      example_response: formData.example_response,
+      notes: formData.notes,
     };
 
     mutate(
@@ -250,11 +262,30 @@ export default function RequestEditForm({
 
       <div className="rounded-xl border border-border bg-card p-6">
         <h3 className="mb-3 font-semibold">Description</h3>
+        <label className="text-sm font-semibold">Description</label>
 
         <textarea
           {...register("description")}
-          rows={3}
-          className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+          className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
+          placeholder="Explain what this request does..."
+        />
+        <label className="text-sm font-semibold">ExampleRequest</label>
+        <textarea
+          {...register("example_request")}
+          className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
+          placeholder="Explain what this request does..."
+        />
+        <label className="text-sm font-semibold">ExampleResponse</label>
+        <textarea
+          {...register("example_response")}
+          className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
+          placeholder="Explain what this request does..."
+        />
+        <label className="text-sm font-semibold">Note</label>
+        <textarea
+          {...register("notes")}
+          className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
+          placeholder="Explain what this request does..."
         />
       </div>
 

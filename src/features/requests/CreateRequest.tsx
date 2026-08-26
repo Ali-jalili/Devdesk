@@ -26,6 +26,9 @@ export default function CreateRequest() {
     }[];
     body: string;
     description: string;
+    example_request: string;
+    example_response: string;
+    notes: string;
   };
 
   const { register, control, handleSubmit, reset } = useForm<FormData>({
@@ -83,6 +86,9 @@ export default function CreateRequest() {
       body: data.body,
 
       description: data.description,
+      example_request: data.example_request,
+      example_response: data.example_response,
+      notes: data.notes,
 
       collectionId: collectionId!,
     };
@@ -267,8 +273,26 @@ export default function CreateRequest() {
         <section className="rounded-xl border border-border p-6">
           <label className="text-sm font-semibold">Description</label>
 
-          <input
+          <textarea
             {...register("description")}
+            className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
+            placeholder="Explain what this request does..."
+          />
+          <label className="text-sm font-semibold">ExampleRequest</label>
+          <textarea
+            {...register("example_request")}
+            className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
+            placeholder="Explain what this request does..."
+          />
+          <label className="text-sm font-semibold">ExampleResponse</label>
+          <textarea
+            {...register("example_response")}
+            className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
+            placeholder="Explain what this request does..."
+          />
+          <label className="text-sm font-semibold">Note</label>
+          <textarea
+            {...register("notes")}
             className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
             placeholder="Explain what this request does..."
           />

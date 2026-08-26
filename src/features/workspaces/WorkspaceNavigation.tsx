@@ -11,10 +11,7 @@ const navigation = [
     label: "Collections",
     path: "collections",
   },
-  {
-    label: "Requests",
-    path: "requests",
-  },
+
   {
     label: "Environments",
     path: "environments",
