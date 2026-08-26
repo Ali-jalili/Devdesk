@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 function useWorkspaceDetails(workspaceId?: string) {
   const { data, isLoading, error } = useQuery({
     queryFn: () => getWorkspaceById(workspaceId!),
-    queryKey: ["WorkSpaceDetails", workspaceId],
+    queryKey: ["workspaceDetails", workspaceId],
     enabled: !!workspaceId,
   });
 

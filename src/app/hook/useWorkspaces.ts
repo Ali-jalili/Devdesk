@@ -1,15 +1,23 @@
 /** @format */
 
 import { useQuery } from "@tanstack/react-query";
-import { getWorkspaces } from "../../features/workspaces/WorkspaceService";
+import useAuth from "@/app/context/useAuth";
+import { getWorkspaces } from "@/features/workspaces/WorkspaceService";
 
-function useGetWorkspaces() {
+export default function useWorkspaces() {
+  const { user } = useAuth();
+
   const { data, isLoading, error } = useQuery({
+    queryKey: ["workspaces", user?.id],
+
     queryFn: getWorkspaces,
-    queryKey: ["workspaces"],
+
+    enabled: !!user,
   });
 
-  return { data, isLoading, error };
+  return {
+    data,
+    isLoading,
+    error,
+  };
 }
-
-export default useGetWorkspaces;

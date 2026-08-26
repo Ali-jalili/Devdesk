@@ -20,7 +20,10 @@ function useUpdateWorkspace() {
 
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ["WorkSpaceDetails", variables.workspaceId],
+        queryKey: ["workspaceDetails", variables.workspaceId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["workspaces"],
       });
     },
   });
