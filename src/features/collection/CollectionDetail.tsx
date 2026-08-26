@@ -100,7 +100,7 @@ export default function CollectionDetail() {
           </div>
         ) : (
           <RequestList
-            data={data!}
+            data={data || []}
             workspaceId={workspaceId!}
             collectionId={collectionId!}
           />

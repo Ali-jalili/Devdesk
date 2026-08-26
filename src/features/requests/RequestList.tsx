@@ -1,5 +1,6 @@
 /** @format */
 
+import Loading from "@/ui/Loading";
 import { useNavigate } from "react-router-dom";
 
 type Request = {
@@ -27,9 +28,12 @@ export default function RequestList({
   collectionId,
 }: RequestListProps) {
   const navigate = useNavigate();
+
+  if (!data) return <Loading />;
+
   return (
     <div className="space-y-4">
-      {data.map((item) => (
+      {data?.map((item) => (
         <div
           key={item.id}
           className="rounded-xl border border-border bg-card p-5"
