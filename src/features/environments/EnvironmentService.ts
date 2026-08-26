@@ -31,3 +31,18 @@ export async function getEnvironments(workspaceId: string) {
 
   return data;
 }
+
+/**
+ * Delete Environment
+ */
+
+export async function deleteEnvironment(environmentId: string) {
+  const { error } = await supabase
+    .from("environments")
+    .delete()
+    .eq("id", environmentId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
