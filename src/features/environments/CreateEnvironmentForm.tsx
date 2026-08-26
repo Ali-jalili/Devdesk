@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { FiGlobe, FiSave } from "react-icons/fi";
 
 import useCreateEnvironment from "@/app/hook/useCreateEnvironment";
 
@@ -33,7 +34,6 @@ export default function CreateEnvironmentForm({
       {
         onSuccess() {
           toast.success("Environment created");
-
           reset();
           onSuccess();
         },
@@ -48,19 +48,47 @@ export default function CreateEnvironmentForm({
   return (
     <form
       onSubmit={handleSubmit(submitForm)}
-      className="rounded-xl border border-border p-5 space-y-4"
+      className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
     >
-      <input
-        {...register("name")}
-        placeholder="Environment name"
-        className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-      />
+      <div className="mb-6 flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+          <FiGlobe size={20} />
+        </div>
 
-      <div className="flex justify-end gap-3">
+        <div>
+          <h2 className="text-base font-semibold text-slate-900">
+            Create Environment
+          </h2>
+
+          <p className="text-sm text-slate-500">
+            Add a new environment for this workspace.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <label className="mb-2 block text-sm font-semibold text-slate-800">
+          Environment Name
+        </label>
+
+        <input
+          {...register("name", {
+            required: true,
+          })}
+          placeholder="e.g. Development"
+          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+        />
+
+        <p className="mt-2 text-xs text-slate-400">
+          Use a clear name like Development, Staging, or Production.
+        </p>
+      </div>
+
+      <div className="mt-6 flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-lg border border-border px-4 py-2 text-sm"
+          className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
         >
           Cancel
         </button>
@@ -68,9 +96,11 @@ export default function CreateEnvironmentForm({
         <button
           disabled={isPending}
           type="submit"
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {isPending ? "Creating..." : "Save"}
+          <FiSave size={16} />
+
+          {isPending ? "Creating..." : "Create Environment"}
         </button>
       </div>
     </form>

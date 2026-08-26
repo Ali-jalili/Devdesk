@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { FiKey, FiPlus, FiSave } from "react-icons/fi";
 
 import useCreateVariable from "@/app/hook/useCreateVariable";
 
@@ -32,13 +33,10 @@ export default function CreateVariableForm({
         key: data.key,
         value: data.value,
       },
-
       {
         onSuccess() {
           toast.success("Variable created");
-
           reset();
-
           onSuccess();
         },
 
@@ -52,34 +50,62 @@ export default function CreateVariableForm({
   return (
     <form
       onSubmit={handleSubmit(submitForm)}
-      className="space-y-4 rounded-xl border border-border p-5"
+      className="border-b border-slate-200 pb-5"
     >
-      <input
-        {...register("key")}
-        placeholder="Variable key"
-        className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-      />
+      <div className="mb-4 flex items-center gap-2">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
+          <FiPlus size={16} />
+        </div>
 
-      <input
-        {...register("value")}
-        placeholder="Variable value"
-        className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-      />
+        <div>
+          <h3 className="text-sm font-semibold text-slate-900">Add Variable</h3>
 
-      <div className="flex justify-end gap-3">
+          <p className="text-xs text-slate-500">
+            Add a key and value for this environment.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="relative">
+          <FiKey className="absolute left-3 top-3.5 text-slate-400" size={15} />
+
+          <input
+            {...register("key", {
+              required: true,
+            })}
+            placeholder="Variable key"
+            className="w-full rounded-xl border border-slate-200 py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+          />
+        </div>
+
+        <div>
+          <input
+            {...register("value", {
+              required: true,
+            })}
+            placeholder="Variable value"
+            className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+          />
+        </div>
+      </div>
+
+      <div className="mt-4 flex justify-end gap-2">
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-lg border border-border px-4 py-2 text-sm"
+          className="rounded-lg px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100"
         >
           Cancel
         </button>
 
         <button
-          type="submit"
           disabled={isPending}
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
+          type="submit"
+          className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:opacity-50"
         >
+          <FiSave size={15} />
+
           {isPending ? "Saving..." : "Save"}
         </button>
       </div>
