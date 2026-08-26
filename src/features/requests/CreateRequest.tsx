@@ -269,33 +269,67 @@ export default function CreateRequest() {
           />
         </section>
 
-        {/* Description */}
+        {/* Documentation */}
         <section className="rounded-xl border border-border p-6">
-          <label className="text-sm font-semibold">Description</label>
+          <div>
+            <h2 className="text-sm font-semibold">Documentation</h2>
 
-          <textarea
-            {...register("description")}
-            className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
-            placeholder="Explain what this request does..."
-          />
-          <label className="text-sm font-semibold">ExampleRequest</label>
-          <textarea
-            {...register("example_request")}
-            className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
-            placeholder="Explain what this request does..."
-          />
-          <label className="text-sm font-semibold">ExampleResponse</label>
-          <textarea
-            {...register("example_response")}
-            className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
-            placeholder="Explain what this request does..."
-          />
-          <label className="text-sm font-semibold">Note</label>
-          <textarea
-            {...register("notes")}
-            className="mt-3 w-full rounded-lg border border-border px-3 py-2 text-sm"
-            placeholder="Explain what this request does..."
-          />
+            <p className="mt-1 text-sm text-muted-foreground">
+              Add information to help other developers understand this endpoint.
+            </p>
+          </div>
+
+          <div className="mt-5 space-y-5">
+            <div>
+              <label className="text-sm font-medium">Description</label>
+
+              <textarea
+                {...register("description")}
+                rows={3}
+                className="mt-2 w-full rounded-lg border border-border px-3 py-2 text-sm"
+                placeholder="Explain what this request does..."
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium">Example Request</label>
+
+              <textarea
+                {...register("example_request")}
+                rows={6}
+                className="mt-2 w-full rounded-lg border border-border px-3 py-2 text-sm font-mono"
+                placeholder={`{
+  "email": "user@example.com",
+  "password": "123456"
+}`}
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium">Example Response</label>
+
+              <textarea
+                {...register("example_response")}
+                rows={6}
+                className="mt-2 w-full rounded-lg border border-border px-3 py-2 text-sm font-mono"
+                placeholder={`{
+  "token": "abc123",
+  "user": {}
+}`}
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium">Notes</label>
+
+              <textarea
+                {...register("notes")}
+                rows={3}
+                className="mt-2 w-full rounded-lg border border-border px-3 py-2 text-sm"
+                placeholder="Add important notes about this endpoint..."
+              />
+            </div>
+          </div>
         </section>
 
         <div className="flex justify-end">
