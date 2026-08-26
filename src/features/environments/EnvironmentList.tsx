@@ -1,6 +1,7 @@
 /** @format */
 
 import { useNavigate } from "react-router-dom";
+import EnvironmentDeleteButton from "./EnvironmentDeleteButton";
 
 type Environment = {
   id: string;
@@ -35,32 +36,36 @@ export default function EnvironmentList({ data }: EnvironmentListProps) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       {data.map((item) => (
-        <button
+        <div
           key={item.id}
-          type="button"
-          onClick={() =>
-            navigate(
-              `/app/workspaces/${item.workspace_id}/environments/${item.id}`,
-            )
-          }
           className="group rounded-xl border border-border bg-background p-5 text-left transition hover:border-primary/50 hover:bg-muted/50"
         >
           <div className="flex items-center justify-between">
             <h3 className="text-base font-semibold">{item.name}</h3>
 
-            <span className="text-sm text-muted-foreground transition group-hover:text-primary">
+            <button
+              type="button"
+              onClick={() =>
+                navigate(
+                  `/app/workspaces/${item.workspace_id}/environments/${item.id}`,
+                )
+              }
+              className="text-sm text-muted-foreground transition group-hover:text-primary"
+            >
               →
-            </span>
+            </button>
           </div>
 
           <p className="mt-3 text-sm text-muted-foreground">
             Manage environment variables
           </p>
 
-          <p className="mt-4 text-xs text-muted-foreground">
+          <p className="mt-4 mb-4 text-xs text-muted-foreground">
             Created {new Date(item.created_at).toLocaleDateString()}
           </p>
-        </button>
+
+          <EnvironmentDeleteButton environmentId={item.id} />
+        </div>
       ))}
     </div>
   );
