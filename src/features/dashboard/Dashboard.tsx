@@ -4,6 +4,7 @@ import useDashboard from "./useDashboard";
 import RecentActivity from "./RecentActivity";
 import StatCards from "./StatCards";
 import WorkspaceSnapshot from "./WorkspaceSnapshot";
+import useWorkspaceSnapshot from "./useWorkspaceSnapshot";
 
 const activities = [
   {
@@ -21,7 +22,8 @@ const activities = [
 ];
 export default function Dashboard() {
   const { data, isLoading } = useDashboard();
-
+  const { data: workspace, isLoading: workspaceLoading } =
+    useWorkspaceSnapshot();
   if (isLoading) {
     return <div className="p-6">Loading...</div>;
   }
@@ -43,7 +45,7 @@ export default function Dashboard() {
       <div className="grid gap-6 lg:grid-cols-2">
         <RecentActivity activities={activities} />
 
-        <WorkspaceSnapshot workspace={workspaceData} />
+        <WorkspaceSnapshot workspace={workspace} />
       </div>
     </div>
   );
