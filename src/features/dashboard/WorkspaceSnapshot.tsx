@@ -9,7 +9,7 @@ interface WorkspaceSnapshotProps {
     requests: number;
     environments: number;
     lastActivity: string;
-  };
+  } | null;
 }
 
 export default function WorkspaceSnapshot({
