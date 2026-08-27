@@ -116,7 +116,7 @@ Implemented:
 
 Clone the repository:
 
-```bash
+
 git clone https://github.com/Ali-jalili/devdesk.git
 🧭 Future Improvements
 
