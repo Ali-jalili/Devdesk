@@ -1,7 +1,10 @@
 /** @format */
 
 import toast from "react-hot-toast";
-import useAuth from "@/app/context/useAuth";
+import { useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+
 import {
   FiBriefcase,
   FiChevronLeft,
@@ -10,8 +13,9 @@ import {
   FiLogOut,
   FiX,
 } from "react-icons/fi";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+
+import useAuth from "@/app/context/useAuth";
+import WorkspaceSidebarNav from "./WorkspaceSidebarNav";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -21,8 +25,16 @@ interface SidebarProps {
 }
 
 const navigation = [
-  { label: "Dashboard", to: "/app/dashboard", icon: FiGrid },
-  { label: "Workspaces", to: "/app/workspaces", icon: FiBriefcase },
+  {
+    label: "Dashboard",
+    to: "/app/dashboard",
+    icon: FiGrid,
+  },
+  {
+    label: "Workspaces",
+    to: "/app/workspaces",
+    icon: FiBriefcase,
+  },
 ];
 
 export default function Sidebar({
@@ -32,8 +44,14 @@ export default function Sidebar({
   onClose,
 }: SidebarProps) {
   const { user, handleSignOut } = useAuth();
+
+  const { workspaceId } = useParams<{
+    workspaceId?: string;
+  }>();
+
   const userName = user?.user_metadata?.name || "User";
   const avatar = userName.charAt(0).toUpperCase();
+
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   async function logoutHandler() {
@@ -50,7 +68,6 @@ export default function Sidebar({
 
   return (
     <>
-      {/* Overlay for mobile */}
       {mobileOpen && (
         <button
           type="button"
@@ -65,7 +82,18 @@ export default function Sidebar({
         />
       )}
 
-      <aside
+      <motion.aside
+        initial={{
+          x: -20,
+          opacity: 0,
+        }}
+        animate={{
+          x: 0,
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.2,
+        }}
         className={`
           fixed left-0 top-16 z-50
           h-[calc(100vh-64px)]
@@ -73,19 +101,15 @@ export default function Sidebar({
           bg-white
           transition-all duration-200
 
-          /* Mobile fixed width */
           w-72
 
-          /* Tablet & up: width depends on collapsed */
           md:sticky md:z-30
           ${collapsed ? "md:w-[72px]" : "md:w-60"}
 
-          /* Slide in/out for mobile */
           ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
       >
         <div className="flex h-full flex-col p-3">
-          {/* Mobile close button */}
           <div className="mb-3 flex justify-end md:hidden">
             <button
               type="button"
@@ -105,6 +129,7 @@ export default function Sidebar({
           <nav className="space-y-1">
             {navigation.map((item) => {
               const Icon = item.icon;
+
               return (
                 <NavLink
                   key={item.to}
@@ -113,134 +138,125 @@ export default function Sidebar({
                   onClick={onClose}
                   title={collapsed ? item.label : undefined}
                   className={({ isActive }) => `
-                    flex items-center
-                    rounded-lg
-                    px-3 py-2.5
-                    text-sm font-medium
-                    transition
-                    ${collapsed ? "md:justify-center" : ""}
-                    ${
-                      isActive
-                        ? "bg-indigo-50 text-indigo-600"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
-                    }
-                  `}
+          flex items-center
+          rounded-lg
+          px-3 py-2.5
+          text-sm font-medium
+          transition
+
+          ${collapsed ? "md:justify-center" : ""}
+
+          ${
+            isActive
+              ? "bg-indigo-50 text-indigo-600"
+              : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
+          }
+        `}
                 >
                   <Icon className="h-[18px] w-[18px] shrink-0" />
+
                   {!collapsed && <span className="ml-3">{item.label}</span>}
                 </NavLink>
               );
             })}
-          </nav>
 
-          {/* Bottom section */}
+            <AnimatePresence mode="wait">
+              {workspaceId && (
+                <motion.div
+                  key="workspace-navigation"
+                  initial={{
+                    opacity: 0,
+                    height: 0,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    height: "auto",
+                  }}
+                  exit={{
+                    opacity: 0,
+                    height: 0,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                  className="mt-4 overflow-hidden border-t border-slate-200 pt-4"
+                >
+                  {!collapsed && (
+                    <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                      Workspace
+                    </p>
+                  )}
+
+                  <WorkspaceSidebarNav onClose={onClose} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </nav>
           <div className="mt-auto space-y-3">
-            {/* ------ User area (optimized for mobile) ------ */}
-            <div>
-              {/* Mobile & tablet: compact row with avatar + logout icon */}
-              <div className="flex items-center justify-between px-1 md:hidden">
+            <div
+              className={`
+                hidden md:block
+                rounded-xl
+                bg-slate-50/80
+                p-3
+                transition
+                hover:bg-slate-100/80
+
+                ${collapsed ? "md:p-2" : ""}
+              `}
+            >
+              <div
+                className={`
+                  flex items-center gap-3
+                  ${collapsed ? "md:justify-center" : ""}
+                `}
+              >
                 <div
                   className="
-                    flex h-8 w-8 shrink-0
+                    flex h-10 w-10 shrink-0
                     items-center justify-center
                     rounded-full
                     bg-indigo-100
-                    text-xs font-bold
+                    text-base font-bold
                     text-indigo-600
-                    ring-2 ring-white
-                    shadow-sm
                   "
                 >
                   {avatar}
                 </div>
+
+                {!collapsed && (
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-semibold text-slate-900">
+                      {userName}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {!collapsed && (
                 <button
                   type="button"
                   onClick={logoutHandler}
                   disabled={isLoggingOut}
-                  aria-label="Logout"
                   className="
-                    rounded-lg p-2
-                    text-slate-400
+                    mt-2
+                    flex w-full items-center justify-center gap-2
+                    rounded-lg
+                    px-3 py-1.5
+                    text-sm font-medium
+                    text-red-600
                     transition
-                    hover:bg-red-50 hover:text-red-500
-                    disabled:opacity-50
+                    hover:bg-red-50
+                    disabled:opacity-60
                   "
                 >
-                  <FiLogOut className="h-5 w-5" />
+                  <FiLogOut className="h-4 w-4" />
+
+                  {isLoggingOut ? "Logging out..." : "Logout"}
                 </button>
-              </div>
-
-              {/* Desktop (md+) : full user card with name + logout button */}
-              <div
-                className={`
-                  hidden md:block
-                  rounded-xl
-                  bg-slate-50/80
-                  p-3
-                  transition
-                  hover:bg-slate-100/80
-                  ${collapsed ? "md:p-2" : ""}
-                `}
-              >
-                <div
-                  className={`
-                    flex items-center gap-3
-                    ${collapsed ? "md:justify-center" : ""}
-                  `}
-                >
-                  {/* Avatar */}
-                  <div
-                    className="
-                      flex h-10 w-10 shrink-0
-                      items-center justify-center
-                      rounded-full
-                      bg-indigo-100
-                      text-base font-bold
-                      text-indigo-600
-                      ring-2 ring-white
-                      shadow-sm
-                    "
-                  >
-                    {avatar}
-                  </div>
-
-                  {/* User name (hidden when collapsed) */}
-                  {!collapsed && (
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-semibold text-slate-900">
-                        {userName}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Logout button (hidden when collapsed) */}
-                {!collapsed && (
-                  <button
-                    type="button"
-                    onClick={logoutHandler}
-                    disabled={isLoggingOut}
-                    className="
-                      mt-2
-                      flex w-full items-center justify-center gap-2
-                      rounded-lg
-                      border border-transparent
-                      px-3 py-1.5
-                      text-sm font-medium
-                      text-red-600
-                      transition
-                      hover:border-red-200 hover:bg-red-50
-                      disabled:opacity-60
-                    "
-                  >
-                    <FiLogOut className="h-4 w-4" />
-                    {isLoggingOut ? "Logging out..." : "Logout"}
-                  </button>
-                )}
-              </div>
+              )}
             </div>
 
-            {/* Collapse toggle (desktop only) */}
             <div className="hidden border-t border-slate-200 pt-3 md:block">
               <button
                 type="button"
@@ -254,6 +270,7 @@ export default function Sidebar({
                   transition
                   hover:bg-slate-50
                   hover:text-slate-950
+
                   ${collapsed ? "justify-center" : ""}
                 `}
               >
@@ -262,6 +279,7 @@ export default function Sidebar({
                 ) : (
                   <>
                     <FiChevronLeft className="h-5 w-5" />
+
                     <span className="ml-3">Collapse</span>
                   </>
                 )}
@@ -269,7 +287,7 @@ export default function Sidebar({
             </div>
           </div>
         </div>
-      </aside>
+      </motion.aside>
     </>
   );
 }
