@@ -23,7 +23,11 @@ export default function CollectionDetail() {
 
   const { data: collection, isLoading } = useGetCollection(collectionId!);
 
-  const { data: requests } = useGetRequests(collectionId);
+  const {
+    data: requests,
+    isLoading: isRequestsLoading,
+    error: requestsError,
+  } = useGetRequests(collectionId);
 
   if (isLoading) {
     return (
@@ -111,7 +115,15 @@ export default function CollectionDetail() {
 
         {/* Request List */}
 
-        {hasRequests ? (
+        {isRequestsLoading ? (
+          <div className="mt-6 rounded-xl border border-dashed border-slate-300 px-6 py-12 text-center text-sm text-slate-500">
+            Loading requests...
+          </div>
+        ) : requestsError ? (
+          <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-6 py-4 text-sm text-red-700">
+            {requestsError.message}
+          </div>
+        ) : hasRequests ? (
           <div className="mt-6">
             <RequestList
               data={filteredRequests ?? []}

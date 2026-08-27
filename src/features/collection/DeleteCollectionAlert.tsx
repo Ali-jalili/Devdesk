@@ -44,7 +44,14 @@ function DeleteCollectionAlert({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog
+      open={open}
+      onOpenChange={(value) => {
+        if (!isPending) {
+          onOpenChange(value);
+        }
+      }}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete collection?</AlertDialogTitle>
@@ -57,7 +64,10 @@ function DeleteCollectionAlert({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <AlertDialogAction onClick={handleDeleteCollection}>
+          <AlertDialogAction
+            disabled={isPending}
+            onClick={handleDeleteCollection}
+          >
             {isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>

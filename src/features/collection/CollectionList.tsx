@@ -115,6 +115,7 @@ function CollectionList({ collections }: CollectionListProps) {
                 onClick={() =>
                   setOpenMenuId(openMenuId === item.id ? null : item.id)
                 }
+                aria-label={`Actions for ${item.name}`}
                 className="
                   rounded-lg
                   p-2

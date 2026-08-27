@@ -7,6 +7,8 @@ import { useParams } from "react-router-dom";
 import { FiFolderPlus, FiPlus } from "react-icons/fi";
 
 import useGetCollections from "@/app/hook/useGetCollections";
+import Loading from "@/ui/Loading";
+import ErrorMessage from "@/components/ErrorMessage";
 
 import CollectionList from "./CollectionList";
 
@@ -19,10 +21,22 @@ function Collections() {
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const { data: collections } = useGetCollections(workspaceId);
+  const {
+    data: collections,
+    isLoading,
+    error,
+  } = useGetCollections(workspaceId);
 
   if (!workspaceId) {
     return null;
+  }
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorMessage message={error.message} />;
   }
 
   function openCreateModal() {

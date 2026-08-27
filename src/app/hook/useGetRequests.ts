@@ -8,6 +8,7 @@ function useGetRequests(collectionId?: string) {
   const { data, error, isLoading } = useQuery({
     queryFn: () => getRequests(collectionId!),
     queryKey: ["requests", collectionId],
+    enabled: !!collectionId,
   });
 
   return { data, error, isLoading };
