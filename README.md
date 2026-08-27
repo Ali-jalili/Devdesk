@@ -121,27 +121,27 @@ git clone https://github.com/Ali-jalili/devdesk.git
 
 ## 🧭 Future Improvements
 Potential future improvements:
-API request execution engine
-Response viewer
-Request history
-Advanced environment management
-API testing workflows
-Shared workspaces
-Team collaboration
+- API request execution engine
+- Response viewer
+- Request history
+- Advanced environment management
+- API testing workflows
+- Shared workspaces
+- Team collaboration
 
 
 ## 🎯 Project Goal
 DevDesk was built to explore building a production-style SaaS application with:
-Modern React architecture
-TypeScript
-Authentication flows
-Database relationships
-Scalable frontend structure
-Real-world application patterns
+- Modern React architecture
+- TypeScript
+- Authentication flows
+- Database relationships
+- Scalable frontend structure
+- Real-world application patterns
 
 
 ## 👨‍💻 Author
-Your Name:
+- Your Name:
 Ali-jalili 
-GitHub:
+ - GitHub:
 https://github.com/Ali-jalili
