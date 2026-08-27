@@ -1,15 +1,19 @@
 /** @format */
 
 import { useState } from "react";
+
 import { Outlet, useParams } from "react-router-dom";
+
 import { FiEdit3 } from "react-icons/fi";
-import WorkspaceNavigation from "./WorkspaceNavigation";
+
 import useWorkspaceDetails from "@/app/hook/useWorkspaceDetails";
-import Loading from "@/ui/Loading";
-import ErrorMessage from "@/components/ErrorMessage";
-import EditWorkspaceModal from "./EditWorkspaceModal";
 import useUpdateWorkspaceEnvironment from "@/app/hook/useUpdateWorkspaceEnvironment";
 import useGetEnvironments from "@/app/hook/useGetEnvironments";
+
+import Loading from "@/ui/Loading";
+import ErrorMessage from "@/components/ErrorMessage";
+
+import EditWorkspaceModal from "./EditWorkspaceModal";
 
 export default function WorkspaceLayout() {
   const { workspaceId } = useParams<{
@@ -19,6 +23,7 @@ export default function WorkspaceLayout() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const { data, isLoading, error } = useWorkspaceDetails(workspaceId);
+
   const { data: environments } = useGetEnvironments(workspaceId);
 
   const { mutate: updateEnvironment, isPending: isUpdatingEnvironment } =
@@ -40,7 +45,6 @@ export default function WorkspaceLayout() {
     <main className="min-h-[calc(100vh-4rem)] bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         {/* Workspace Header */}
-
         <section className="border-b border-slate-200 pb-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
@@ -61,6 +65,8 @@ export default function WorkspaceLayout() {
                   {data.description}
                 </p>
               )}
+
+              {/* Environment Switch */}
               {environments && environments.length > 0 && (
                 <div className="mt-4 flex items-center gap-3">
                   <span className="text-sm font-medium text-slate-500">
@@ -77,19 +83,19 @@ export default function WorkspaceLayout() {
                       })
                     }
                     className="
-        rounded-lg
-        border
-        border-slate-200
-        bg-white
-        px-3
-        py-2
-        text-sm
-        font-medium
-        text-slate-700
-        outline-none
-        transition
-        focus:border-indigo-400
-      "
+                      rounded-lg
+                      border border-slate-200
+                      bg-white
+                      px-3
+                      py-2
+                      text-sm
+                      font-medium
+                      text-slate-700
+                      outline-none
+                      transition
+                      focus:border-indigo-400
+                      disabled:opacity-60
+                    "
                   >
                     <option value="">Select environment</option>
 
@@ -106,19 +112,30 @@ export default function WorkspaceLayout() {
             <button
               type="button"
               onClick={() => setIsEditModalOpen(true)}
-              className="inline-flex w-fit items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-slate-950"
+              className="
+                inline-flex
+                w-fit
+                items-center
+                gap-2
+                rounded-lg
+                border
+                border-slate-200
+                bg-white
+                px-3
+                py-2
+                text-sm
+                font-medium
+                text-slate-700
+                transition
+                hover:bg-slate-50
+                hover:text-slate-950
+              "
             >
               <FiEdit3 className="h-4 w-4" />
               Edit
             </button>
           </div>
         </section>
-
-        {/* Workspace Navigation */}
-
-        <div className="mt-5">
-          <WorkspaceNavigation />
-        </div>
 
         {/* Current Page */}
 

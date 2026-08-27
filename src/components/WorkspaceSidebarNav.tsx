@@ -1,6 +1,6 @@
 /** @format */
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import { FiGrid, FiFolder, FiGlobe } from "react-icons/fi";
 
@@ -29,6 +29,8 @@ interface WorkspaceSidebarNavProps {
 export default function WorkspaceSidebarNav({
   onClose,
 }: WorkspaceSidebarNavProps) {
+  const { workspaceId } = useParams<{ workspaceId: string }>();
+
   return (
     <nav className="space-y-1">
       {navigation.map((item) => {
@@ -37,7 +39,7 @@ export default function WorkspaceSidebarNav({
         return (
           <NavLink
             key={item.label}
-            to={item.path}
+            to={`/app/workspaces/${workspaceId}${item.path ? `/${item.path}` : ""}`}
             end={item.path === ""}
             onClick={onClose}
             className={({ isActive }) => `
