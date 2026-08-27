@@ -1,147 +1,254 @@
 # DevDesk
 
-A modern API workflow management platform for organizing API projects, workspaces, collections, requests, and environments.
+A Developer Workflow Workspace for organizing and managing API information during the development process.
 
-DevDesk is a developer-focused SaaS application designed to help teams and individuals manage API workflows in a structured workspace environment.
+DevDesk helps developers keep API-related information structured in one centralized workspace, including API requests, collections, environments, and technical context.
 
-Instead of keeping API information scattered across different places, DevDesk provides a centralized system for organizing API documentation, request structures, and environment configurations.
+The goal of DevDesk is to improve API workflow organization and help developers maintain project context during development.
+
+DevDesk is not an API client and is not designed to replace tools like Postman. Its focus is managing API development workflow, organizing requests, and keeping important API information in one place.
 
 ---
 
 ## 🚀 Live Demo
 
-Production:
-
-[https://your-devdesk-url.vercel.app](https://devdesk-omega.vercel.app/)
+https://devdesk-omega.vercel.app/
 
 ---
 
-## ✨ Features
+# ✨ Features
 
 ## Authentication
 
-- User registration and login
-- Protected application routes
+DevDesk provides secure user access through authentication.
+
+Features:
+
+- User registration
+- Login
+- Logout
 - Session management
-- Secure authentication using Supabase Auth
+- Protected routes
 
 ---
 
 ## Workspace Management
 
-- Create multiple workspaces
-- View workspace overview
-- Edit workspace information
-- Manage workspace-specific resources
-- Workspace-focused navigation experience
+Workspaces provide a dedicated space for organizing API-related information.
+
+Features:
+
+- Create workspace
+- View workspaces
+- Update workspace information
+- Manage workspace resources
 
 ---
 
-## Collections
+## Collection Management
 
-- Organize API endpoints into collections
-- Create and manage API groups
-- Navigate through collection structures
-- Manage collection details inside workspaces
+Collections allow developers to organize related API requests into structured groups.
+
+Features:
+
+- Create collections
+- Manage collections
+- Organize requests inside collections
 
 ---
 
-## Requests Management
+## Request Management
 
-- Create and organize API request documentation
-- Structure requests inside collections
-- Manage request information and details
+Requests are the core entities of DevDesk.
+
+Each request stores the information developers need to understand and maintain API endpoints.
+
+Request information includes:
+
+- Name
+- HTTP Method
+- URL
+- Headers
+- Params
+- Body
+- Description
+
+The purpose is not only storing endpoints, but preserving the technical context behind APIs.
 
 ---
 
 ## Environment Management
 
-- Create workspace environments
-- Manage environment configurations
-- Switch between workspace environments
-- Keep API workflows organized per environment
+Environments help developers manage different API configurations.
+
+Features:
+
+- Create environments
+- Manage environment variables
+- Organize API configurations
 
 ---
 
 ## Dashboard
 
-DevDesk includes a workflow-oriented dashboard designed as a command center instead of a simple statistics page.
+The dashboard works as a workflow-focused command center.
 
-Dashboard provides:
+Instead of repeating management pages, it helps developers continue their workflow by providing:
 
-- Continue working with the active workspace
-- Workspace readiness tracking
+- Active workspace context
+- Workspace readiness status
 - Next recommended action
 - Current workspace overview
-
-The dashboard focuses on helping users continue their workflow instead of repeating management pages.
 
 ---
 
 # 🏗 Architecture
 
-DevDesk follows a feature-based frontend architecture.
+DevDesk follows a Feature-Based React Architecture.
 
+The application is organized around product domains instead of file types.
 
-Each feature contains its own components, hooks, and services to keep the codebase organized and scalable.
+Main domains include:
+
+- Dashboard
+- Workspaces
+- Collections
+- Requests
+- Environments
+
+Each feature is responsible for its own:
+
+- Components
+- Hooks
+- Services
+- Business logic
+
+This structure keeps the codebase scalable, maintainable, and easier to extend.
 
 ---
 
-## 🛠 Tech Stack
+# 🛠 Tech Stack
+
+## Frontend
 
 - React
 - TypeScript
+- Vite
 - React Router
 - Tailwind CSS
+
+## Data Management
+
 - TanStack Query
+
+## Backend / Database
+
 - Supabase
+
+Used for:
+
+- Authentication
+- PostgreSQL Database
+- API Layer
+- Row Level Security
+
+## UI
+
 - Framer Motion
-- Vite
-- pnpm
+
+---
+# ⚡ Engineering Approach
+
+## TypeScript Strategy
+
+TypeScript is used as a core part of the application design.
+
+It is used for:
+
+- Domain modeling
+- Component contracts
+- API responses
+- Data structures
+
+The goal is to create clear and predictable communication between different parts of the application.
 
 ---
 
-## ⚡ Performance
+## Data Flow
+
+DevDesk follows a separated data flow architecture:
+Component
+
+↓
+
+Custom Hook
+
+↓
+
+Service Layer
+
+↓
+
+Supabase
+
+↓
+
+Database
+
+
+This approach keeps UI components separated from data access logic and makes the code easier to maintain.
+
+---
+
+# ⚡ Performance
 
 Implemented:
 
 - Route-based lazy loading
 - Code splitting
-- Query caching with TanStack Query
+- TanStack Query caching
 - Optimized production builds
+- Loading and error state handling
 
 ---
 
-## 📦 Getting Started
+# 🔐 Security
 
-Clone the repository:
+Implemented:
 
+- Protected application routes
+- Environment variable configuration
+- Authentication-based access control
+- Supabase security features
 
-git clone https://github.com/Ali-jalili/devdesk.git
+---
 
-## 🧭 Future Improvements
+# 📦 Getting Started
+pnpm install
+
+# 🧭 Future Improvements
+
 Potential future improvements:
+
 - API request execution engine
 - Response viewer
 - Request history
 - Advanced environment management
 - API testing workflows
 - Shared workspaces
-- Team collaboration
+- Team collaboration features
 
+---
 
-## 🎯 Project Goal
-DevDesk was built to explore building a production-style SaaS application with:
-- Modern React architecture
-- TypeScript
+# 🎯 Project Goal
+
+DevDesk was built to demonstrate the ability to create a production-style frontend application with:
+
+- Clean React architecture
+- TypeScript domain modeling
+- Real-world data management
 - Authentication flows
-- Database relationships
-- Scalable frontend structure
-- Real-world application patterns
+- Scalable application structure
+- Product-oriented development decisions
 
-
-## 👨‍💻 Author
-- Your Name:
-Ali-jalili 
- - GitHub:
-[https://github.com/Ali-jalili](https://github.com/Ali-jalili)
+---
