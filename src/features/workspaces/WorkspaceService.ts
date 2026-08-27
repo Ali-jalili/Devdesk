@@ -56,6 +56,62 @@ async function updateWorkspace(
 }
 
 async function deleteWorkspace(workspaceId: string) {
+  const { data: collections, error: collectionsError } = await supabase
+    .from("collections")
+    .select("id")
+    .eq("workspace_id", workspaceId);
+
+  if (collectionsError) throw new Error(collectionsError.message);
+
+  const collectionIds = collections.map((collection) => collection.id);
+
+  if (collectionIds.length > 0) {
+    const { error: requestsError } = await supabase
+      .from("requests")
+      .delete()
+      .in("collection_id", collectionIds);
+
+    if (requestsError) throw new Error(requestsError.message);
+  }
+
+  const { data: environments, error: environmentsError } = await supabase
+    .from("environments")
+    .select("id")
+    .eq("workspace_id", workspaceId);
+
+  if (environmentsError) throw new Error(environmentsError.message);
+
+  const environmentIds = environments.map((environment) => environment.id);
+
+  if (environmentIds.length > 0) {
+    const { error: variablesError } = await supabase
+      .from("environment_variables")
+      .delete()
+      .in("environment_id", environmentIds);
+
+    if (variablesError) throw new Error(variablesError.message);
+
+    const { error: environmentsDeleteError } = await supabase
+      .from("environments")
+      .delete()
+      .in("id", environmentIds);
+
+    if (environmentsDeleteError) {
+      throw new Error(environmentsDeleteError.message);
+    }
+  }
+
+  if (collectionIds.length > 0) {
+    const { error: collectionsDeleteError } = await supabase
+      .from("collections")
+      .delete()
+      .in("id", collectionIds);
+
+    if (collectionsDeleteError) {
+      throw new Error(collectionsDeleteError.message);
+    }
+  }
+
   const { error } = await supabase
     .from("CreateWorkspace")
     .delete()

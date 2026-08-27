@@ -65,16 +65,24 @@ async function getDashboardStats(userId: string) {
 
 export default getDashboardStats;
 
-export async function getWorkspaceSnapshot(userId: string) {
-  const { data: workspace, error } = await supabase
+export async function getWorkspaceSnapshot(
+  userId: string,
+  workspaceId?: string,
+) {
+  let workspaceQuery = supabase
     .from("CreateWorkspace")
-    .select("id, name")
-    .eq("user_id", userId)
-    .order("created_at", {
-      ascending: false,
-    })
-    .limit(1)
-    .single();
+    .select("id, name, created_at")
+    .eq("user_id", userId);
+
+  if (workspaceId) {
+    workspaceQuery = workspaceQuery.eq("id", workspaceId);
+  } else {
+    workspaceQuery = workspaceQuery
+      .order("created_at", { ascending: false })
+      .limit(1);
+  }
+
+  const { data: workspace, error } = await workspaceQuery.maybeSingle();
 
   if (error) throw error;
 
@@ -92,7 +100,7 @@ export async function getWorkspaceSnapshot(userId: string) {
 
   const { data: collectionData } = await supabase
     .from("collections")
-    .select("id")
+    .select("id, created_at")
     .eq("workspace_id", workspace.id);
 
   const collectionIds = collectionData?.map((item) => item.id) ?? [];
@@ -113,7 +121,31 @@ export async function getWorkspaceSnapshot(userId: string) {
     })
     .eq("workspace_id", workspace.id);
 
+  const { data: environmentData } = await supabase
+    .from("environments")
+    .select("created_at")
+    .eq("workspace_id", workspace.id);
+
+  const { data: requestData } = collectionIds.length
+    ? await supabase
+        .from("requests")
+        .select("created_at")
+        .in("collection_id", collectionIds)
+    : { data: [] };
+
+  const timestamps = [
+    workspace.created_at,
+    ...(collectionData ?? []).map((item) => item.created_at),
+    ...(requestData ?? []).map((item) => item.created_at),
+    ...(environmentData ?? []).map((item) => item.created_at),
+  ].filter(Boolean);
+
+  const latestActivity = timestamps.sort(
+    (first, second) => new Date(second).getTime() - new Date(first).getTime(),
+  )[0];
+
   return {
+    id: workspace.id,
     name: workspace.name,
 
     collections: collections ?? 0,
@@ -122,6 +154,55 @@ export async function getWorkspaceSnapshot(userId: string) {
 
     environments: environments ?? 0,
 
-    lastActivity: "Recently",
+    lastActivity: latestActivity ? formatRelativeTime(latestActivity) : null,
   };
+}
+
+function formatRelativeTime(timestamp: string) {
+  const elapsedSeconds = Math.max(
+    0,
+    Math.floor((Date.now() - new Date(timestamp).getTime()) / 1000),
+  );
+
+  if (elapsedSeconds < 60) return "Just now";
+  if (elapsedSeconds < 3600) return `${Math.floor(elapsedSeconds / 60)}m ago`;
+  if (elapsedSeconds < 86400)
+    return `${Math.floor(elapsedSeconds / 3600)}h ago`;
+  return `${Math.floor(elapsedSeconds / 86400)}d ago`;
+}
+
+export async function getRecentWorkspaces(
+  userId: string,
+  workspaceIds: string[],
+) {
+  if (!workspaceIds.length) {
+    const { data, error } = await supabase
+      .from("CreateWorkspace")
+      .select("id, name")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(5);
+
+    if (error) throw error;
+
+    return data;
+  }
+
+  const { data, error } = await supabase
+    .from("CreateWorkspace")
+    .select("id, name")
+    .eq("user_id", userId)
+    .in("id", workspaceIds);
+
+  if (error) throw error;
+
+  const workspaces = new Map(
+    data.map((workspace) => [workspace.id, workspace]),
+  );
+
+  return workspaceIds
+    .map((id) => workspaces.get(id))
+    .filter((workspace): workspace is { id: string; name: string } =>
+      Boolean(workspace),
+    );
 }

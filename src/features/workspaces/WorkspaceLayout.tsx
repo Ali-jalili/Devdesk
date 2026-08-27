@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Outlet, useParams } from "react-router-dom";
 
@@ -14,8 +14,11 @@ import Loading from "@/ui/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 
 import EditWorkspaceModal from "./EditWorkspaceModal";
+import useAuth from "@/app/context/useAuth";
 
 export default function WorkspaceLayout() {
+  const { user } = useAuth();
+
   const { workspaceId } = useParams<{
     workspaceId: string;
   }>();
@@ -25,6 +28,24 @@ export default function WorkspaceLayout() {
   const { data, isLoading, error } = useWorkspaceDetails(workspaceId);
 
   const { data: environments } = useGetEnvironments(workspaceId);
+
+  useEffect(() => {
+    if (user?.id && workspaceId) {
+      const lastWorkspaceKey = `devdesk:last-workspace:${user.id}`;
+      const workspaceHistoryKey = `devdesk:workspace-history:${user.id}`;
+      const currentHistory = JSON.parse(
+        localStorage.getItem(workspaceHistoryKey) ?? "[]",
+      ) as string[];
+      const nextHistory = [
+        workspaceId,
+        ...currentHistory.filter((id) => id !== workspaceId),
+      ].slice(0, 5);
+
+      localStorage.setItem(lastWorkspaceKey, workspaceId);
+      localStorage.setItem(workspaceHistoryKey, JSON.stringify(nextHistory));
+      window.dispatchEvent(new Event("devdesk:last-workspace-changed"));
+    }
+  }, [user?.id, workspaceId]);
 
   const { mutate: updateEnvironment, isPending: isUpdatingEnvironment } =
     useUpdateWorkspaceEnvironment();

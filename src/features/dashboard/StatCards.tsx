@@ -41,14 +41,7 @@ export default function StatCards({ stats }: StatCardsProps) {
   ];
 
   return (
-    <div
-      className="
-        grid
-        gap-4
-        sm:grid-cols-2
-        xl:grid-cols-4
-      "
-    >
+    <div className="grid overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm sm:grid-cols-2 xl:grid-cols-4">
       {items.map((item, index) => {
         const Icon = item.icon;
 
@@ -69,27 +62,21 @@ export default function StatCards({ stats }: StatCardsProps) {
             whileHover={{
               y: -4,
             }}
-            className="
-              rounded-xl
-              border
-              border-slate-200
-              bg-white
-              p-5
-              shadow-sm
-              transition
-              hover:shadow-md
-            "
+            className="group flex items-center gap-3 border-b border-slate-200 p-4 transition hover:bg-slate-50 sm:last:border-b-0 xl:border-b-0 xl:border-r xl:last:border-r-0"
           >
             <div
               className="
                 flex
-                h-10
-                w-10
+                h-9
+                w-9
                 items-center
                 justify-center
                 rounded-lg
-                bg-indigo-50
-                text-indigo-600
+                bg-slate-100
+                text-slate-600
+                transition
+                group-hover:bg-indigo-50
+                group-hover:text-indigo-600
               "
             >
               <Icon className="h-5 w-5" />
@@ -97,8 +84,7 @@ export default function StatCards({ stats }: StatCardsProps) {
 
             <p
               className="
-                mt-4
-                text-sm
+                text-xs
                 font-medium
                 text-slate-500
               "
@@ -108,8 +94,8 @@ export default function StatCards({ stats }: StatCardsProps) {
 
             <p
               className="
-                mt-2
-                text-3xl
+                mt-0.5
+                text-xl
                 font-bold
                 text-slate-950
               "
@@ -119,9 +105,7 @@ export default function StatCards({ stats }: StatCardsProps) {
 
             <p
               className="
-                mt-1
-                text-xs
-                text-slate-400
+                hidden
               "
             >
               {item.description}
