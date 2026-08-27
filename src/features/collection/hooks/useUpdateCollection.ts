@@ -8,8 +8,6 @@ function useUpdateCollection() {
 
   const mutation = useMutation({
     mutationFn: ({
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      workspaceId,
       collectionId,
       data,
     }: {
