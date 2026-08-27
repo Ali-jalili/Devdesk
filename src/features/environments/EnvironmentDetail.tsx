@@ -65,7 +65,7 @@ export default function EnvironmentDetail() {
       {/* Create Variable */}
 
       {isCreating && (
-        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section>
           <CreateVariableForm
             environmentId={environmentId}
             onSuccess={() => setIsCreating(false)}
