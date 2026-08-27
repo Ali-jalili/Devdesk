@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import useAuth from "@/app/context/useAuth";
+import { FiBriefcase, FiFolder, FiGlobe, FiSend } from "react-icons/fi";
 
 const requests = [
   {
@@ -35,25 +37,25 @@ const features = [
     title: "Workspaces",
     description:
       "Keep every project and its API context organized in its own workspace.",
-    icon: "W",
+    icon: FiBriefcase,
   },
   {
     title: "Collections",
     description:
       "Group related API requests into meaningful collections that match your project.",
-    icon: "C",
+    icon: FiFolder,
   },
   {
     title: "Requests",
     description:
       "Keep endpoints, methods, headers, parameters, and documentation together.",
-    icon: "R",
+    icon: FiSend,
   },
   {
     title: "Environments",
     description:
       "Manage environment-specific values like base URLs and tokens in one place.",
-    icon: "E",
+    icon: FiGlobe,
   },
 ];
 
@@ -75,12 +77,23 @@ const workflow = [
     title: "Manage Requests",
     description: "Keep every request and its surrounding context together.",
   },
+  {
+    number: "04",
+    title: "Configure Environments",
+    description:
+      "Keep development, testing, and production values ready for your workflow.",
+  },
 ];
 
 export default function Home() {
   const [requestIndex, setRequestIndex] = useState(0);
+  const { user } = useAuth();
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     const interval = setInterval(() => {
       setRequestIndex((current) => (current + 1) % requests.length);
     }, 3000);
@@ -94,12 +107,12 @@ export default function Home() {
     <main className="min-h-screen bg-slate-50 text-slate-900">
       {/* ================= HERO ================= */}
 
-      <section className="mx-auto grid min-h-[calc(100vh-72px)] max-w-7xl items-center gap-14 px-6 py-16 sm:py-20 lg:grid-cols-2 lg:gap-20 lg:px-8">
+      <section className="mx-auto grid min-h-[calc(100vh-64px)] max-w-7xl items-center gap-14 px-6 py-16 sm:py-20 lg:grid-cols-2 lg:gap-20 lg:px-8">
         {/* Hero Content */}
 
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-600">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-indigo-500" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-indigo-500 motion-reduce:animate-none" />
             Developer workflow, simplified
           </div>
 
@@ -115,10 +128,10 @@ export default function Home() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <NavLink
-              to="/signup"
+              to={user ? "/app/dashboard" : "/signup"}
               className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-600/20"
             >
-              Get Started
+              {user ? "Go to Dashboard" : "Get Started"}
               <span className="ml-2">→</span>
             </NavLink>
 
@@ -157,7 +170,7 @@ export default function Home() {
               <div className="w-8" />
             </div>
 
-            <div className="grid min-h-[400px] grid-cols-[145px_1fr]">
+            <div className="grid min-h-[320px] grid-cols-[92px_1fr] sm:min-h-[400px] sm:grid-cols-[145px_1fr]">
               {/* Sidebar */}
 
               <aside className="border-r border-slate-200 bg-slate-50/70 p-3">
@@ -203,9 +216,9 @@ export default function Home() {
                     </h3>
                   </div>
 
-                  <button className="rounded-md bg-indigo-600 px-3 py-2 text-[10px] font-semibold text-white shadow-sm shadow-indigo-600/20">
+                  <div className="rounded-md bg-indigo-600 px-3 py-2 text-[10px] font-semibold text-white shadow-sm shadow-indigo-600/20">
                     + New Request
-                  </button>
+                  </div>
                 </div>
 
                 {/* Stats */}
@@ -236,7 +249,7 @@ export default function Home() {
                   <div className="flex items-center gap-2 border-b border-slate-200 bg-white px-4 py-3">
                     <span
                       key={request.method}
-                      className={`animate-pulse rounded bg-slate-50 px-1.5 py-0.5 font-mono text-[9px] font-bold ${request.methodColor}`}
+                      className={`animate-pulse rounded bg-slate-50 px-1.5 py-0.5 font-mono text-[9px] font-bold motion-reduce:animate-none ${request.methodColor}`}
                     >
                       {request.method}
                     </span>
@@ -252,7 +265,7 @@ export default function Home() {
                       key={request.status}
                       className={`ml-auto flex items-center gap-1.5 text-[9px] ${request.statusColor}`}
                     >
-                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500 motion-reduce:animate-none" />
                       {request.status}
                     </span>
                   </div>
@@ -295,7 +308,7 @@ export default function Home() {
                     <div className="mt-2 h-1 overflow-hidden rounded-full bg-slate-100">
                       <div
                         key={requestIndex}
-                        className="h-full w-full origin-left animate-[grow_3s_ease-in-out]"
+                        className="h-full w-full origin-left animate-[grow_3s_ease-in-out] motion-reduce:animate-none"
                         style={{
                           backgroundColor: "#6366f1",
                         }}
@@ -370,8 +383,8 @@ export default function Home() {
                 key={feature.title}
                 className="group rounded-xl border border-slate-200 bg-white p-6 transition duration-200 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-lg hover:shadow-slate-900/5"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-sm font-bold text-indigo-600 transition group-hover:bg-indigo-600 group-hover:text-white">
-                  {feature.icon}
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 transition group-hover:bg-indigo-600 group-hover:text-white">
+                  <feature.icon className="h-5 w-5" />
                 </div>
 
                 <h3 className="mt-5 font-semibold text-slate-950">
@@ -405,7 +418,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-10 md:grid-cols-3">
+          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {workflow.map((step) => (
               <div key={step.number}>
                 <span className="font-mono text-sm font-semibold text-indigo-600">
@@ -422,31 +435,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ================= CTA ================= */}
-
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-indigo-200 bg-indigo-50 px-6 py-16 text-center sm:px-10">
-          <span className="text-sm font-semibold text-indigo-600">
-            Ready to get organized?
-          </span>
-
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-            Build with context, not clutter.
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-xl leading-7 text-slate-600">
-            Create your first workspace and bring your API workflow together.
-          </p>
-
-          <NavLink
-            to="/signup"
-            className="mt-7 inline-flex items-center justify-center rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-600/20"
-          >
-            Create your workspace
-          </NavLink>
         </div>
       </section>
     </main>

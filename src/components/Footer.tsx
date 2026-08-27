@@ -1,8 +1,11 @@
 /** @format */
 
 import { NavLink } from "react-router-dom";
+import useAuth from "@/app/context/useAuth";
 
 export default function Footer() {
+  const { user } = useAuth();
+
   return (
     <footer className="border-t border-slate-200 bg-white">
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
@@ -33,10 +36,10 @@ export default function Footer() {
                 </a>
 
                 <NavLink
-                  to="/signup"
+                  to={user ? "/app/dashboard" : "/signup"}
                   className="text-sm text-slate-500 transition hover:text-slate-950"
                 >
-                  Get Started
+                  {user ? "Open Dashboard" : "Get Started"}
                 </NavLink>
               </nav>
             </div>
@@ -46,7 +49,9 @@ export default function Footer() {
 
               <nav className="mt-4 flex flex-col gap-3">
                 <a
-                  href="#"
+                  href="https://github.com/Ali-jalili/Devdesk"
+                  target="_blank"
+                  rel="noreferrer"
                   className="text-sm text-slate-500 transition hover:text-slate-950"
                 >
                   GitHub
