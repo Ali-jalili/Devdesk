@@ -1,4 +1,6 @@
-/** @format */
+/**
+ * @format
+ */
 
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -82,18 +84,7 @@ export default function Sidebar({
         />
       )}
 
-      <motion.aside
-        initial={{
-          x: -20,
-          opacity: 0,
-        }}
-        animate={{
-          x: 0,
-          opacity: 1,
-        }}
-        transition={{
-          duration: 0.2,
-        }}
+      <aside
         className={`
           fixed left-0 top-16 z-50
           h-[calc(100vh-64px)]
@@ -296,7 +287,7 @@ export default function Sidebar({
             </div>
           </div>
         </div>
-      </motion.aside>
+      </aside>
     </>
   );
 }
