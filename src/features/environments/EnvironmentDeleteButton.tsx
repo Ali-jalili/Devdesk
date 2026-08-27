@@ -2,7 +2,7 @@
 
 import { toast } from "react-hot-toast";
 
-import useDeleteEnvironment from "@/app/hook/useDeleteEnvironment";
+import useDeleteEnvironment from "./hooks/useDeleteEnvironment";
 
 import {
   AlertDialog,

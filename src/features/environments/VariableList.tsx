@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { FiEdit2, FiEye, FiEyeOff, FiKey } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 
-import useUpdateVariable from "@/app/hook/useUpdateVariable";
+import useUpdateVariable from "./hooks/useUpdateVariable";
 import VariableDeleteButton from "./VariableDeleteButton";
 
 type Variable = {

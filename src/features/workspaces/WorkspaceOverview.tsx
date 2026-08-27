@@ -6,8 +6,8 @@ import { Link, useParams } from "react-router-dom";
 
 import { FiArrowRight, FiFolder, FiLayers, FiTrash2 } from "react-icons/fi";
 
-import useGetCollections from "@/app/hook/useGetCollections";
-import useGetEnvironments from "@/app/hook/useGetEnvironments";
+import useGetCollections from "@/features/collection/hooks/useGetCollections";
+import useGetEnvironments from "@/features/environments/hooks/useGetEnvironments";
 
 import DeleteWorkspaceAlert from "./DeleteWorkspaceAlert";
 

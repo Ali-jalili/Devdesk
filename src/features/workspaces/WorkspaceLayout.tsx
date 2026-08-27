@@ -6,9 +6,9 @@ import { Outlet, useParams } from "react-router-dom";
 
 import { FiEdit3, FiGlobe } from "react-icons/fi";
 
-import useWorkspaceDetails from "@/app/hook/useWorkspaceDetails";
-import useUpdateWorkspaceEnvironment from "@/app/hook/useUpdateWorkspaceEnvironment";
-import useGetEnvironments from "@/app/hook/useGetEnvironments";
+import useWorkspaceDetails from "./hooks/useWorkspaceDetails";
+import useUpdateWorkspaceEnvironment from "./hooks/useUpdateWorkspaceEnvironment";
+import useGetEnvironments from "@/features/environments/hooks/useGetEnvironments";
 
 import Loading from "@/ui/Loading";
 import ErrorMessage from "@/components/ErrorMessage";

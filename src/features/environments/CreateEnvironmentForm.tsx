@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FiGlobe, FiSave } from "react-icons/fi";
 
-import useCreateEnvironment from "@/app/hook/useCreateEnvironment";
+import useCreateEnvironment from "./hooks/useCreateEnvironment";
 
 type FormData = {
   name: string;

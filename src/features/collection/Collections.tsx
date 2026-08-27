@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import { FiFolderPlus, FiPlus } from "react-icons/fi";
 
-import useGetCollections from "@/app/hook/useGetCollections";
+import useGetCollections from "./hooks/useGetCollections";
 import Loading from "@/ui/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 

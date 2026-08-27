@@ -2,7 +2,7 @@
 
 import { FiX } from "react-icons/fi";
 import { useForm } from "react-hook-form";
-import useUpdateWorkspace from "@/app/hook/useUpdateWorkspace";
+import useUpdateWorkspace from "./hooks/useUpdateWorkspace";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 

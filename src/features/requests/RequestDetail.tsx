@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
-import useGetRequest from "@/app/hook/useGetRequest";
+import useGetRequest from "./hooks/useGetRequest";
 
 import Loading from "@/ui/Loading";
 

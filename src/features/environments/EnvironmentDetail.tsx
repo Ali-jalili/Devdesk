@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { FiPlus, FiSliders } from "react-icons/fi";
 
-import useGetVariables from "@/app/hook/useGetVariables";
+import useGetVariables from "./hooks/useGetVariables";
 
 import Loading from "@/ui/Loading";
 import ErrorMessage from "@/components/ErrorMessage";

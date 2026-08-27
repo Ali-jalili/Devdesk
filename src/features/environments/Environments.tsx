@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { FiGlobe, FiPlus } from "react-icons/fi";
 
-import useGetEnvironments from "@/app/hook/useGetEnvironments";
+import useGetEnvironments from "./hooks/useGetEnvironments";
 import Loading from "@/ui/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 

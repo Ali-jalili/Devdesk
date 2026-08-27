@@ -2,7 +2,7 @@
 
 import Loading from "@/ui/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
-import useGetWorkspaces from "@/app/hook/useWorkspaces";
+import useGetWorkspaces from "./hooks/useWorkspaces";
 
 import { NavLink } from "react-router-dom";
 

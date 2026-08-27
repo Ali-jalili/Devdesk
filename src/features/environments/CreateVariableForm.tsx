@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FiKey, FiPlus, FiSave } from "react-icons/fi";
 
-import useCreateVariable from "@/app/hook/useCreateVariable";
+import useCreateVariable from "./hooks/useCreateVariable";
 
 type FormData = {
   key: string;

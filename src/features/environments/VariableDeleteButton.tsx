@@ -2,7 +2,7 @@
 
 import { toast } from "react-hot-toast";
 
-import useDeleteVariable from "@/app/hook/useDeleteVariable";
+import useDeleteVariable from "./hooks/useDeleteVariable";
 
 import {
   AlertDialog,

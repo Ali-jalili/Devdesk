@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import useGetCollection from "@/app/hook/useGetCollection";
-import useGetRequests from "@/app/hook/useGetRequests";
+import useGetCollection from "./hooks/useGetCollection";
+import useGetRequests from "@/features/requests/hooks/useGetRequests";
 
 import { FiPlus, FiSearch } from "react-icons/fi";
 

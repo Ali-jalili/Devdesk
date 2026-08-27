@@ -1,6 +1,6 @@
 /** @format */
 
-import useDeleteCollection from "@/app/hook/useDeleteCollection";
+import useDeleteCollection from "./hooks/useDeleteCollection";
 import {
   AlertDialog,
   AlertDialogAction,

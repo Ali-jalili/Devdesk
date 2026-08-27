@@ -1,6 +1,6 @@
 /** @format */
 
-import useCreateRequest from "@/app/hook/useCreateRequest";
+import useCreateRequest from "./hooks/useCreateRequest";
 import { useForm, useFieldArray } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";

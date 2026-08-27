@@ -1,6 +1,6 @@
 /** @format */
 
-import useDeleteWorkspace from "@/app/hook/useDeleteWorkspace";
+import useDeleteWorkspace from "./hooks/useDeleteWorkspace";
 import {
   AlertDialog,
   AlertDialogAction,

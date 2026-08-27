@@ -1,5 +1,5 @@
 /** @format */
-import useCreateCollection from "@/app/hook/useCreateCollection";
+import useCreateCollection from "./hooks/useCreateCollection";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";

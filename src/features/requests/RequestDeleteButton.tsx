@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-import useDeleteRequest from "@/app/hook/useDeleteRequest";
+import useDeleteRequest from "./hooks/useDeleteRequest";
 
 import {
   AlertDialog,

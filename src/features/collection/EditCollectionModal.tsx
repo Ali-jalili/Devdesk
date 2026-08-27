@@ -1,6 +1,6 @@
 /** @format */
 
-import useUpdateCollection from "@/app/hook/useUpdateCollection";
+import useUpdateCollection from "./hooks/useUpdateCollection";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";

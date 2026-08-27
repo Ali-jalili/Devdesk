@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 
-import useUpdateRequest from "@/app/hook/useUpdateRequest";
+import useUpdateRequest from "./hooks/useUpdateRequest";
 import { convertKeyValueArrayToObject } from "@/utils/convertKeyValueArrayToObject";
 
 type FormData = {
