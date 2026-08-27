@@ -5,7 +5,6 @@
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 
 import {
   FiBriefcase,
@@ -151,36 +150,17 @@ export default function Sidebar({
               );
             })}
 
-            <AnimatePresence mode="wait">
-              {workspaceId && (
-                <motion.div
-                  key="workspace-navigation"
-                  initial={{
-                    opacity: 0,
-                    height: 0,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    height: "auto",
-                  }}
-                  exit={{
-                    opacity: 0,
-                    height: 0,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                  }}
-                  className="mt-4 overflow-hidden border-t border-slate-200 pt-4"
-                >
-                  {!collapsed && (
-                    <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                      Workspace
-                    </p>
-                  )}
-                  <WorkspaceSidebarNav onClose={onClose} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* حذف AnimatePresence و motion.div اضافی */}
+            {workspaceId && (
+              <div className="mt-4 overflow-hidden border-t border-slate-200 pt-4">
+                {!collapsed && (
+                  <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                    Workspace
+                  </p>
+                )}
+                <WorkspaceSidebarNav onClose={onClose} />
+              </div>
+            )}
           </nav>
           <div className="mt-auto space-y-3">
             <div
