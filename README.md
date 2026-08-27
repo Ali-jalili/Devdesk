@@ -81,3 +81,67 @@ The dashboard focuses on helping users continue their workflow instead of repeat
 # 🏗 Architecture
 
 DevDesk follows a feature-based frontend architecture.
+
+
+Each feature contains its own components, hooks, and services to keep the codebase organized and scalable.
+
+---
+
+## 🛠 Tech Stack
+
+- React
+- TypeScript
+- React Router
+- Tailwind CSS
+- TanStack Query
+- Supabase
+- Framer Motion
+- Vite
+- pnpm
+
+---
+
+## ⚡ Performance
+
+Implemented:
+
+- Route-based lazy loading
+- Code splitting
+- Query caching with TanStack Query
+- Optimized production builds
+
+---
+
+## 📦 Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Ali-jalili/devdesk.git
+🧭 Future Improvements
+
+Potential future improvements:
+
+API request execution engine
+Response viewer
+Request history
+Advanced environment management
+API testing workflows
+Shared workspaces
+Team collaboration
+🎯 Project Goal
+
+DevDesk was built to explore building a production-style SaaS application with:
+
+Modern React architecture
+TypeScript
+Authentication flows
+Database relationships
+Scalable frontend structure
+Real-world application patterns
+👨‍💻 Author
+
+Your Name
+
+GitHub:
+https://github.com/Ali-jalili
