@@ -1,7 +1,8 @@
 /** @format */
 
-import { updateWorkspaceEnvironment } from "@/features/workspaces/WorkspaceService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { updateWorkspaceEnvironment } from "@/features/workspaces/WorkspaceService";
 
 export default function useUpdateWorkspaceEnvironment() {
   const queryClient = useQueryClient();
@@ -17,7 +18,7 @@ export default function useUpdateWorkspaceEnvironment() {
 
     onSuccess(data) {
       queryClient.invalidateQueries({
-        queryKey: ["workspace", data.id],
+        queryKey: ["workspaceDetails", data.id],
       });
     },
   });

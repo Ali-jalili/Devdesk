@@ -1,20 +1,15 @@
 /** @format */
 
 import { useState } from "react";
-
 import { Outlet, useParams } from "react-router-dom";
-
 import { FiEdit3 } from "react-icons/fi";
-
 import WorkspaceNavigation from "./WorkspaceNavigation";
-
 import useWorkspaceDetails from "@/app/hook/useWorkspaceDetails";
-
 import Loading from "@/ui/Loading";
-
 import ErrorMessage from "@/components/ErrorMessage";
-
 import EditWorkspaceModal from "./EditWorkspaceModal";
+import useUpdateWorkspaceEnvironment from "@/app/hook/useUpdateWorkspaceEnvironment";
+import useGetEnvironments from "@/app/hook/useGetEnvironments";
 
 export default function WorkspaceLayout() {
   const { workspaceId } = useParams<{
@@ -24,6 +19,10 @@ export default function WorkspaceLayout() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const { data, isLoading, error } = useWorkspaceDetails(workspaceId);
+  const { data: environments } = useGetEnvironments(workspaceId);
+
+  const { mutate: updateEnvironment, isPending: isUpdatingEnvironment } =
+    useUpdateWorkspaceEnvironment();
 
   if (isLoading) {
     return <Loading />;
@@ -61,6 +60,46 @@ export default function WorkspaceLayout() {
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
                   {data.description}
                 </p>
+              )}
+              {environments && environments.length > 0 && (
+                <div className="mt-4 flex items-center gap-3">
+                  <span className="text-sm font-medium text-slate-500">
+                    Environment
+                  </span>
+
+                  <select
+                    value={data.active_environment_id ?? ""}
+                    disabled={isUpdatingEnvironment}
+                    onChange={(e) =>
+                      updateEnvironment({
+                        workspaceId,
+                        environmentId: e.target.value || null,
+                      })
+                    }
+                    className="
+        rounded-lg
+        border
+        border-slate-200
+        bg-white
+        px-3
+        py-2
+        text-sm
+        font-medium
+        text-slate-700
+        outline-none
+        transition
+        focus:border-indigo-400
+      "
+                  >
+                    <option value="">Select environment</option>
+
+                    {environments.map((environment) => (
+                      <option key={environment.id} value={environment.id}>
+                        {environment.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               )}
             </div>
 
