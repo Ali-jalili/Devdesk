@@ -1,24 +1,37 @@
 /** @format */
 
-import Home from "@/page/Home";
+import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Signup from "@/page/Signup";
-import Login from "@/page/Login";
-import ProtectedRoute from "./ProtectedRoute";
-import AppLayout from "../layouts/AppLayout";
-import PublicLayout from "../layouts/PublicLayout";
-import Workspaces from "@/features/workspaces/Workspaces";
-import WorkspaceLayout from "@/features/workspaces/WorkspaceLayout";
-import WorkspaceOverview from "@/features/workspaces/WorkspaceOverview";
-import CreateWorkspace from "@/features/workspaces/CreateWorkspace ";
-import Collections from "@/features/collection/Collections";
-import CollectionDetail from "@/features/collection/CollectionDetail";
-import CreateRequest from "@/features/requests/CreateRequest";
-import RequestDetail from "@/features/requests/RequestDetail";
-import Environments from "@/features/environments/Environments";
-import EnvironmentDetail from "@/features/environments/EnvironmentDetail";
-import Dashboard from "@/features/dashboard/Dashboard";
+import Loading from "@/ui/Loading";
+
+const Home = lazy(() => import("@/page/Home"));
+const Signup = lazy(() => import("@/page/Signup"));
+const Login = lazy(() => import("@/page/Login"));
+const ProtectedRoute = lazy(() => import("./ProtectedRoute"));
+const AppLayout = lazy(() => import("../layouts/AppLayout"));
+const PublicLayout = lazy(() => import("../layouts/PublicLayout"));
+const Workspaces = lazy(() => import("@/features/workspaces/Workspaces"));
+const WorkspaceLayout = lazy(
+  () => import("@/features/workspaces/WorkspaceLayout"),
+);
+const WorkspaceOverview = lazy(
+  () => import("@/features/workspaces/WorkspaceOverview"),
+);
+const CreateWorkspace = lazy(
+  () => import("@/features/workspaces/CreateWorkspace "),
+);
+const Collections = lazy(() => import("@/features/collection/Collections"));
+const CollectionDetail = lazy(
+  () => import("@/features/collection/CollectionDetail"),
+);
+const CreateRequest = lazy(() => import("@/features/requests/CreateRequest"));
+const RequestDetail = lazy(() => import("@/features/requests/RequestDetail"));
+const Environments = lazy(() => import("@/features/environments/Environments"));
+const EnvironmentDetail = lazy(
+  () => import("@/features/environments/EnvironmentDetail"),
+);
+const Dashboard = lazy(() => import("@/features/dashboard/Dashboard"));
 
 const router = createBrowserRouter([
   {
@@ -106,5 +119,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function Router() {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
