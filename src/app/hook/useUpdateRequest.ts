@@ -30,6 +30,9 @@ function useUpdateRequest() {
       queryClient.invalidateQueries({
         queryKey: ["requests", data.id],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["requests", data.collection_id],
+      });
     },
   });
 }

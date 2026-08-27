@@ -4,6 +4,7 @@ import useCreateRequest from "@/app/hook/useCreateRequest";
 import { useForm, useFieldArray } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
 
 export default function CreateRequest() {
   const { workspaceId, collectionId } = useParams<{
@@ -107,6 +108,19 @@ export default function CreateRequest() {
   return (
     <div className="mx-auto max-w-3xl">
       <div className="mb-8">
+        <button
+          type="button"
+          onClick={() =>
+            navigate(
+              `/app/workspaces/${workspaceId}/collections/${collectionId}`,
+            )
+          }
+          className="mb-5 inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-slate-950"
+        >
+          <FiArrowLeft className="h-4 w-4" />
+          Back to collection
+        </button>
+
         <h1 className="text-xl font-semibold">Create Request</h1>
 
         <p className="mt-2 text-sm text-muted-foreground">
@@ -169,7 +183,10 @@ export default function CreateRequest() {
 
           <div className="mt-4 space-y-3">
             {headerFields.map((field, index) => (
-              <div key={field.id} className="flex gap-3">
+              <div
+                key={field.id}
+                className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]"
+              >
                 <input
                   {...register(`headers.${index}.key`)}
                   placeholder="Key"
@@ -217,7 +234,10 @@ export default function CreateRequest() {
 
           <div className="mt-4 space-y-3">
             {paramFields.map((field, index) => (
-              <div key={field.id} className="flex gap-3">
+              <div
+                key={field.id}
+                className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]"
+              >
                 <input
                   {...register(`params.${index}.key`)}
                   placeholder="Key"

@@ -47,14 +47,11 @@ export default function RequestDeleteButton({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger>
-        <button
-          type="button"
-          disabled={isPending}
-          className="inline-flex items-center rounded-lg border border-destructive px-4 py-2 text-sm font-medium text-destructive transition hover:bg-destructive/10 disabled:opacity-50"
-        >
-          {isPending ? "Deleting..." : "Delete Request"}
-        </button>
+      <AlertDialogTrigger
+        disabled={isPending}
+        className="inline-flex items-center rounded-lg border border-destructive px-4 py-2 text-sm font-medium text-destructive transition hover:bg-destructive/10 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {isPending ? "Deleting..." : "Delete Request"}
       </AlertDialogTrigger>
 
       <AlertDialogContent>
