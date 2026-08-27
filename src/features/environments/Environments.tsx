@@ -6,6 +6,7 @@ import { FiGlobe, FiPlus } from "react-icons/fi";
 
 import useGetEnvironments from "@/app/hook/useGetEnvironments";
 import Loading from "@/ui/Loading";
+import ErrorMessage from "@/components/ErrorMessage";
 
 import EnvironmentList from "./EnvironmentList";
 import CreateEnvironmentForm from "./CreateEnvironmentForm";
@@ -17,10 +18,14 @@ export default function Environments() {
     workspaceId: string;
   }>();
 
-  const { data, isLoading } = useGetEnvironments(workspaceId);
+  const { data, isLoading, error } = useGetEnvironments(workspaceId);
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorMessage message={error.message} />;
   }
 
   if (!workspaceId) {
@@ -61,7 +66,7 @@ export default function Environments() {
       {/* Create Form */}
 
       {isCreating && (
-        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section>
           <CreateEnvironmentForm
             workspaceId={workspaceId}
             onSuccess={() => setIsCreating(false)}

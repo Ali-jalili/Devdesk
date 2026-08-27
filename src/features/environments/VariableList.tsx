@@ -157,6 +157,11 @@ export default function VariableList({ data }: VariableListProps) {
                   <button
                     type="button"
                     onClick={() => toggleValue(item.id)}
+                    aria-label={
+                      visibleValues[item.id]
+                        ? `Hide value for ${item.key}`
+                        : `Show value for ${item.key}`
+                    }
                     className="rounded-lg p-2 text-slate-400 hover:bg-slate-100"
                   >
                     {visibleValues[item.id] ? (

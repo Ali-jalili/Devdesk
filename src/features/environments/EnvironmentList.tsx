@@ -1,7 +1,7 @@
 /** @format */
 
 import { useNavigate } from "react-router-dom";
-import { FiArrowRight, FiGlobe, FiTrash2 } from "react-icons/fi";
+import { FiArrowRight, FiGlobe } from "react-icons/fi";
 
 import EnvironmentDeleteButton from "./EnvironmentDeleteButton";
 

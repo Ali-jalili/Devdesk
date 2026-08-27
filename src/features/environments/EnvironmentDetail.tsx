@@ -7,6 +7,7 @@ import { FiPlus, FiSliders } from "react-icons/fi";
 import useGetVariables from "@/app/hook/useGetVariables";
 
 import Loading from "@/ui/Loading";
+import ErrorMessage from "@/components/ErrorMessage";
 
 import CreateVariableForm from "./CreateVariableForm";
 import VariableList from "./VariableList";
@@ -18,10 +19,14 @@ export default function EnvironmentDetail() {
     environmentId: string;
   }>();
 
-  const { data, isLoading } = useGetVariables(environmentId);
+  const { data, isLoading, error } = useGetVariables(environmentId);
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorMessage message={error.message} />;
   }
 
   if (!environmentId) {
