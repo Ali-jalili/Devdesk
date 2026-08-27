@@ -104,7 +104,7 @@ export default function Sidebar({
           w-72
 
           md:sticky md:z-30
-          ${collapsed ? "md:w-[72px]" : "md:w-60"}
+          ${collapsed ? "md:w-[69px]" : "md:w-60"}
 
           ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
@@ -186,7 +186,6 @@ export default function Sidebar({
                       Workspace
                     </p>
                   )}
-
                   <WorkspaceSidebarNav onClose={onClose} />
                 </motion.div>
               )}
