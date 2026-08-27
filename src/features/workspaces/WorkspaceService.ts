@@ -63,10 +63,29 @@ async function deleteWorkspace(workspaceId: string) {
   if (error) throw new Error(error.message);
 }
 
+async function updateWorkspaceEnvironment(
+  workspaceId: string,
+  environmentId: string | null,
+) {
+  const { data, error } = await supabase
+    .from("CreateWorkspace")
+    .update({
+      active_environment_id: environmentId,
+    })
+    .eq("id", workspaceId)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
 export {
   createWorkspace,
   getWorkspaces,
   getWorkspaceById,
   updateWorkspace,
   deleteWorkspace,
+  updateWorkspaceEnvironment,
 };
