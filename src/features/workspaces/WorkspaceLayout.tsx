@@ -32,17 +32,7 @@ export default function WorkspaceLayout() {
   useEffect(() => {
     if (user?.id && workspaceId) {
       const lastWorkspaceKey = `devdesk:last-workspace:${user.id}`;
-      const workspaceHistoryKey = `devdesk:workspace-history:${user.id}`;
-      const currentHistory = JSON.parse(
-        localStorage.getItem(workspaceHistoryKey) ?? "[]",
-      ) as string[];
-      const nextHistory = [
-        workspaceId,
-        ...currentHistory.filter((id) => id !== workspaceId),
-      ].slice(0, 5);
-
       localStorage.setItem(lastWorkspaceKey, workspaceId);
-      localStorage.setItem(workspaceHistoryKey, JSON.stringify(nextHistory));
       window.dispatchEvent(new Event("devdesk:last-workspace-changed"));
     }
   }, [user?.id, workspaceId]);
