@@ -128,6 +128,7 @@ Advanced environment management
 API testing workflows
 Shared workspaces
 Team collaboration
+---
 
 🎯 Project Goal
 DevDesk was built to explore building a production-style SaaS application with:
@@ -137,6 +138,7 @@ Authentication flows
 Database relationships
 Scalable frontend structure
 Real-world application patterns
+---
 
 👨‍💻 Author
 Your Name:
