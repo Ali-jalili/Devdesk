@@ -1,75 +1,83 @@
-# React + TypeScript + Vite
+# DevDesk
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern API workflow management platform for organizing API projects, workspaces, collections, requests, and environments.
 
-Currently, two official plugins are available:
+DevDesk is a developer-focused SaaS application designed to help teams and individuals manage API workflows in a structured workspace environment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Instead of keeping API information scattered across different places, DevDesk provides a centralized system for organizing API documentation, request structures, and environment configurations.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Live Demo
 
-## Expanding the ESLint configuration
+Production:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+[https://your-devdesk-url.vercel.app](https://devdesk-omega.vercel.app/)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✨ Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Authentication
 
-```
+- User registration and login
+- Protected application routes
+- Session management
+- Secure authentication using Supabase Auth
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Workspace Management
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Create multiple workspaces
+- View workspace overview
+- Edit workspace information
+- Manage workspace-specific resources
+- Workspace-focused navigation experience
 
-```
+---
+
+## Collections
+
+- Organize API endpoints into collections
+- Create and manage API groups
+- Navigate through collection structures
+- Manage collection details inside workspaces
+
+---
+
+## Requests Management
+
+- Create and organize API request documentation
+- Structure requests inside collections
+- Manage request information and details
+
+---
+
+## Environment Management
+
+- Create workspace environments
+- Manage environment configurations
+- Switch between workspace environments
+- Keep API workflows organized per environment
+
+---
+
+## Dashboard
+
+DevDesk includes a workflow-oriented dashboard designed as a command center instead of a simple statistics page.
+
+Dashboard provides:
+
+- Continue working with the active workspace
+- Workspace readiness tracking
+- Next recommended action
+- Current workspace overview
+
+The dashboard focuses on helping users continue their workflow instead of repeating management pages.
+
+---
+
+# 🏗 Architecture
+
+DevDesk follows a feature-based frontend architecture.
