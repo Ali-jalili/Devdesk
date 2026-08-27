@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-import { FiFolder, FiLayers, FiTrash2 } from "react-icons/fi";
+import { FiArrowRight, FiFolder, FiLayers, FiTrash2 } from "react-icons/fi";
 
 import useGetCollections from "@/app/hook/useGetCollections";
+import useGetEnvironments from "@/app/hook/useGetEnvironments";
 
 import DeleteWorkspaceAlert from "./DeleteWorkspaceAlert";
 
@@ -18,6 +19,7 @@ export default function WorkspaceOverview() {
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
   const { data: collections } = useGetCollections(workspaceId);
+  const { data: environments } = useGetEnvironments(workspaceId);
 
   if (!workspaceId) {
     return null;
@@ -25,55 +27,87 @@ export default function WorkspaceOverview() {
 
   return (
     <div className="space-y-8">
-      {/* Overview Header */}
-
       <section>
-        <div className="mb-5">
-          <h2 className="text-xl font-bold tracking-tight text-slate-950">
-            Workspace Overview
-          </h2>
+        <div className="mb-5 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-indigo-600">
+              Workspace snapshot
+            </p>
 
-          <p className="mt-1 text-sm text-slate-500">
-            A quick look at your workspace.
-          </p>
+            <h2 className="mt-1 text-xl font-bold tracking-tight text-slate-950">
+              Project at a glance
+            </h2>
+          </div>
+
+          <span className="hidden text-xs font-medium text-slate-400 sm:block">
+            Live data
+          </span>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           {/* Collections */}
 
-          <div className="rounded-xl border border-slate-200 bg-white p-5">
+          <Link
+            to={`/app/workspaces/${workspaceId}/collections`}
+            className="group rounded-xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-indigo-500/10"
+          >
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-slate-500">
-                Collections
-              </span>
+              <div>
+                <span className="text-sm font-medium text-slate-500">
+                  Collections
+                </span>
 
-              <FiFolder className="h-5 w-5 text-indigo-600" />
+                <p className="mt-1 text-xs text-slate-400">
+                  Organized API groups
+                </p>
+              </div>
+
+              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 transition group-hover:bg-indigo-600 group-hover:text-white">
+                <FiFolder className="h-5 w-5" />
+              </span>
             </div>
 
             <p className="mt-4 text-3xl font-bold text-slate-950">
               {collections?.length ?? 0}
             </p>
 
-            <p className="mt-1 text-xs text-slate-400">API collections</p>
-          </div>
+            <span className="mt-4 inline-flex text-sm font-semibold text-indigo-600">
+              View collections
+              <FiArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
 
           {/* Environments */}
 
-          <div className="rounded-xl border border-slate-200 bg-white p-5">
+          <Link
+            to={`/app/workspaces/${workspaceId}/environments`}
+            className="group rounded-xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-500/10"
+          >
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-slate-500">
-                Environments
-              </span>
+              <div>
+                <span className="text-sm font-medium text-slate-500">
+                  Environments
+                </span>
 
-              <FiLayers className="h-5 w-5 text-indigo-600" />
+                <p className="mt-1 text-xs text-slate-400">
+                  Runtime configurations
+                </p>
+              </div>
+
+              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 transition group-hover:bg-emerald-600 group-hover:text-white">
+                <FiLayers className="h-5 w-5" />
+              </span>
             </div>
 
-            <p className="mt-4 text-3xl font-bold text-slate-950">0</p>
-
-            <p className="mt-1 text-xs text-slate-400">
-              Configured environments
+            <p className="mt-4 text-3xl font-bold text-slate-950">
+              {environments?.length ?? 0}
             </p>
-          </div>
+
+            <span className="mt-4 inline-flex text-sm font-semibold text-emerald-600">
+              Manage environments
+              <FiArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
         </div>
       </section>
 
