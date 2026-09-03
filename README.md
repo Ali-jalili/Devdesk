@@ -12,7 +12,7 @@ DevDesk is not an API client and is not designed to replace tools like Postman. 
 
 ## 🚀 Live Demo
 
-https://devdesk-omega.vercel.app/
+[View Live Demo] (https://devdesk-omega.vercel.app/)
 
 ---
 
@@ -223,9 +223,15 @@ Implemented:
 
 ---
 
-# 📦 Getting Started
-pnpm install
+## 🚀 Getting Started
 
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Ali-jalili/DevDesk.git
+cd DevDesk
+pnpm install
+pnpm dev
 # 🧭 Future Improvements
 
 Potential future improvements:
