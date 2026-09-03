@@ -13,8 +13,7 @@ DevDesk is not an API client and is not designed to replace tools like Postman. 
 ## 🚀 Live Demo
 
 
-[View Live Demo]((https://devdesk-omega.vercel.app/))
-
+[View Live Demo](https://devdesk-omega.vercel.app/)
 ---
 
 # ✨ Features
